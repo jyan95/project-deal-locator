@@ -7,7 +7,10 @@ class Home extends React.Component {
   render(){
 
     return(
-      <Map />
+      <div id='homepage'>
+        <h1>Home</h1>
+        <Map />
+      </div>
     )
   }
 }
