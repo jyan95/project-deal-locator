@@ -1,12 +1,22 @@
+require('dotenv').config();
+const DEALS_KEY = process.env.DEALS_API_KEY;
+// const MAPBOX_KEY = process.env.MAPBOX_API_KEY;
 const BACKEND_API = 'http://localhost:3000';
+const FRONTEND_API = 'https://api.discountapi.com/v2';
 
 const get = (url) => {
   return fetch(url)
-  .then(r => r.json());
+  .then(r => r.json())
 }
 
 const getCategories = () => {
-  return get(`${BACKEND_API}/categories`);
+  // console.log(DEALS_KEY);
+  // console.log(MAPBOX_KEY);
+  return get(`${FRONTEND_API}/categories`)
+}
+
+const getCategory = (query) => {
+  return get(`${FRONTEND_API}/deals?api_key=${DEALS_KEY}&category_slugs=${query}&location=NY`)
 }
 
 const addUserCategory = (data) => {
@@ -23,9 +33,10 @@ const addUserCategory = (data) => {
   })
 }
 
-const API_FUNCITONS = {
+const API = {
   getCategories,
+  getCategory,
   addUserCategory
 }
 
-export default API_FUNCITONS;
+export default API;

@@ -3,14 +3,17 @@ import CategoryCard from '../components/CategoryCard';
 
 // import './Categories.css';
 
-// index page for all categories
+// category index
 class CategoriesContainer extends React.Component {
+
   render(){
+    // console.log('Categories',this.state.categories);
+    // console.log(this.props);
     // iterate through categories and render category components
     return(
-      <div id='categories'>
-        <h1>Categories</h1>
-        <CategoryCard />
+      <div id='categories-container'>
+        <h1>ALL CATEGORIES</h1>
+        {this.props.categories.map(c => <CategoryCard category={c.category} key={c.id} setCategory={this.props.setCategory}/>)}
       </div>
     )
   }

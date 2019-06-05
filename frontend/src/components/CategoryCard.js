@@ -1,12 +1,16 @@
 import React from 'react';
-// import './category.css';
+import { Link } from "react-router-dom";
 
 class CategoryCard extends React.Component {
-  render(){
 
+  render(){
+    let { slug, name } = this.props.category;
+    // console.log(this.props);
     return(
-      <div id='category-card'>
-        i am a category card
+      <div id={this.props.category}>
+        <Link to={`/categories/${slug}`} onClick={() => this.props.setCategory(slug)}>
+          {name}
+        </Link>
       </div>
     )
   }
