@@ -7,10 +7,14 @@ class Home extends React.Component {
   render(){
 
     return(
+      <React.Fragment>
       <div id='homepage'>
         <h1>Home</h1>
-        <Map />
+        <div id='map-container'>
+          <Map />
+        </div>
       </div>
+      </React.Fragment>
     )
   }
 }

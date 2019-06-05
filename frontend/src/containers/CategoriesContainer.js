@@ -16,4 +16,4 @@ class CategoriesContainer extends React.Component {
   }
 }
 
-export default CategoriesController;
+export default CategoriesContainer;
