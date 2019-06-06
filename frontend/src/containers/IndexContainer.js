@@ -26,10 +26,10 @@ class IndexContainer extends React.Component {
     // console.log(this.state);
   }
 
-  componentDidMount(){
-    API.getCategories()
-    .then(data => this.setState({categories: data.categories}))
-  }
+  // componentDidMount(){
+  //   API.getCategories()
+  //   .then(data => this.setState({categories: data.categories}))
+  // }
 
   render(){
     let { active_index, categories, deals } = this.state;
