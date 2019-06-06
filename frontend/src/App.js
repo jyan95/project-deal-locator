@@ -4,7 +4,7 @@ import Home from './containers/Home';
 import CategoriesContainer from './containers/CategoriesContainer';
 import DealsContainer from './containers/DealsContainer';
 import Profile from './containers/Profile';
-import { Swtich, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 
 import './App.css';
 
