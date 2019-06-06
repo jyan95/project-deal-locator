@@ -1,10 +1,19 @@
 import React from 'react';
 import CategoryCard from '../components/CategoryCard';
+import API from '../api';
 
 // import './Categories.css';
 
 // category index
 class CategoriesContainer extends React.Component {
+  state = {
+    categories: []
+  }
+
+  componentDidMount(){
+    API.getCategories()
+    .then(data => this.setState({categories: data.categories}))
+  }
 
   render(){
     // console.log('Categories',this.state.categories);
@@ -13,7 +22,7 @@ class CategoriesContainer extends React.Component {
     return(
       <div id='categories-container'>
         <h1>ALL CATEGORIES</h1>
-        {this.props.categories.map(c => <CategoryCard category={c.category} key={c.id} setCategory={this.props.setCategory}/>)}
+        {this.state.categories.map(c => <CategoryCard category={c.category} key={c.id} setCategory={this.props.setCategory}/>)}
       </div>
     )
   }
