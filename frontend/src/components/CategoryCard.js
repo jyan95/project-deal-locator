@@ -7,10 +7,11 @@ class CategoryCard extends React.Component {
     let { slug, name } = this.props.category;
     // console.log(this.props);
     return(
-      <div id={this.props.category}>
+      <div id={slug}>
         <Link to={`/categories/${slug}`} onClick={() => this.props.setCategory(slug)}>
           {name}
         </Link>
+         - Follow
       </div>
     )
   }

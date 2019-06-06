@@ -1,4 +1,5 @@
 import React from 'react';
+import FilterForm from '../components/FilterForm';
 import CategoryCard from '../components/CategoryCard';
 import API from '../api';
 
@@ -7,12 +8,23 @@ import API from '../api';
 // category index
 class CategoriesContainer extends React.Component {
   state = {
-    categories: []
+    categories: [],
+    filteredCategories: []
   }
 
   componentDidMount(){
     API.getCategories()
-    .then(data => this.setState({categories: data.categories}))
+    .then(data => this.setState({categories: data.categories, filteredCategories: data.categories}))
+  }
+
+  filterCategories = (input) => {
+    // console.log(input);
+    let categories = this.state.categories;
+    let filteredCategories = categories.filter(c => {
+      let slug = c.category.slug;
+      return slug.indexOf(input.toLowerCase()) !== -1
+    });
+    this.setState({filteredCategories});
   }
 
   render(){
@@ -20,10 +32,13 @@ class CategoriesContainer extends React.Component {
     // console.log(this.props);
     // iterate through categories and render category components
     return(
-      <div id='categories-container'>
+      <React.Fragment>
         <h1>ALL CATEGORIES</h1>
-        {this.state.categories.map(c => <CategoryCard category={c.category} key={c.id} setCategory={this.props.setCategory}/>)}
-      </div>
+        <FilterForm onChange={this.filterCategories}/>
+        <div id='categories-container'>
+          {this.state.filteredCategories.map(c => <CategoryCard category={c.category} key={c.id} />)}
+        </div>
+      </React.Fragment>
     )
   }
 }
