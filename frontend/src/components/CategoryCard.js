@@ -5,8 +5,8 @@ import API from '../api';
 class CategoryCard extends React.Component {
 
   // followCategory = (slug) => {
-  //
-  //   API.addUserCategory(slug, user_id);
+  //  grab user_id
+  //  API.addUserCategory(slug, user_id);
   // }
 
   render(){
