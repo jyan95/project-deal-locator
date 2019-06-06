@@ -17,11 +17,15 @@ const getCategories = () => {
   return get(`${FRONTEND_API}/categories`)
 }
 
+const getUserCategories = () => {
+  return get(`${BACKEND_API}/users`)
+}
+
 const getCategory = (query) => {
   return get(`${FRONTEND_API}/deals?api_key=${DEALS_KEY}&location=${location}&category_slugs=${query}`)
 }
 
-const addUserCategory = (data) => {
+const addUserCategory = (slug) => {
   return fetch(`${BACKEND_API}/user_categories`, {
     method: 'POST',
     headers: {
@@ -29,8 +33,7 @@ const addUserCategory = (data) => {
       'Content-type' : 'application/json'
     },
     body: JSON.stringy({
-      user_id: data.user_id,
-      category_id: data.category_id
+      slug: slug
     })
   })
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Filter extends React.Component {
+class FilterForm extends React.Component {
   state = {
     input: ''
   };
@@ -26,4 +26,4 @@ class Filter extends React.Component {
   }
 }
 
-export default Filter;
+export default FilterForm;
