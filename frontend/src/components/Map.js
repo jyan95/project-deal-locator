@@ -1,11 +1,10 @@
 import React from 'react';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
-// import 'leaflet/dist/leaflet.css';
+import DealMarker from './DealMarker';
 import './map.css';
 import DealModal from './DealModal';
 import API from '../api';
-// import styled from 'styled-components';
 
 const MAPTYPE_URL = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png';
 let LAT = 40.706858499999996; // put user latitude here
@@ -24,11 +23,6 @@ class HomeMap extends React.Component {
   state = {
     deals: this.props.deals
   };
-
-  // to use in iterator
-  setCoords = (deal) => {
-    // modify deals in state to add lat long
-  }
 
   // componentDidMount(){
   //   const dealsWithAddress = this.state.deals.filter(d => !!d.deal.merchant.address);
@@ -62,6 +56,11 @@ class HomeMap extends React.Component {
   renderUserLocation = () => {
     const userLocation = [LAT,LNG];
     return <Marker position={userLocation} icon={userIcon}/>
+  }
+
+  renderDealLocations = () => {
+    let dealsWithAddress = this.state.deals.filter(d => !!d.deal.merchant.address);
+    dealsWithAddress.map(d => <DealMarker deal={d}/>)
   }
   //
   // renderDealLocations = (d, lat,lon) => {
@@ -117,7 +116,6 @@ class HomeMap extends React.Component {
   // }
 
   render(){
-    const dealsWithAddress = this.state.deals.filter(d => !!d.deal.merchant.address);
     // console.log(this.props.deals);
     // {this.renderDealLocations()}
     return(
@@ -131,7 +129,7 @@ class HomeMap extends React.Component {
             width='90vw'
           />
           {this.renderUserLocation()}
-
+          {this.renderDealLocations()}
         </Map>
       </div>
     )
