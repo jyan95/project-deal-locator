@@ -29,7 +29,7 @@ const getCategory = (query) => {
 }
 
 const getDeals = (lat,long) => {
-  return get(`${FRONTEND_API}/deals?api_key=${DEALS_KEY}&location=${lat},${long}&radius=3`)
+  return get(`${FRONTEND_API}/deals?api_key=${DEALS_KEY}&location=${lat},${long}&radius=4`)
 }
 
 // const addUserCategory = (slug) => {
@@ -46,7 +46,7 @@ const getDeals = (lat,long) => {
 // }
 
 const getLatLon = (address) => {
-  return get(`${GEOCODING_API}&location=${address}`)
+  return get(`${GEOCODING_API}&location=${address}, NY`)
   // .then(data => console.log('lat', data.results[0].locations[0].latLng.lat))
 }
 
