@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import API from '../api';
+// import API from '../api';
 
 class CategoryCard extends React.Component {
 

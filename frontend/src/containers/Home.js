@@ -1,6 +1,6 @@
 import React from 'react';
 import Map from '../components/Map';
-import API from '../api';
+// import API from '../api';
 
 // import './Home.css';
 
