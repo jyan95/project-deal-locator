@@ -4,7 +4,7 @@ const MAPQUEST_KEY = process.env.MAPQUEST_API_KEY;
 // const MAPBOX_KEY = process.env.MAPBOX_API_KEY;
 const BACKEND_API = 'http://localhost:3000';
 const FRONTEND_API = 'https://api.discountapi.com/v2';
-const GEOCODING_API = `http://www.mapquestapi.com/geocoding/v1/address?key=${MAPQUEST_KEY}&location=`
+const GEOCODING_API = `http://www.mapquestapi.com/geocoding/v1/address?key=gnwV2kq7QREdwog89nNB5ndECcj0Zbw1`
 let location = '40.7068069,-74.0149976'; // 11 broadway
 // let distance = '2';
 
@@ -45,7 +45,8 @@ const addUserCategory = (slug) => {
 }
 
 const getLatLon = (address) => {
-  return fetch(`${GEOCODING_API}${address}`)
+  return get(`${GEOCODING_API}&location=${address}`)
+  // .then(data => console.log('lat', data.results[0].locations[0].latLng.lat))
 }
 
 const API = {

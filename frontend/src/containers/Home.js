@@ -7,8 +7,8 @@ import API from '../api';
 class Home extends React.Component {
   state = {
     deals: [],
-    latitude: '',
-    longitude: ''
+    userLat: '',
+    userLon: ''
   };
 
   getCoords() {
@@ -28,11 +28,12 @@ class Home extends React.Component {
   componentDidMount() {
     navigator.geolocation.getCurrentPosition((position => {
       this.setState({
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude
+        userLat: position.coords.latitude,
+        userLon: position.coords.longitude
       })
     }));
     // console.log('from home.js', navigator.geolocation);
+    // API.getDeals(this.state.userLat,userLon)
     API.getDeals(40.706858499999996,-74.01491589999999)
     .then(data => this.setState({deals: data.deals}))
     .catch(err => console.log(err));

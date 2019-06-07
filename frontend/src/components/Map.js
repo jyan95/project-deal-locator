@@ -12,6 +12,7 @@ let LAT = 40.706858499999996; // put user latitude here
 let LNG = -74.01491589999999; // put user longitude here
 const userLocation = [LAT,LNG];
 
+
 const userIcon = new L.Icon({
   iconUrl: require('../assets/userIcon.png'),
   iconRetinaUrl: require('../assets/userIcon.png'),
@@ -20,39 +21,105 @@ const userIcon = new L.Icon({
 })
 
 class HomeMap extends React.Component {
+  state = {
+    deals: this.props.deals
+  };
 
-  geocode = (address) => {
-    API.getLatLon(address)
-    .then('geocoding',console.log)
+  // to use in iterator
+  setCoords = (deal) => {
+    // modify deals in state to add lat long
   }
+
+  // componentDidMount(){
+  //   const dealsWithAddress = this.state.deals.filter(d => !!d.deal.merchant.address);
+  //   dealsWithAddress.map(d => {
+  //     let lat = '';
+  //     let lon = '';
+  //     let { merchant, short_title, discount_percentage } = d.deal;
+  //     API.getLatLon(merchant.address.replace(/\s/g, ''))
+  //     .then(data => {
+  //       lat = data.results[0].locations[0].latLng.lat;
+  //       lon = data.results[0].locations[0].latLng.lng;
+  //       console.log(lat)
+  //       console.log(d)
+  //
+  //       return (
+  //         this.renderDealLocations(d,lat,lon)
+  //         // <Marker position={[lat,lon]}>
+  //         //   <Popup>
+  //         //     {short_title}
+  //         //     <br/>
+  //         //     <button onclick={() => this.handleDealClick(d.deal)}>
+  //         //       See details
+  //         //     </button>
+  //         //   </Popup>
+  //         // </Marker>
+  //       )
+  //     })
+  //   })
+  // }
 
   renderUserLocation = () => {
     const userLocation = [LAT,LNG];
     return <Marker position={userLocation} icon={userIcon}/>
   }
+  //
+  // renderDealLocations = (d, lat,lon) => {
+  //   let { short_title } = d.deal;
+  //   return(
+  //     <Marker position={[lat,lon]}>
+  //       <Popup>
+  //         {short_title}
+  //         <br/>
+  //         <button onclick={() => this.handleDealClick(d.deal)}>
+  //           See details
+  //         </button>
+  //       </Popup>
+  //     </Marker>
+  //   )
 
-  renderDealLocations = () => {
-    return this.props.deals.map(d => {
-      let { merchant, short_title, discount_percentage } = d.deal;
-      this.geocode(merchant.address.replace(/\s/g, ''));
-      // let { lat,lng } = data.results[1][0][0].latlng;
-      return (
-        <Marker key={d.indexOf()}>
-          <Popup>
-            {short_title}
-            <br/>
-            <button onclick={() => this.handleDealClick(d.deal)}>
-              See details
-            </button>
-          </Popup>
-        </Marker>
-      )
-    })
-  }
+    // console.log('render deals function',this.props.deals);
+    // let lat = '';
+    // let lon = '';
+    // console.log('deals with locations:', dealsWithAddress);
 
+
+    // this.props.deals.map(d => {
+    //   let { merchant, short_title, discount_percentage } = d.deal;
+    //
+    //   if (merchant.latitude) {
+    //     lat = merchant.latitude;
+    //     lon = merchant.longitude;
+    //   } else if (merchant.address) {
+    //     API.getLatLon(merchant.address.replace(/\s/g, ''))
+    //     .then(data => console.log('lat', data.results[0].locations[0].latLng.lat))
+    //     // .then(data => {
+    //     //   lat = data.results[0].locations[0].latLng.lat;
+    //     //   lon = data.results[0].locations[0].latLng.lng;
+    //     // })
+    //   };
+    //
+    //   // console.log('lat:', lat);
+    //   // console.log('lon:', lon);
+    //
+    //   return (
+    //     <Marker position={[lat,lon]}>
+    //       <Popup>
+    //         {short_title}
+    //         <br/>
+    //         <button onclick={() => this.handleDealClick(d.deal)}>
+    //           See details
+    //         </button>
+    //       </Popup>
+    //     </Marker>
+    //   )
+    // });//end of map
+  // }
 
   render(){
-    console.log(this.props.deals);
+    const dealsWithAddress = this.state.deals.filter(d => !!d.deal.merchant.address);
+    // console.log(this.props.deals);
+    // {this.renderDealLocations()}
     return(
       <div>
         <Map id='map' center={userLocation} zoom={18} >
@@ -64,6 +131,7 @@ class HomeMap extends React.Component {
             width='90vw'
           />
           {this.renderUserLocation()}
+
         </Map>
       </div>
     )
