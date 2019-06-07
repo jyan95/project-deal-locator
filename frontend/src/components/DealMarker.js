@@ -11,8 +11,10 @@ class DealMarker extends React.Component {
   }
 
   componentDidMount(){
-    API.getLatLon(this.state.address.replace(/\s/g, ''))
+    console.log('deal marker mounting');
+    API.getLatLon(this.state.address)
     .then(data => {
+      // console.log(data);
       this.setState({
         lat: data.results[0].locations[0].latLng.lat,
         lon: data.results[0].locations[0].latLng.lng
@@ -21,17 +23,18 @@ class DealMarker extends React.Component {
   }
 
   render(){
+    console.log('in deal marker',this.state);
     let { lat, lon, deal } = this.state;
-    console.log(this.state);
     let loading = !lat || !lon;
-    if(loading) return null
+
+    if(loading) return null;
 
     return(
       <Marker position={[lat,lon]}>
         <Popup>
           {deal.short_title}
           <br/>
-          <button onclick={() => this.handleDealClick(this.state.deal)}>
+          <button onclick={() => this.props.handleClick(deal)}>
             See details
           </button>
         </Popup>

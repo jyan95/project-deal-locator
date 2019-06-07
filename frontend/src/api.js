@@ -1,14 +1,15 @@
-require('dotenv').config();
-const DEALS_KEY = process.env.DEALS_API_KEY;
-const MAPQUEST_KEY = process.env.MAPQUEST_API_KEY;
+const DEALS_KEY = process.env.REACT_APP_DEALS_API_KEY;
+const MAPQUEST_KEY = process.env.REACT_APP_MAPQUEST_API_KEY;
 // const MAPBOX_KEY = process.env.MAPBOX_API_KEY;
 const BACKEND_API = 'http://localhost:3000';
 const FRONTEND_API = 'https://api.discountapi.com/v2';
-const GEOCODING_API = `http://www.mapquestapi.com/geocoding/v1/address?key=gnwV2kq7QREdwog89nNB5ndECcj0Zbw1`
+const GEOCODING_API = `http://www.mapquestapi.com/geocoding/v1/address?key=${MAPQUEST_KEY}`
 let location = '40.7068069,-74.0149976'; // 11 broadway
 // let distance = '2';
 
 const get = (url) => {
+  // console.log('DEALSKEY',DEALS_KEY);
+  // console.log('MAPKEY',MAPQUEST_KEY);
   return fetch(url)
   .then(r => r.json())
 }
