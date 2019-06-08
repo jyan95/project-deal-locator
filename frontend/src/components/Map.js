@@ -1,5 +1,5 @@
 import React from 'react';
-import { Map, TileLayer, Marker} from 'react-leaflet';
+import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import './map.css';
 import DealMarker from './DealMarker';
@@ -38,35 +38,6 @@ class HomeMap extends React.Component {
     .catch(err => console.log(err));
   }
 
-  // componentDidMount(){
-  //   const dealsWithAddress = this.state.deals.filter(d => !!d.deal.merchant.address);
-  //   dealsWithAddress.map(d => {
-  //     let lat = '';
-  //     let lon = '';
-  //     let { merchant, short_title, discount_percentage } = d.deal;
-  //     API.getLatLon(merchant.address.replace(/\s/g, ''))
-  //     .then(data => {
-  //       lat = data.results[0].locations[0].latLng.lat;
-  //       lon = data.results[0].locations[0].latLng.lng;
-  //       console.log(lat)
-  //       console.log(d)
-  //
-  //       return (
-  //         this.renderDealLocations(d,lat,lon)
-  //         // <Marker position={[lat,lon]}>
-  //         //   <Popup>
-  //         //     {short_title}
-  //         //     <br/>
-  //         //     <button onclick={() => this.handleDealClick(d.deal)}>
-  //         //       See details
-  //         //     </button>
-  //         //   </Popup>
-  //         // </Marker>
-  //       )
-  //     })
-  //   })
-  // }
-
   renderUserLocation = () => {
     // console.log('rendering user');
     const userLocation = [LAT,LON];
@@ -79,6 +50,17 @@ class HomeMap extends React.Component {
     let dealsWithAddress = this.state.deals.filter(d => !!d.deal.merchant.address);
     console.log('deals with address',dealsWithAddress);
     return dealsWithAddress.map(d => <DealMarker forceUpdate={()=>this.setState({})} key={d.deal.id} deal={d.deal}/>)
+    // return(
+    //   <Marker position={[40.707,-74.018]}>
+    //     <Popup>
+    //       Deal
+    //       <br/>
+    //       <button onclick={() => this.props.handleClick()}>
+    //         See details
+    //       </button>
+    //     </Popup>
+    //   </Marker>
+    // )
   }
 
   // renderDealLocations = (d, lat,lon) => {
