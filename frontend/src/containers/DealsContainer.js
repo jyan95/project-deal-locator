@@ -1,6 +1,9 @@
 import React from 'react';
 import API from '../api';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
 import DealCard from '../components/DealCard';
+
 
 // deals index
 class DealsContainer extends React.Component {
@@ -18,7 +21,15 @@ class DealsContainer extends React.Component {
     return(
       <div id='deals-container'>
         <h1>ALL DEALS</h1>
-        {this.state.deals.map(d => <DealCard deal={d.deal}/>)}
+        <GridList cellHeight={160} cols={3}>
+          {this.state.deals.map(d => {
+            return (
+              <GridListTile key={d.deal.id}>
+                <DealCard deal={d.deal}/>
+              </GridListTile>
+            )
+          })}
+        </GridList>
       </div>
     )
   }
