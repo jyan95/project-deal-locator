@@ -40,7 +40,7 @@ class DealMarker extends React.Component {
         <Popup>
           {deal.short_title}
           <br/>
-          <button onclick={() => this.props.handleClick(deal)}>
+          <button onClick={() => this.props.handleClick(deal)}>
             See details
           </button>
         </Popup>

@@ -21,7 +21,7 @@ class DealsContainer extends React.Component {
     return(
       <div id='deals-container'>
         <h1>ALL DEALS</h1>
-        <GridList cellHeight={160} cols={3}>
+        <GridList cellHeight={300} cols={3}>
           {this.state.deals.map(d => {
             return (
               <GridListTile key={d.deal.id}>

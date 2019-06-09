@@ -1,5 +1,6 @@
 import React from 'react';
 import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -16,9 +17,9 @@ class DealCard extends React.Component {
     let { id, discount_percentage, expires_at, short_title, url, image_url, description } = this.props.deal;
     // console.log(image_url);
     return(
-      <Card>
+      <Card style={{minHeight: '200px'}}>
         <CardActionArea>
-          <CardMedia image={image_url} title='deal image' className={{height:140}}/>
+          <CardMedia image={image_url} title='deal image' style={{height: '140px'}}/>
           <CardContent>
             <Typography gutterBottom component='h3'>
               <a href={url}>{short_title}</a>
