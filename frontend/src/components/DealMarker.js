@@ -26,20 +26,21 @@ class DealMarker extends React.Component {
       this.setState({
         lat: data.results[0].locations[0].latLng.lat,
         lon: data.results[0].locations[0].latLng.lng
-      }, ()=> this.props.forceUpdate())
+      })
+      //, () => this.props.forceUpdate())
     })
   }
 
   render(){
-    console.log('in deal marker',this.state);
+    // console.log('in deal marker',this.state);
     let { lat, lon, deal } = this.state;
     // debugger
     return(
-      <Marker position={[lat,lon]}>
+      <Marker position={[lat,lon]} icon={dealMarker}>
         <Popup>
           {deal.short_title}
           <br/>
-          <button onclick={() => this.props.handleClick(deal)}>
+          <button onClick={() => this.props.handleClick(deal)}>
             See details
           </button>
         </Popup>

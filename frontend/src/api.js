@@ -28,8 +28,8 @@ const getCategory = (query) => {
   return get(`${FRONTEND_API}/deals?api_key=${DEALS_KEY}&location=${location}&category_slugs=${query}`)
 }
 
-const getDeals = (lat,long) => {
-  return get(`${FRONTEND_API}/deals?api_key=${DEALS_KEY}&location=${lat},${long}&radius=4`)
+const getDeals = (lat,lon,page) => {
+  return get(`${FRONTEND_API}/deals?api_key=${DEALS_KEY}&location=${lat},${lon}&radius=2&page=${page}`)
 }
 
 // const addUserCategory = (slug) => {

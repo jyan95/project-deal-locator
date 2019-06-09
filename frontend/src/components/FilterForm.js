@@ -1,4 +1,5 @@
 import React from 'react';
+import TextField from '@material-ui/core/TextField';
 
 class FilterForm extends React.Component {
   state = {
@@ -21,6 +22,26 @@ class FilterForm extends React.Component {
           onChange={this.handleChange}
           placeholder='Search by Category'
         />
+
+        <TextField
+          id="standard-full-width"
+          placeholder="Search by Category"
+          helperText=""
+          fullWidth
+          margin="normal"
+          variant="outlined"
+          InputLabelProps={{
+            shrink: true,
+          }}
+        >
+        <input
+          type='text'
+          id='filter'
+          value={this.state.input}
+          onChange={this.handleChange}
+          placeholder='Search by Category'
+        />
+        </TextField>
       </div>
     )
   }

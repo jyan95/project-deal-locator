@@ -10,6 +10,7 @@ const MAPTYPE_URL = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_label
 let LAT = 40.706858499999996; // put user latitude here
 let LON = -74.01491589999999; // put user longitude here
 const userLocation = [LAT,LON];
+let queryPage = 1;
 
 
 const userIcon = new L.Icon({
@@ -21,8 +22,22 @@ const userIcon = new L.Icon({
 
 class HomeMap extends React.Component {
   state = {
-    deals: []
+    deals: [],
+    withAddress: []
   };
+
+  getMoreDeals = (dealsArray) => {
+    if (dealsArray.length < 20) {
+      queryPage++;
+      API.getDeals(LAT,LON,queryPage)
+      .then(console.log)
+      // .then(data => {
+      //   data.deals.map(d => !!d.deal.merchant.address ? dealsArray.push(d) : this.getMoreDeals(dealsArray))
+      //   return dealsArray;
+      // });
+      console.log('in get more deals function',dealsArray);
+    };
+  }
 
   componentDidMount() {
     navigator.geolocation.getCurrentPosition((position => {
@@ -33,7 +48,7 @@ class HomeMap extends React.Component {
     }));
     // console.log('from home.js', navigator.geolocation);
     // API.getDeals(this.state.userLat,userLon)
-    API.getDeals(LAT,LON)
+    API.getDeals(LAT,LON,queryPage)
     .then(data => this.setState({deals: data.deals}))
     .catch(err => console.log(err));
   }
@@ -45,11 +60,14 @@ class HomeMap extends React.Component {
   }
 
   renderDealLocations = () => {
-    // console.log('rendering deals');
-    // console.log('all deals', this.state.deals);
+    // console.log('deals with address', this.state.withAddress);
+    // let dealsWithAddress = this.state.deals.filter(d => !!d.deal.merchant.address);
     let dealsWithAddress = this.state.deals.filter(d => !!d.deal.merchant.address);
-    console.log('deals with address',dealsWithAddress);
-    return dealsWithAddress.map(d => <DealMarker forceUpdate={()=>this.setState({})} key={d.deal.id} deal={d.deal}/>)
+    // this.getMoreDeals(dealsWithAddress);
+    // console.log('after getMoreDeals',dealsWithAddress);
+
+    // console.log('deals with address',dealsWithAddress);
+    return dealsWithAddress.map(d => <DealMarker key={d.deal.id} deal={d.deal}/>)
     // return(
     //   <Marker position={[40.707,-74.018]}>
     //     <Popup>
