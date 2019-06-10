@@ -1,16 +1,22 @@
 import React from 'react';
-import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
+import { Map, TileLayer, Marker } from 'react-leaflet';
 import L from 'leaflet';
 import './map.css';
 import DealMarker from './DealMarker';
+
+// for map filter
+// import IconButton from '@material-ui/core/IconButton';
+// import Menu from '@material-ui/core/Menu';
+// import MenuItem from '@material-ui/core/MenuItem';
 // import DealModal from './DealModal';
 import API from '../api';
 
 const MAPTYPE_URL = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png';
+
 let LAT = 40.706858499999996; // put user latitude here
 let LON = -74.01491589999999; // put user longitude here
 let userLocation = [LAT,LON];
-let queryPage = 1;
+
 
 const userIcon = new L.Icon({
   iconUrl: require('../assets/userIcon.png'),
@@ -21,7 +27,9 @@ const userIcon = new L.Icon({
 
 class HomeMap extends React.Component {
   state = {
-    deals: []
+    deals: [],
+    filter: 'All',
+    filteredDeals: []
   };
 
   // SINGLE PAGE QUERY
@@ -42,11 +50,10 @@ class HomeMap extends React.Component {
 
   // MULTI PAGE QUERY
   componentDidMount(){
+    let queryPage = 1;
     while(queryPage < 20){
       queryPage++;
-      console.log(queryPage);
       API.getDeals(LAT,LON,queryPage)
-      .then(console.log())
       .then(data => this.setState({deals: this.state.deals.concat(data.deals.filter(d => !!d.deal.merchant.address))}))
     };
   }
@@ -54,17 +61,28 @@ class HomeMap extends React.Component {
 
   renderUserLocation = () => {
     // console.log('rendering user');
-    const userLocation = [LAT,LON];
     return <Marker position={userLocation} icon={userIcon}/>
   }
 
-  renderDealLocations = () => {
+  renderAllDeals = () => {
     // console.log('rendering deals');
-    return this.state.deals.map(d => <DealMarker key={d.deal.id} deal={d.deal}/>)
+    return this.state.deals.map(d => <DealMarker key={d.deal.id} deal={d.deal} handleClick={this.handleClick}/>)
   }
+
+  renderFilteredDeals = () => {
+    let queryPage = 1;
+    while(queryPage < 10){
+      queryPage++;
+      API.getCategory(this.state.filter,queryPage)
+      .then(data => this.setState({filteredDeals: this.state.filteredDeals.concat(data.deals.filter(d => !!d.deal.merchant.address))}))
+    };
+    return this.state.filteredDeals.map(d => <DealMarker key={d.deal.id} deal={d.deal} handleClick={this.handleClick}/>)
+  }
+
 
   render(){
     // console.log(this.props.deals);
+
     return(
       <div>
         <Map id='map' center={userLocation} zoom={16} >
@@ -72,11 +90,10 @@ class HomeMap extends React.Component {
             attribution={MAPTYPE_URL}
             url={MAPTYPE_URL}
             maxZoom='18'
-            minZoom='13'
-            width='90vw'
+            minZoom='14'
           />
           {this.renderUserLocation()}
-          {this.renderDealLocations()}
+          {this.state.filter === 'All' ? this.renderAllDeals() : this.renderFilteredDeals()}
         </Map>
       </div>
     )
