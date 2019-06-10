@@ -24,8 +24,8 @@ const getCategories = () => {
 //   return get(`${BACKEND_API}/users`)
 // }
 
-const getCategory = (query) => {
-  return get(`${FRONTEND_API}/deals?api_key=${DEALS_KEY}&location=${location}&category_slugs=${query}`)
+const getCategory = (query,queryPage) => {
+  return get(`${FRONTEND_API}/deals?api_key=${DEALS_KEY}&location=${location}&category_slugs=${query}&page=${queryPage}`)
 }
 
 const getDeals = (lat,lon,page) => {

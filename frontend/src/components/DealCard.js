@@ -1,11 +1,11 @@
 import React from 'react';
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
+// import CardHeader from '@material-ui/core/CardHeader';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
+// import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 class DealCard extends React.Component {
@@ -14,10 +14,10 @@ class DealCard extends React.Component {
   }
 
   render(){
-    let { id, discount_percentage, expires_at, short_title, url, image_url, description } = this.props.deal;
+    let { id, expires_at, short_title, url, image_url, description } = this.props.deal;
     // console.log(image_url);
     return(
-      <Card style={{minHeight: '200px'}}>
+      <Card style={{minHeight: '200px'}} key={id}>
         <CardActionArea>
           <CardMedia image={image_url} title='deal image' style={{height: '140px'}}/>
           <CardContent>

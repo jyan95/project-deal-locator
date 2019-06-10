@@ -12,8 +12,12 @@ class DealsContainer extends React.Component {
   }
 
   componentDidMount(){
-    API.getCategory(this.props.match.params.slug)
-    .then(data => this.setState({deals: data.deals}))
+    let queryPage = 1
+    while(queryPage < 5){
+      API.getCategory(this.props.match.params.slug,queryPage)
+      .then(data => this.setState({deals: this.state.deals.concat(data.deals)}))
+      queryPage++;
+    }
   }
 
   render(){
@@ -24,7 +28,7 @@ class DealsContainer extends React.Component {
         <GridList cellHeight={300} cols={3}>
           {this.state.deals.map(d => {
             return (
-              <GridListTile key={d.deal.id}>
+              <GridListTile>
                 <DealCard deal={d.deal}/>
               </GridListTile>
             )
