@@ -6,7 +6,7 @@ import API from '../api';
 const dealMarker = new L.Icon({
   iconUrl: require('../assets/redPointer.svg'),
   iconRetinaUrl: require('../assets/redPointer.svg'),
-  popupAnchor: [10,-44],
+  popupAnchor: [0,-20],
   iconSize: [15,20]
 })
 
