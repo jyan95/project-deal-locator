@@ -1,7 +1,7 @@
 import React from 'react';
 import { Map, TileLayer, Marker } from 'react-leaflet';
 import L from 'leaflet';
-import './map.css';
+import './Map.css';
 import DealMarker from './DealMarker';
 
 // for map filter

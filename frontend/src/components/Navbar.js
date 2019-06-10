@@ -22,27 +22,13 @@ function Navbar() {
   function handleChange(e, newValue){
     setValue(newValue);
   }
-  // default render <Home/
-  // <div>
-  //   <ul>
-  //     <li>
-  //      <Link to="/">Home</Link>
-  //     </li>
-  //     <li>
-  //      <Link to="/categories">Categories</Link>
-  //     </li>
-  //     <li>
-  //      <Link to="/profile">Profile</Link>
-  //     </li>
-  //   </ul>
-  //   <hr />
-  // </div>
+
   return (
     <AppBar>
       <Tabs variant="fullWidth" value={value} onChange={handleChange} aria-disabled='true'>
         <LinkTab label="Home" href="/" value={0}/>
         <LinkTab label="Browse" href="/categories" value={1}/>
-        <LinkTab label="Profile" href="/profile" value={2}/>
+        <LinkTab label="Your Deals" href="/your-deals" value={2}/>}
       </Tabs>
     </AppBar>
   );

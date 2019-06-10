@@ -3,7 +3,7 @@ import Navbar from './components/Navbar';
 import Home from './containers/Home';
 import CategoriesContainer from './containers/CategoriesContainer';
 import DealsContainer from './containers/DealsContainer';
-import Profile from './containers/Profile';
+import UserDeals from './containers/UserDeals';
 import { Switch, Route } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 
@@ -19,7 +19,7 @@ function App() {
           <Route exact path="/" component={Home} />
           <Route path="/categories/:slug" component={DealsContainer} />
           <Route exact path="/categories/" component={CategoriesContainer} />
-          <Route path="/profile" component={Profile} />
+          <Route path="/your-deals" component={UserDeals} />
         </Switch>
       </Container>
     </React.Fragment>
