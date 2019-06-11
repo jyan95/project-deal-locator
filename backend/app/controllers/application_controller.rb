@@ -13,7 +13,7 @@ class ApplicationController < ActionController::API
     if auth_header
       token = auth_header.split(' ')[1]
       begin
-        JWT.decode(token, , 'yaboixSecretKey', true, algorithm: 'HS256')
+        JWT.decode(token, ENV['JWT_KEY'], true, algorithm: 'HS256')
       rescue JWT::DecodeError
         nil
       end

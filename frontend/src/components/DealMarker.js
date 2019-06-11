@@ -20,15 +20,20 @@ class DealMarker extends React.Component {
 
   componentDidMount(){
     // console.log('deal marker mounting');
-    API.getLatLon(this.state.address)
-    .then(data => {
-      // console.log(data);
-      this.setState({
-        lat: data.results[0].locations[0].latLng.lat,
-        lon: data.results[0].locations[0].latLng.lng
+    let { latitude, longitude } = this.props.deal.merchant;
+    if (latitude) {
+      this.setState({lat:latitude, lon:longitude})
+    } else {
+      API.getLatLon(this.state.address)
+      .then(data => {
+        // console.log(data);
+        this.setState({
+          lat: data.results[0].locations[0].latLng.lat,
+          lon: data.results[0].locations[0].latLng.lng
+        })
+        //, () => this.props.forceUpdate())
       })
-      //, () => this.props.forceUpdate())
-    })
+    }
   }
 
   render(){

@@ -1,7 +1,7 @@
 const DEALS_KEY = process.env.REACT_APP_DEALS_API_KEY;
 const MAPQUEST_KEY = process.env.REACT_APP_MAPQUEST_API_KEY;
 // const MAPBOX_KEY = process.env.REACT_APP_MAPBOX_API_KEY;
-// const BACKEND_API = 'http://localhost:3000';
+const BACKEND_API = 'http://localhost:3000';
 const FRONTEND_API = 'https://api.discountapi.com/v2';
 const GEOCODING_API = `http://www.mapquestapi.com/geocoding/v1/address?key=${MAPQUEST_KEY}`
 let location = '40.7068069,-74.0149976'; // 11 broadway
@@ -12,6 +12,23 @@ const get = (url) => {
   // console.log('MAPKEY',MAPQUEST_KEY);
   return fetch(url)
   .then(r => r.json())
+}
+
+const getUser = (token) => {
+  return get(`${BACKEND_API}/users`,{
+    headers: {
+      Authorization: token
+    }
+  })
+  .then(user => {
+    if(!user.error) {
+      this.setState({currentUser: user})
+      console.log('current user:', user);
+      this.setState({loggedIn:true})
+    } else {
+      console.log(user.error);
+    }
+  })
 }
 
 const getCategories = () => {
@@ -55,7 +72,8 @@ const API = {
   getCategory,
   getDeals,
   // addUserCategory,
-  getLatLon
+  getLatLon,
+  getUser
 }
 
 export default API;

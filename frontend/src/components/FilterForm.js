@@ -14,15 +14,6 @@ class FilterForm extends React.Component {
   render(){
     return(
       <div>
-        <label htmlFor='filter'></label>
-        <input
-          type='text'
-          id='filter'
-          value={this.state.input}
-          onChange={this.handleChange}
-          placeholder='Search by Category'
-        />
-
         <TextField
           id="standard-full-width"
           placeholder="Search by Category"
@@ -33,6 +24,8 @@ class FilterForm extends React.Component {
           InputLabelProps={{
             shrink: true,
           }}
+          value={this.state.input}
+          onChange={this.handleChange}
         >
         <input
           type='text'
