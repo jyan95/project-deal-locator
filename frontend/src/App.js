@@ -1,6 +1,8 @@
 import React from 'react';
 import Navbar from './components/Navbar';
 import Home from './containers/Home';
+import SignUp from './components/SignUp';
+import Login from './components/Login';
 import CategoriesContainer from './containers/CategoriesContainer';
 import DealsContainer from './containers/DealsContainer';
 import UserDeals from './containers/UserDeals';
@@ -16,10 +18,12 @@ function App() {
       <Container maxWidth='lg'>
         <Navbar />
         <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/categories/:slug" component={DealsContainer} />
-          <Route exact path="/categories/" component={CategoriesContainer} />
-          <Route path="/your-deals" component={UserDeals} />
+          <Route exact path='/' component={Home} />
+          <Route path='/categories/:slug' component={DealsContainer} />
+          <Route exact path='/categories/' component={CategoriesContainer} />
+          <Route path='/your-deals' component={UserDeals} />
+          <Route path='/signup' component={SignUp} />
+          <Route path='/login' component={Login} />
         </Switch>
       </Container>
     </React.Fragment>

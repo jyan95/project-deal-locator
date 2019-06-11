@@ -1,12 +1,12 @@
 import React from 'react';
 // import './Categories.css';
 import API from '../api';
-import Login from './Login';
+import Login from '../components/Login';
 
 // index page for all categories
 class UserDeals extends React.Component {
   state = {
-    loggedIn: true
+    loggedIn: false
   };
 
   componentDidMount() {
@@ -17,10 +17,15 @@ class UserDeals extends React.Component {
     }
   }
 
+  login = (formData) => {
+    console.log('logging in', formData);
+    API.login(formData)
+  }
+
   render(){
     return(
       <div id='deals'>
-        {!this.state.loggedIn ? <Login/> : <h1>Your Deals</h1>}
+        {!this.state.loggedIn ? <Login login={this.login}/> : <h1>Your Deals</h1>}
       </div>
     )
   }

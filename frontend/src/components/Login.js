@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
+//styling
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -35,7 +35,22 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function Login() {
+const Login = (props) => {
+
+  const [formData, setFormData] = useState({username: '', password: ''});
+
+  const handleChange = (e) => {
+    setFormData({...formData, [e.target.name]: e.target.value})
+    // console.log('handling login form', formData);
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    props.login(formData);
+    setFormData({username:'',password:''});
+    return <Redirect to='/your-deals' />
+  }
+
   const classes = useStyles();
 
   return (
@@ -45,7 +60,7 @@ function Login() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -56,6 +71,8 @@ function Login() {
             name="username"
             autoComplete="username"
             autoFocus
+            value={formData.username}
+            onChange={handleChange}
           />
           <TextField
             variant="outlined"
@@ -67,10 +84,8 @@ function Login() {
             type="password"
             id="password"
             autoComplete="current-password"
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
+            value={formData.password}
+            onChange={handleChange}
           />
           <Button
             type="submit"
@@ -81,14 +96,9 @@ function Login() {
           >
             Sign In
           </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
+          <Grid container justify='center'>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/signup" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
