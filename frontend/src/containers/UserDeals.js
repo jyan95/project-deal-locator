@@ -1,7 +1,7 @@
 import React from 'react';
 // import './Categories.css';
 import API from '../api';
-import Login from './Login';
+import Login from '../components/Login';
 
 // index page for all categories
 class UserDeals extends React.Component {
@@ -17,8 +17,9 @@ class UserDeals extends React.Component {
     }
   }
 
-  login = (username, password) => {
-    API.login(username, password)
+  login = (formData) => {
+    console.log('logging in', formData);
+    API.login(formData)
   }
 
   render(){

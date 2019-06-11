@@ -4,7 +4,8 @@ const MAPQUEST_KEY = process.env.REACT_APP_MAPQUEST_API_KEY;
 const BACKEND_API = 'http://localhost:3000';
 const FRONTEND_API = 'https://api.discountapi.com/v2';
 const GEOCODING_API = `http://www.mapquestapi.com/geocoding/v1/address?key=${MAPQUEST_KEY}`;
-const LOGIN_URL = 'http://localhost:3000/api/vi/login';
+const LOGIN_URL = 'http://localhost:3000/api/v1/login';
+const SIGNUP_URL = 'http://localhost:3000/api/v1/signup';
 let location = '40.7068069,-74.0149976'; // 11 broadway
 // let distance = '2';
 
@@ -50,25 +51,6 @@ const getDeals = (lat,lon,page) => {
   return get(`${FRONTEND_API}/deals?api_key=${DEALS_KEY}&location=${lat},${lon}&radius=2&page=${page}`)
 }
 
-const login = (formData) => {
-  console.log('logging in', formData);
-  return fetch(LOGIN_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      username: formData.username,
-      password: formData.password
-    })
-  })
-  .then(r => r.json())
-  .then(data => {
-    const { token, user } = data;
-    localStorage.setItem("token", token);
-  })
-}
-
 // const addUserCategory = (slug) => {
 //   return fetch(`${BACKEND_API}/user_categories`, {
 //     method: 'POST',
@@ -87,6 +69,38 @@ const getLatLon = (address) => {
   // .then(data => console.log('lat', data.results[0].locations[0].latLng.lat))
 }
 
+const login = (formData) => {
+  console.log('API login', formData);
+  return fetch(LOGIN_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(formData)
+  })
+  .then(r => r.json())
+  .then(data => {
+    const { token, user } = data;
+    localStorage.setItem('token', token);
+  })
+}
+
+const signup = (formData) => {
+  console.log('signing up', formData);
+  return fetch(SIGNUP_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(formData)
+  })
+  .then(r => r.json())
+  .then(data => {
+    const { token, user } = data;
+    localStorage.setItem('token', token);
+  })
+}
+
 const API = {
   getCategories,
   getCategory,
@@ -94,7 +108,10 @@ const API = {
   // addUserCategory,
   getLatLon,
   getUser,
-  login
+  login,
+  signup
 }
+
+
 
 export default API;

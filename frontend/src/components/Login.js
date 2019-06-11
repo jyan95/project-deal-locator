@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
+//styling
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -48,7 +48,7 @@ const Login = (props) => {
     e.preventDefault();
     props.login(formData);
     setFormData({username:'',password:''});
-
+    return <Redirect to='/your-deals' />
   }
 
   const classes = useStyles();
@@ -60,7 +60,7 @@ const Login = (props) => {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} onSubmit={handleSubmit}>
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -87,10 +87,6 @@ const Login = (props) => {
             value={formData.password}
             onChange={handleChange}
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
           <Button
             type="submit"
             fullWidth
@@ -100,14 +96,9 @@ const Login = (props) => {
           >
             Sign In
           </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
+          <Grid container justify='center'>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/signup" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
