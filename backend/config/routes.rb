@@ -1,14 +1,18 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  resources :user_categories, only: [:index, :show, :create]
-
   namespace :api do
     namespace :v1 do
-      resources :users, only: [:create]
-      resources :categories, only: [:index, :show, :create]
-
       post '/login', to:'auth#create'
+      post '/signup', to: 'users#create'
+      post '/add-deal/:deal_id', to: 'user_deals#create'
       get '/profile', to:'users#profile'
+
+      resources :users, only: [:index, :update]
+      resources :categories, only: [:index, :show]
+      resources :user_categories, only: [:create]
+      resources :user_deals, only: [:index, :show, :create, :destroy]
     end
   end
+
+
 end

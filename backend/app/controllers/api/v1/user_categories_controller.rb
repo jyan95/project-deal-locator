@@ -1,4 +1,4 @@
-class UserCategoriesController < ApplicationController
+class Api::V1::UserCategoriesController < ApplicationController
   skip_before_action :authorized, only: [:index, :show]
 
   def index
