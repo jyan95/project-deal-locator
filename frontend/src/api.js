@@ -1,7 +1,7 @@
 const DEALS_KEY = process.env.REACT_APP_DEALS_API_KEY;
 const MAPQUEST_KEY = process.env.REACT_APP_MAPQUEST_API_KEY;
 // const MAPBOX_KEY = process.env.REACT_APP_MAPBOX_API_KEY;
-const BACKEND_API = 'http://localhost:3000';
+const BACKEND_API = 'http://localhost:3000/api/v1';
 const FRONTEND_API = 'https://api.discountapi.com/v2';
 const GEOCODING_API = `http://www.mapquestapi.com/geocoding/v1/address?key=${MAPQUEST_KEY}`;
 const LOGIN_URL = 'http://localhost:3000/api/v1/login';
@@ -13,29 +13,22 @@ const get = (url) => {
   // console.log('DEALSKEY',DEALS_KEY);
   // console.log('MAPKEY',MAPQUEST_KEY);
   return fetch(url)
+  // .then(console.log)
   .then(r => r.json())
 }
 
 const getUser = (token) => {
-  return get(`${BACKEND_API}/users`,{
+  return fetch(`${BACKEND_API}/find-user`,{
     headers: {
       Authorization: token
     }
   })
-  .then(user => {
-    if(!user.error) {
-      this.setState({currentUser: user})
-      console.log('current user:', user);
-      this.setState({loggedIn:true})
-    } else {
-      console.log(user.error);
-    }
-  })
+  // .then(r => r.json())
+  // .then(console.log)
+  // .catch(console.log)
 }
 
 const getCategories = () => {
-  // console.log(DEALS_KEY);
-  // console.log(MAPBOX_KEY);
   return get(`${FRONTEND_API}/categories`)
 }
 
@@ -79,10 +72,10 @@ const login = (formData) => {
     body: JSON.stringify(formData)
   })
   .then(r => r.json())
-  .then(data => {
-    const { token, user } = data;
-    localStorage.setItem('token', token);
-  })
+  // .then(data => {
+  //   const { token, user } = data;
+  //   localStorage.setItem('token', token);
+  // })
 }
 
 const signup = (formData) => {
@@ -111,7 +104,5 @@ const API = {
   login,
   signup
 }
-
-
 
 export default API;

@@ -9,17 +9,32 @@ class UserDeals extends React.Component {
     loggedIn: false
   };
 
-  componentDidMount() {
-    const token = localStorage.getItem("token")
-    // console.log('token is', token);
-    if(token) {
-      API.getUser(token)
-    }
-  }
+  // componentDidMount() {
+  //   const token = localStorage.getItem("token")
+  //   console.log('token is', token);
+  //   if(token) {
+  //     API.getUser(token)
+  //     .then(user => {
+  //       if(!user.error) {
+  //         this.setState({currentUser: user})
+  //         console.log('current user:', user);
+  //         // this.setState({loggedIn:true})
+  //         console.log(this.state);
+  //       } else {
+  //         console.log(user.error);
+  //       }
+  //     })
+  //   }
+  // }
 
   login = (formData) => {
-    console.log('logging in', formData);
+    // console.log('logging in', formData);
     API.login(formData)
+    .then(data => {
+      const { token, user } = data;
+      localStorage.setItem('token', token);
+      this.setState({currentUser: user, loggedIn: true})
+    })
   }
 
   render(){
