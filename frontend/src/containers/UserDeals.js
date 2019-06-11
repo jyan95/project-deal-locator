@@ -6,7 +6,7 @@ import Login from './Login';
 // index page for all categories
 class UserDeals extends React.Component {
   state = {
-    loggedIn: true
+    loggedIn: false
   };
 
   componentDidMount() {
@@ -17,10 +17,14 @@ class UserDeals extends React.Component {
     }
   }
 
+  login = (username, password) => {
+    API.login(username, password)
+  }
+
   render(){
     return(
       <div id='deals'>
-        {!this.state.loggedIn ? <Login/> : <h1>Your Deals</h1>}
+        {!this.state.loggedIn ? <Login login={this.login}/> : <h1>Your Deals</h1>}
       </div>
     )
   }
