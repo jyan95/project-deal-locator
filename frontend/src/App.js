@@ -13,6 +13,7 @@ import './App.css';
 
 function App() {
   // default render <Home/
+            // <Route path='/login' component={Login} />/
   return (
     <React.Fragment>
       <Container maxWidth='lg'>
@@ -23,7 +24,7 @@ function App() {
           <Route exact path='/categories/' component={CategoriesContainer} />
           <Route path='/your-deals' component={UserDeals} />
           <Route path='/signup' component={SignUp} />
-          <Route path='/login' component={Login} />
+
         </Switch>
       </Container>
     </React.Fragment>
