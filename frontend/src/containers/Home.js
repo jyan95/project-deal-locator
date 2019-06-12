@@ -5,32 +5,33 @@ import API from '../api';
 // import './Home.css';
 
 class Home extends React.Component {
-  // getCoords() {
-  //   if (window.navigator.geolocation) {
+
+  // getUserLocation = () => {
+  //   if ('geolocation' in navigator) {
+  //     // console.log('fetching location');
   //     navigator.geolocation.getCurrentPosition((position) => {
-  //       localStorage.setItem(`latitude`, position.coords.latitude);
-  //       localStorage.setItem(`longitude`, position.coords.longitude);
-  //     },
-  //     (error) => {
-  //       this.setState({
-  //         error: error.message,
-  //       });
+  //       this.setState({ position })
+  //       console.log('in home.js',this.state);
   //     });
+  //   } else {
+  //     console.log('geolocation is not available');
   //   }
   // }
 
-  componentDidMount(){
-    const token = localStorage.getItem('token');
-    if (!!token) {
-      API.getUser(token)
-      .then(user => {
-        this.setState({
-          loggedIn: true,
-          currentUser: user
-        })
-      })
-    }
-  }
+  // componentDidMount(){
+  //   const token = localStorage.getItem('token');
+  //   if (!!token) {
+  //     API.getUser(token)
+  //     .then(user => {
+  //       this.setState({
+  //         loggedIn: true,
+  //         currentUser: user
+  //       })
+  //       // console.log(this.state)
+  //     })
+  //   };
+  //   this.getUserLocation();
+  // }
 
   render() {
     return (
