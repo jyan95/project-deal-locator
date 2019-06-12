@@ -24,7 +24,6 @@ const getUser = (token) => {
     }
   })
   .then(r => r.json())
-  .then(console.log)
   // .catch(console.log)
 }
 

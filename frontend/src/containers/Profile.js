@@ -11,8 +11,15 @@ class Profile extends React.Component {
 
   componentDidMount(){
     const token = localStorage.getItem('token');
-    console.log(token)
-    API.getUser(token)
+    if (!!token) {
+      API.getUser(token)
+      .then(user => {
+        this.setState({
+          loggedIn: true,
+          currentUser: user
+        })
+      })
+    }
   }
 
   login = (formData) => {
