@@ -3,6 +3,8 @@ import React from 'react';
 import API from '../api';
 import Login from '../components/Login';
 
+import Button from '@material-ui/core/Button';
+
 // index page for all categories
 class Profile extends React.Component {
   state = {
@@ -32,10 +34,22 @@ class Profile extends React.Component {
     })
   }
 
+  logout = () => {
+    localStorage.clear();
+    this.setState({loggedIn: false, currentUser: null});
+  }
+
   render(){
     return(
       <div id='deals'>
         {!this.state.loggedIn ? <Login login={this.login}/> : <h1>Your Deals</h1>}
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        {this.state.loggedIn ? <Button variant="contained" color="primary" onClick={this.logout}>
+          Logout
+        </Button> : null }
       </div>
     )
   }

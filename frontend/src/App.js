@@ -11,7 +11,7 @@ import Container from '@material-ui/core/Container';
 
 import './App.css';
 
-function App() {
+const App = () => {
   return (
     <React.Fragment>
       <Container maxWidth='lg'>

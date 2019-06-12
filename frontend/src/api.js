@@ -35,6 +35,15 @@ const getCategories = () => {
 //   return get(`${BACKEND_API}/users`)
 // }
 
+const getUserDeals = (token) => {
+  return fetch(`${BACKEND_API}/user_deals`,{
+    headers: {
+      Authorization: token
+    }
+  })
+  .then(r => r.json())
+}
+
 const getCategory = (query,queryPage) => {
   return get(`${FRONTEND_API}/deals?api_key=${DEALS_KEY}&location=${location}&category_slugs=${query}&page=${queryPage}`)
 }
@@ -47,11 +56,25 @@ const getDeals = (lat,lon,page) => {
 //   return fetch(`${BACKEND_API}/user_categories`, {
 //     method: 'POST',
 //     headers: {
-//       // Authorization: token
-//       'Content-type' : 'application/json'
+//       // Authorization: token,
+//       'Content-Type' : 'application/json'
 //     },
-//     body: JSON.stringy({
+//     body: JSON.stringify({
 //       slug: slug
+//     })
+//   })
+// }
+
+// const addUserDeal = (user, deal, token) => {
+//   return fetch(`${BACKEND_API}/add-deal`,{
+//     method: 'POST',
+//     headers: {
+//       Authorization: token,
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify({
+//       user_id: user.id,
+//       deal_id: deal.id
 //     })
 //   })
 // }
@@ -98,8 +121,10 @@ const API = {
   getCategory,
   getDeals,
   // addUserCategory,
+  // addUserDeal,
   getLatLon,
   getUser,
+  getUserDeals,
   login,
   signup
 }

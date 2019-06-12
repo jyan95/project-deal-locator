@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       post '/login', to:'auth#create'
       post '/signup', to: 'users#create'
-      post '/deals/:deal_id', to: 'user_deals#create'
+      post '/add-deal', to: 'user_deals#create'
       get '/profile', to:'users#profile'
       get '/set-user', to:'users#show'
 

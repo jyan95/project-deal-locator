@@ -1,16 +1,13 @@
-class Api::V1::ProfileController < ApplicationController
+class Api::V1::UserDealsController < ApplicationController
   def create
-    deal = Deal.find_or_create_by(deal_params)
-    UserDeal.create(user_id:user_id, deal_id:deal.id)
+    # deal = Deal.find_or_create_by(deal_params)
+    user_id = decoded_token[0]['user_id']
+    UserDeal.create(user_id: user_id, deal_id:params[:deal_id])
   end
 
-  private
-
-  def deal_params
-    #code
-  end
-
-  def user_id
-    #code
+  def index
+    user_id = decoded_token[0]['user_id']
+    deals = UserDeal.where(user_id: user_id)
+    render json: deals
   end
 end
