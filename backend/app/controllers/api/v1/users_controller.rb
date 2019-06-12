@@ -22,8 +22,9 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
-    render json: @user
+    current = user ||= User.find(decoded_token[0]['user_id'])
+
+    render json: current
   end
 
   private

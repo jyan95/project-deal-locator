@@ -4,28 +4,23 @@ import API from '../api';
 import Login from '../components/Login';
 
 // index page for all categories
-class UserDeals extends React.Component {
+class Profile extends React.Component {
   state = {
     loggedIn: false
   };
 
-  // componentDidMount() {
-  //   const token = localStorage.getItem("token")
-  //   console.log('token is', token);
-  //   if(token) {
-  //     API.getUser(token)
-  //     .then(user => {
-  //       if(!user.error) {
-  //         this.setState({currentUser: user})
-  //         console.log('current user:', user);
-  //         // this.setState({loggedIn:true})
-  //         console.log(this.state);
-  //       } else {
-  //         console.log(user.error);
-  //       }
-  //     })
-  //   }
-  // }
+  componentDidMount(){
+    const token = localStorage.getItem('token');
+    if (!!token) {
+      API.getUser(token)
+      .then(user => {
+        this.setState({
+          loggedIn: true,
+          currentUser: user
+        })
+      })
+    }
+  }
 
   login = (formData) => {
     // console.log('logging in', formData);
@@ -46,4 +41,4 @@ class UserDeals extends React.Component {
   }
 }
 
-export default UserDeals;
+export default Profile;

@@ -1,4 +1,4 @@
-class Api::V1::UserDealsController < ApplicationController
+class Api::V1::ProfileController < ApplicationController
   def create
     deal = Deal.find_or_create_by(deal_params)
     UserDeal.create(user_id:user_id, deal_id:deal.id)

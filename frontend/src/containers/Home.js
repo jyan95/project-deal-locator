@@ -1,6 +1,6 @@
 import React from 'react';
 import Map from '../components/Map';
-// import API from '../api';
+import API from '../api';
 
 // import './Home.css';
 
@@ -18,6 +18,19 @@ class Home extends React.Component {
   //     });
   //   }
   // }
+
+  componentDidMount(){
+    const token = localStorage.getItem('token');
+    if (!!token) {
+      API.getUser(token)
+      .then(user => {
+        this.setState({
+          loggedIn: true,
+          currentUser: user
+        })
+      })
+    }
+  }
 
   render() {
     return (

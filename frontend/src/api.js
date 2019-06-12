@@ -18,13 +18,12 @@ const get = (url) => {
 }
 
 const getUser = (token) => {
-  return fetch(`${BACKEND_API}/find-user`,{
+  return fetch(`${BACKEND_API}/set-user`,{
     headers: {
       Authorization: token
     }
   })
-  // .then(r => r.json())
-  // .then(console.log)
+  .then(r => r.json())
   // .catch(console.log)
 }
 
