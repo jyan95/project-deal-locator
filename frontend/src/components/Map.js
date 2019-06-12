@@ -17,7 +17,6 @@ let LAT = 40.706858499999996; // put user latitude here
 let LON = -74.01491589999999; // put user longitude here
 let userLocation = [LAT,LON];
 
-
 const userIcon = new L.Icon({
   iconUrl: require('../assets/userIcon.png'),
   iconRetinaUrl: require('../assets/userIcon.png'),
@@ -29,38 +28,43 @@ class HomeMap extends React.Component {
   state = {
     deals: [],
     filter: 'All',
-    filteredDeals: []
+    filteredDeals: [],
+    lat: null,
+    lon: null
   };
 
-  // SINGLE PAGE QUERY
-  // componentDidMount() {
-  //   navigator.geolocation.getCurrentPosition((position => {
-  //     this.setState({
-  //       userLat: position.coords.latitude,
-  //       userLon: position.coords.longitude
-  //     })
-  //   }));
-  //   // console.log('from home.js', navigator.geolocation);
-  //   // API.getDeals(this.state.userLat,userLon)
-  //   API.getDeals(LAT,LON,queryPage)
-  //   .then(data => this.setState({deals: data.deals}))
-  //   .catch(err => console.log(err));
-  // }
-  // SINGLE PAGE QUERY
+  getDeals = (position) => {
+    let queryPage = 1;
+    let { latitude, longitude } = position.coords;
+    while(queryPage < 20){
+      queryPage++;
+      API.getDeals(latitude,longitude,queryPage)
+      .then(data => this.setState({deals: this.state.deals.concat(data.deals.filter(d => !!d.deal.merchant.address))}))
+    };
+  }
+
+  getLocationDeals = () => {
+    if ('geolocation' in navigator) {
+      // console.log('fetching location');
+      navigator.geolocation.getCurrentPosition((position) => {
+        // this.setState({
+        //   lat: position.coords.latitude,
+        //   lon: position.coords.longitude
+        // });
+        this.getDeals(position);
+      });
+    } else {
+      console.log('geolocation is not available');
+    }
+  }
 
   // MULTI PAGE QUERY
   componentDidMount(){
-    let queryPage = 1;
-    while(queryPage < 20){
-      queryPage++;
-      API.getDeals(LAT,LON,queryPage)
-      .then(data => this.setState({deals: this.state.deals.concat(data.deals.filter(d => !!d.deal.merchant.address))}))
-    };
+    this.getLocationDeals();
   }
   // MULTI PAGE QUERY
 
   renderUserLocation = () => {
-    // console.log('rendering user');
     return <Marker position={userLocation} icon={userIcon}/>
   }
 
@@ -69,20 +73,20 @@ class HomeMap extends React.Component {
     return this.state.deals.map(d => <DealMarker key={d.deal.id} deal={d.deal} handleClick={this.handleClick}/>)
   }
 
-  renderFilteredDeals = () => {
-    let queryPage = 1;
-    while(queryPage < 10){
-      queryPage++;
-      API.getCategory(this.state.filter,queryPage)
-      .then(data => this.setState({filteredDeals: this.state.filteredDeals.concat(data.deals.filter(d => !!d.deal.merchant.address))}))
-    };
-    return this.state.filteredDeals.map(d => <DealMarker key={d.deal.id} deal={d.deal} handleClick={this.handleClick}/>)
-  }
+  // renderFilteredDeals = () => {
+  //   let queryPage = 1;
+  //   while(queryPage < 10){
+  //     queryPage++;
+  //     API.getCategory(this.state.filter,queryPage)
+  //     .then(data => this.setState({filteredDeals: this.state.filteredDeals.concat(data.deals.filter(d => !!d.deal.merchant.address))}))
+  //   };
+  //   return this.state.filteredDeals.map(d => <DealMarker key={d.deal.id} deal={d.deal} handleClick={this.handleClick}/>)
+  // }
 
 
   render(){
-    // console.log(this.props.deals);
-
+    // console.log('map props',this.props);
+    // {this.state.filter === 'All' ? this.renderAllDeals() : this.renderFilteredDeals()}
     return(
       <div>
         <Map id='map' center={userLocation} zoom={16} >
@@ -93,7 +97,7 @@ class HomeMap extends React.Component {
             minZoom='14'
           />
           {this.renderUserLocation()}
-          {this.state.filter === 'All' ? this.renderAllDeals() : this.renderFilteredDeals()}
+          {this.renderAllDeals()}
         </Map>
       </div>
     )
