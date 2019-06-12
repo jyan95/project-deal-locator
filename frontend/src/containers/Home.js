@@ -1,11 +1,9 @@
 import React from 'react';
-import Map from '../components/Map';
-import API from '../api';
-
+import Map from '../components/map/Map';
+// import API from '../api';
 // import './Home.css';
 
-class Home extends React.Component {
-
+function Home() {
   // getUserLocation = () => {
   //   if ('geolocation' in navigator) {
   //     // console.log('fetching location');
@@ -32,14 +30,11 @@ class Home extends React.Component {
   //   };
   //   this.getUserLocation();
   // }
-
-  render() {
-    return (
-      <div id='homepage'>
-        <Map />
-      </div>
-    )
-  }
+  return (
+    <div id='homepage'>
+      <Map />
+    </div>
+  )
 }
 
 export default Home;

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
-import API from '../api';
+import API from '../../api';
 
 const dealMarker = new L.Icon({
-  iconUrl: require('../assets/redPointer.svg'),
-  iconRetinaUrl: require('../assets/redPointer.svg'),
+  iconUrl: require('../../assets/redPointer.svg'),
+  iconRetinaUrl: require('../../assets/redPointer.svg'),
   popupAnchor: [0,-20],
   iconSize: [15,20]
 })
@@ -46,7 +46,7 @@ class DealMarker extends React.Component {
           {deal.short_title}
           <br/>
           <button onClick={() => this.props.handleClick(deal)}>
-            See details
+            Follow Deal
           </button>
         </Popup>
       </Marker>

@@ -3,23 +3,24 @@ import { Map, TileLayer, Marker } from 'react-leaflet';
 import L from 'leaflet';
 import './Map.css';
 import DealMarker from './DealMarker';
+// import UserMarker from './UserMarker';
+import API from '../../api';
 
 // for map filter
 // import IconButton from '@material-ui/core/IconButton';
 // import Menu from '@material-ui/core/Menu';
 // import MenuItem from '@material-ui/core/MenuItem';
 // import DealModal from './DealModal';
-import API from '../api';
 
 const MAPTYPE_URL = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png';
 
-let LAT = 40.706858499999996; // put user latitude here
-let LON = -74.01491589999999; // put user longitude here
-let userLocation = [LAT,LON];
+let lat = 40.706858499999996;
+let lon = -74.01491589999999;
+let userLocation = [lat,lon];
 
 const userIcon = new L.Icon({
-  iconUrl: require('../assets/userIcon.png'),
-  iconRetinaUrl: require('../assets/userIcon.png'),
+  iconUrl: require('../../assets/userIcon.png'),
+  iconRetinaUrl: require('../../assets/userIcon.png'),
   popupAnchor: [10,-44],
   iconSize: [30,30]
 })
@@ -28,10 +29,12 @@ class HomeMap extends React.Component {
   state = {
     deals: [],
     filter: 'All',
-    filteredDeals: [],
-    lat: null,
-    lon: null
+    filteredDeals: []
   };
+
+  handleClick = (deal) => {
+    console.log('ya done clicked',deal);
+  }
 
   getDeals = (position) => {
     let queryPage = 1;
@@ -47,10 +50,7 @@ class HomeMap extends React.Component {
     if ('geolocation' in navigator) {
       // console.log('fetching location');
       navigator.geolocation.getCurrentPosition((position) => {
-        // this.setState({
-        //   lat: position.coords.latitude,
-        //   lon: position.coords.longitude
-        // });
+        this.setState({ position });
         this.getDeals(position);
       });
     } else {
@@ -65,6 +65,9 @@ class HomeMap extends React.Component {
   // MULTI PAGE QUERY
 
   renderUserLocation = () => {
+    // return <UserMarker position={this.state.position} />
+    // let { latitude, longitude } = this.state.position.coords;
+    // console.log('in render user location fn:', latitude);
     return <Marker position={userLocation} icon={userIcon}/>
   }
 
