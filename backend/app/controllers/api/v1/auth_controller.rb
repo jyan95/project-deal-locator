@@ -11,14 +11,14 @@ class Api::V1::AuthController < ApplicationController
     end
   end
 
-  def find_user
-    # byebug
-    if decoded_token
-      user_id = decoded_token[0]['user_id']
-      @user = User.find_by(id: user_id)
-      render json: @user
-    end
-  end
+  # def find_user
+  #   # byebug
+  #   if decoded_token
+  #     user_id = decoded_token[0]['user_id']
+  #     @user = User.find_by(id: user_id)
+  #     render json: @user
+  #   end
+  # end
 
   private
 

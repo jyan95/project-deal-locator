@@ -1,5 +1,5 @@
 require 'rails_helper'
 
-RSpec.describe UserDealsController, type: :controller do
+RSpec.describe ProfileController, type: :controller do
 
 end

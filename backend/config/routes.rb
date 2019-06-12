@@ -6,7 +6,7 @@ Rails.application.routes.draw do
       post '/signup', to: 'users#create'
       post '/deals/:deal_id', to: 'user_deals#create'
       get '/profile', to:'users#profile'
-      get '/find-user', to:'auth#find_user'
+      get '/set-user', to:'users#show'
 
       resources :users, only: [:index, :update]
       resources :categories, only: [:index, :show]
