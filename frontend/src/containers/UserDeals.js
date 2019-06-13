@@ -1,5 +1,5 @@
 import React from 'react';
-import DealCard from '../components/DealCard';
+import UserDealCard from '../components/cards/UserDealCard';
 import API from '../api';
 
 import GridList from '@material-ui/core/GridList';
@@ -21,12 +21,6 @@ class UserDeals extends React.Component {
     })
   }
 
-  renderDeals = () => {
-    this.state.userDeals.map(deal => {
-
-    })
-  }
-
   componentDidMount(){
     const token = localStorage.getItem('token');
     API.getUserDeals(token)
@@ -36,19 +30,13 @@ class UserDeals extends React.Component {
   }
 
   render(){
-    // console.log(this.state.deals);
+    // console.log(this.state.userDeals);
     return(
-      <div id='deals-container'>
-        <h1>ALL DEALS</h1>
-        <GridList cellHeight={300} cols={3}>
+      <div id='user-deals-container'>
+        <h1>YOUR DEALS</h1>
           {this.state.userDeals.map(d => {
-            return (
-              <GridListTile>
-                <DealCard deal={d}/>
-              </GridListTile>
-            )
+            return <UserDealCard deal={d}/>
           })}
-        </GridList>
       </div>
     )
   }

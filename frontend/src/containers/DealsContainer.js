@@ -2,7 +2,7 @@ import React from 'react';
 import API from '../api';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
-import DealCard from '../components/DealCard';
+import DealCard from '../components/cards/DealCard';
 
 
 // deals index
