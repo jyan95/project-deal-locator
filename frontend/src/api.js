@@ -27,6 +27,10 @@ const getUser = (token) => {
   // .catch(console.log)
 }
 
+const getDeal = (id) => {
+  return get(`${FRONTEND_API}/deals/${id}`)
+}
+
 const getCategories = () => {
   return get(`${FRONTEND_API}/categories`)
 }
@@ -36,12 +40,13 @@ const getCategories = () => {
 // }
 
 const getUserDeals = (token) => {
-  return fetch(`${BACKEND_API}/user_deals`,{
+  return fetch(`${BACKEND_API}/user-deals`,{
     headers: {
       Authorization: token
     }
   })
   .then(r => r.json())
+  // .then(console.log)
 }
 
 const getCategory = (query,queryPage) => {
@@ -116,7 +121,21 @@ const signup = (formData) => {
   })
 }
 
+const addUserDeal = (id, token) => {
+  console.log('adding user deal', id, token);
+  return fetch(`${BACKEND_API}/add-deal/${id}`,{
+    method: 'POST',
+    headers: {
+      Authorization: token
+    },
+    body: JSON.stringify({
+      deal_id: id
+    })
+  })
+}
+
 const API = {
+  getDeal,
   getCategories,
   getCategory,
   getDeals,
@@ -126,7 +145,10 @@ const API = {
   getUser,
   getUserDeals,
   login,
-  signup
+  signup,
+  addUserDeal
 }
+
+
 
 export default API;

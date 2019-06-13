@@ -2,6 +2,7 @@ import React from 'react';
 // import './Categories.css';
 import API from '../api';
 import Login from '../components/Login';
+import UserDeals from './UserDeals';
 
 import Button from '@material-ui/core/Button';
 
@@ -42,7 +43,7 @@ class Profile extends React.Component {
   render(){
     return(
       <div id='deals'>
-        {!this.state.loggedIn ? <Login login={this.login}/> : <h1>Your Deals</h1>}
+        {!this.state.loggedIn ? <Login login={this.login}/> : <UserDeals />}
         <br/>
         <br/>
         <br/>

@@ -11,11 +11,28 @@ class UserDeals extends React.Component {
     userDeals: []
   }
 
-  componentDidMount(){
-    API.getUserDeals(token)
+  fetchDeal = (id) => {
+    API.getDeal(id)
     .then(data => {
-      this.setState({userDeals: data.deals})
+      this.setState({
+        userDeals: [...this.state.userDeals, data.deal]
+      });
+      // console.log('state after fetches:', this.state.userDeals);
     })
+  }
+
+  renderDeals = () => {
+    this.state.userDeals.map(deal => {
+
+    })
+  }
+
+  componentDidMount(){
+    const token = localStorage.getItem('token');
+    API.getUserDeals(token)
+    .then(data => data.map(d => {
+      this.fetchDeal(d.deal_id)
+    }))
   }
 
   render(){
@@ -24,10 +41,10 @@ class UserDeals extends React.Component {
       <div id='deals-container'>
         <h1>ALL DEALS</h1>
         <GridList cellHeight={300} cols={3}>
-          {this.state.deals.map(d => {
+          {this.state.userDeals.map(d => {
             return (
               <GridListTile>
-                <DealCard deal={d.deal}/>
+                <DealCard deal={d}/>
               </GridListTile>
             )
           })}
