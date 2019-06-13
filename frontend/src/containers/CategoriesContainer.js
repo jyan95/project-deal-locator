@@ -1,6 +1,6 @@
 import React from 'react';
 import FilterForm from '../components/FilterForm';
-import CategoryCard from '../components/CategoryCard';
+import CategoryCard from '../components/cards/CategoryCard';
 import API from '../api';
 
 // import './Categories.css';
