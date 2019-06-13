@@ -33,7 +33,7 @@ class UserDeals extends React.Component {
     // console.log(this.state.userDeals);
     return(
       <div id='user-deals-container'>
-        <h1>YOUR DEALS</h1>
+        <h1><br/>YOUR DEALS</h1>
           {this.state.userDeals.map(d => {
             return <UserDealCard deal={d}/>
           })}

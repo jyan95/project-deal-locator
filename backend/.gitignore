@@ -14,7 +14,7 @@
 !/tmp/.keep
 
 # Ignore all env files
-.env
+/env
 
 # Ignore uploaded files in development
 /storage/*

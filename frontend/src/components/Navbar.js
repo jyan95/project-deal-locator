@@ -28,7 +28,7 @@ function Navbar() {
       <Tabs variant="fullWidth" value={value} onChange={handleChange} aria-disabled='true'>
         <LinkTab label="Home" href="/" value={0}/>
         <LinkTab label="Browse" href="/categories" value={1}/>
-        <LinkTab label="Your Deals" href="/profile" value={2}/>}
+        <LinkTab label="Your Deals" href="/your-deals" value={2}/>}
       </Tabs>
     </AppBar>
   );
