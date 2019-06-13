@@ -24,9 +24,10 @@ class DealsContainer extends React.Component {
 
   render(){
     // console.log(this.props);
+    let { slug } = this.props.match.params;
     return(
       <div id='deals-container'>
-        <h1><br/>{this.props.match.params.slug.split('').includes('-') ? this.props.match.params.slug.replace('-',' & ').toUpperCase() : this.props.match.params.slug.toUpperCase()}</h1>
+        <h1><br/>{slug.split('').includes('-') ? slug.replace('-',' & ').toUpperCase() : slug.toUpperCase()}</h1>
         <GridList cellHeight={155} cols={1}>
           {this.state.deals.map(d => {
             return (
