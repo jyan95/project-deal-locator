@@ -5,6 +5,8 @@ import Login from '../components/Login';
 import UserDeals from './UserDeals';
 
 import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
+
 
 // index page for all categories
 class Profile extends React.Component {
@@ -43,16 +45,18 @@ class Profile extends React.Component {
 
   render(){
     return(
-      <div id='deals'>
-        {this.state.loggedIn ? <UserDeals /> : <Login login={this.login}/>}
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        {this.state.loggedIn ? <Button variant="contained" color="primary" onClick={this.logout}>
-          Logout
-        </Button> : null }
-      </div>
+      <Container>
+        <div id='deals'>
+          {this.state.loggedIn ? <UserDeals /> : <Login login={this.login}/>}
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          {this.state.loggedIn ? <Button variant="contained" color="primary" onClick={this.logout}>
+            Logout
+          </Button> : null }
+        </div>
+      </Container>
     )
   }
 }

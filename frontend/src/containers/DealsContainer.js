@@ -4,7 +4,7 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 // import DealCard from '../components/cards/DealCard';
 import DealCard from '../components/cards/Card';
-
+import Container from '@material-ui/core/Container';
 
 // deals index
 class DealsContainer extends React.Component {
@@ -26,18 +26,20 @@ class DealsContainer extends React.Component {
     // console.log(this.props);
     let { slug } = this.props.match.params;
     return(
-      <div id='deals-container'>
-        <h1><br/>{slug.split('').includes('-') ? slug.replace('-',' & ').toUpperCase() : slug.toUpperCase()}</h1>
-        <GridList cellHeight={155} cols={1}>
-          {this.state.deals.map(d => {
-            return (
-              <GridListTile>
-                <DealCard deal={d.deal}/>
-              </GridListTile>
-            )
-          })}
-        </GridList>
-      </div>
+      <Container>
+        <div id='deals-container'>
+          <h1><br/>{slug.split('').includes('-') ? slug.replace('-',' & ').toUpperCase() : slug.toUpperCase()}</h1>
+          <GridList cellHeight={155} cols={1}>
+            {this.state.deals.map(d => {
+              return (
+                <GridListTile>
+                  <DealCard deal={d.deal}/>
+                </GridListTile>
+              )
+            })}
+          </GridList>
+        </div>
+      </Container>
     )
   }
 }

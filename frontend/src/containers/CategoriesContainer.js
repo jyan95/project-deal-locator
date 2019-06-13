@@ -1,6 +1,8 @@
 import React from 'react';
 import FilterForm from '../components/FilterForm';
 import CategoryCard from '../components/cards/CategoryCard';
+import Container from '@material-ui/core/Container';
+
 import API from '../api';
 
 // import './Categories.css';
@@ -35,10 +37,12 @@ class CategoriesContainer extends React.Component {
         <br/>
         <br/>
         <br/>
-        <FilterForm onChange={this.filterCategories}/>
-        <div id='categories-container'>
-          {this.state.filteredCategories.map(data => <CategoryCard data={data} key={data.category.slug} />)}
-        </div>
+        <Container>
+          <FilterForm onChange={this.filterCategories}/>
+          <div id='categories-container'>
+            {this.state.filteredCategories.map(data => <CategoryCard data={data} key={data.category.slug} />)}
+          </div>
+        </Container>
       </React.Fragment>
     )
   }

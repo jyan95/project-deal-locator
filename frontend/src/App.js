@@ -7,23 +7,20 @@ import CategoriesContainer from './containers/CategoriesContainer';
 import DealsContainer from './containers/DealsContainer';
 import Profile from './containers/Profile';
 import { Switch, Route } from 'react-router-dom';
-import Container from '@material-ui/core/Container';
 
 import './App.css';
 
 const App = () => {
   return (
     <React.Fragment>
-      <Container maxWidth='lg'>
-        <Navbar />
-        <Switch>
-          <Route exact path='/' component={Home} />
-          <Route path='/categories/:slug' component={DealsContainer} />
-          <Route exact path='/categories/' component={CategoriesContainer} />
-          <Route path='/your-deals' component={Profile} />
-          <Route path='/signup' component={SignUp} />
-        </Switch>
-      </Container>
+      <Navbar />
+      <Switch>
+        <Route exact path='/' component={Home} />
+        <Route path='/categories/:slug' component={DealsContainer} />
+        <Route exact path='/categories/' component={CategoriesContainer} />
+        <Route path='/your-deals' component={Profile} />
+        <Route path='/signup' component={SignUp} />
+      </Switch>
     </React.Fragment>
   );
 }
