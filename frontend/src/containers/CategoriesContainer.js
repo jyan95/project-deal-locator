@@ -32,7 +32,9 @@ class CategoriesContainer extends React.Component {
     // console.log(this.props);
     return(
       <React.Fragment>
-        <h1>ALL CATEGORIES</h1>
+        <br/>
+        <br/>
+        <br/>
         <FilterForm onChange={this.filterCategories}/>
         <div id='categories-container'>
           {this.state.filteredCategories.map(data => <CategoryCard data={data} key={data.category.slug} />)}

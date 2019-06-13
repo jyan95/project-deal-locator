@@ -13,6 +13,10 @@ class UserDealCard extends React.Component {
     return str.length > charLimit ? str.substr(0, charLimit-1) + '…' : str;
   }
 
+  formatDate = (string) => {
+    return string.split('').slice(0,10);
+  }
+
   render(){
     let { id, expires_at, short_title, url, image_url, description } = this.props.deal;
     // console.log(image_url);
@@ -24,7 +28,7 @@ class UserDealCard extends React.Component {
               <a href={url}>{short_title}</a>
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              {expires_at}
+              {this.formatDate(expires_at)}
             </Typography>
           </CardContent>
         </CardActionArea>
