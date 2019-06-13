@@ -15,6 +15,7 @@ class Profile extends React.Component {
   componentDidMount(){
     const token = localStorage.getItem('token');
     if (!!token) {
+      console.log('mounting',this.state);
       API.getUser(token)
       .then(user => {
         this.setState({
@@ -43,7 +44,7 @@ class Profile extends React.Component {
   render(){
     return(
       <div id='deals'>
-        {!this.state.loggedIn ? <Login login={this.login}/> : <UserDeals />}
+        {this.state.loggedIn ? <UserDeals /> : <Login login={this.login}/>}
         <br/>
         <br/>
         <br/>

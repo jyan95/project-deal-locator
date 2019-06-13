@@ -5,6 +5,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 // import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import Divider from '@material-ui/core/Divider';
 // import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
@@ -21,7 +22,6 @@ class UserDealCard extends React.Component {
     let { id, expires_at, short_title, url, image_url, description } = this.props.deal;
     // console.log(image_url);
     return(
-      <Card style={{minHeight: '150px'}} key={id}>
         <CardActionArea>
           <CardContent>
             <Typography gutterBottom component='h3'>
@@ -31,8 +31,8 @@ class UserDealCard extends React.Component {
               {this.formatDate(expires_at)}
             </Typography>
           </CardContent>
+          <Divider variant="middle" />
         </CardActionArea>
-      </Card>
     )
   }
 }

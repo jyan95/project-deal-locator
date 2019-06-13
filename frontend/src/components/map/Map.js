@@ -62,7 +62,7 @@ class HomeMap extends React.Component {
 
   // MULTI PAGE QUERY
   componentDidMount(){
-    this.getLocationDeals();
+    // this.getLocationDeals();
   }
   // MULTI PAGE QUERY
 
