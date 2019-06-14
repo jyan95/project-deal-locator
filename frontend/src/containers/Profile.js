@@ -17,7 +17,7 @@ class Profile extends React.Component {
   componentDidMount(){
     const token = localStorage.getItem('token');
     if (!!token) {
-      console.log('mounting',this.state);
+      // console.log('mounting',this.state);
       API.getUser(token)
       .then(user => {
         this.setState({
