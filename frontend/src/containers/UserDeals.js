@@ -21,6 +21,11 @@ class UserDeals extends React.Component {
     })
   }
 
+  removeDeal = (id) => {
+    // console.log('removing deal', id);
+    API.removeDeal(id);
+  }
+
   componentDidMount(){
     const token = localStorage.getItem('token');
     API.getUserDeals(token)
@@ -35,7 +40,7 @@ class UserDeals extends React.Component {
       <div id='user-deals-container'>
         <h1><br/>YOUR DEALS</h1>
           {this.state.userDeals.map(d => {
-            return <UserDealCard deal={d}/>
+            return <UserDealCard deal={d} removeClick={this.removeDeal}/>
           })}
       </div>
     )

@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       post '/login', to:'auth#create'
       post '/signup', to: 'users#create'
       post '/add-deal/:id', to: 'user_deals#create'
+      delete '/remove-deal/:id', to: 'user_deals#destroy'
 
       get '/profile', to:'users#profile'
       get '/set-user', to:'users#show'
