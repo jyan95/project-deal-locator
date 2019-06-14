@@ -20,8 +20,9 @@ class UserDealCard extends React.Component {
     return string.split('').slice(0,10);
   }
 
-  removeDeal = () => {
+  removeDeal = (id) => {
     this.setState({following:false});
+    this.props.removeClick(id);
   }
 
   render(){
@@ -44,7 +45,7 @@ class UserDealCard extends React.Component {
                 </Typography>
               </Grid>
               <Grid item xs={4}>
-                <Button variant="contained" color="secondary" onClick={this.removeDeal, () => this.props.removeClick(id)}>
+                <Button variant="contained" color="secondary" onClick={() => this.removeDeal(id)}>
                   Remove
                 </Button>
               </Grid>
