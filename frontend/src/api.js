@@ -31,6 +31,10 @@ const getDeal = (id) => {
   return get(`${FRONTEND_API}/deals/${id}`)
 }
 
+const removeDeal = (id) => {
+  return fetch(`${BACKEND_API}/remove-deal/${id}`,{method: 'DELETE'})
+}
+
 const getCategories = () => {
   return get(`${FRONTEND_API}/categories`)
 }
@@ -136,6 +140,7 @@ const addUserDeal = (id, token) => {
 
 const API = {
   getDeal,
+  removeDeal,
   getCategories,
   getCategory,
   getDeals,
