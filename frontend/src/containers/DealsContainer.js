@@ -1,10 +1,11 @@
 import React from 'react';
 import API from '../api';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-// import DealCard from '../components/cards/DealCard';
 import DealCard from '../components/cards/Card';
 import Container from '@material-ui/core/Container';
+
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import Typography from '@material-ui/core/Typography';
 
 // deals index
 class DealsContainer extends React.Component {
@@ -27,18 +28,22 @@ class DealsContainer extends React.Component {
     let { slug } = this.props.match.params;
     return(
       <Container>
-        <div id='deals-container'>
-          <h1><br/>{slug.split('').includes('-') ? slug.replace('-',' & ').toUpperCase() : slug.toUpperCase()}</h1>
-          <GridList cellHeight={155} cols={1}>
-            {this.state.deals.map(d => {
-              return (
-                <GridListTile>
-                  <DealCard deal={d.deal}/>
-                </GridListTile>
-              )
-            })}
-          </GridList>
-        </div>
+        <br/>
+        <Typography variant='h5' component='h1' align='center'>
+          {slug.split('').includes('-') ? slug.replace('-',' & ').toUpperCase() : slug.toUpperCase()}
+        </Typography>
+        <GridList cellHeight={155} cols={1}>
+          {this.state.deals.map(d => {
+            return (
+              <GridListTile key={d.deal.id}>
+                <DealCard deal={d.deal}/>
+              </GridListTile>
+            )
+          })}
+        </GridList>
+        <br/>
+        <br/>
+        <br/>
       </Container>
     )
   }

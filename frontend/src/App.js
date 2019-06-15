@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from './components/Navbar';
 import Home from './containers/Home';
 import SignUp from './components/SignUp';
-import Login from './components/Login';
+// import Login from './components/Login';
 import CategoriesContainer from './containers/CategoriesContainer';
 import DealsContainer from './containers/DealsContainer';
 import Profile from './containers/Profile';

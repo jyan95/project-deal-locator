@@ -1,3 +1,3 @@
 class DealSerializer < ActiveModel::Serializer
-  attributes :id
+  attributes :id, :frontend_id
 end

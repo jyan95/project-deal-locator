@@ -51,6 +51,20 @@ const getUserDeals = (token) => {
   })
   .then(r => r.json())
   // .then(console.log)
+    // fetch(`${BACKEND_API}/user-deals`,{
+    //   headers: {
+    //     Authorization: token
+    //   }
+    // })
+    // .then(r=>r.json())
+    // .then(data => {
+    //   data.map(d => {
+    //   let deals = [];
+    //   get(`${FRONTEND_API}/deals/${d.frontend_id}`)
+    //   .then(data => deals.push(data.deal))
+    //   })
+    //   return deals
+    // })
 }
 
 const getCategory = (query,queryPage) => {
@@ -120,7 +134,7 @@ const signup = (formData) => {
   })
   .then(r => r.json())
   .then(data => {
-    const { token, user } = data;
+    const { token } = data;
     localStorage.setItem('token', token);
   })
 }
