@@ -56,6 +56,10 @@ class Profile extends React.Component {
             Logout
           </Button> : null }
         </div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
       </Container>
     )
   }

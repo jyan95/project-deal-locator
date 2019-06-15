@@ -64,7 +64,7 @@ class DealMarker extends React.Component {
             <Grid item sm={6}>
             {!this.state.following ? <Button size="small" variant="outlined" color="primary" onClick={() => this.followDeal(deal)}>
               follow deal
-            </Button> : <Button size="small" variant="outlined" color="primary" disabled color="primary">
+            </Button> : <Button size="small" variant="outlined" color="primary" disabled>
               follow deal
             </Button> }
             </Grid>

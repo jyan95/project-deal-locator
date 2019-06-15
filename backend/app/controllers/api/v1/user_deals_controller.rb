@@ -9,8 +9,11 @@ class Api::V1::UserDealsController < ApplicationController
   end
 
   def index
+    deals = []
     user_id = decoded_token[0]['user_id']
-    deals = UserDeal.where(user_id: user_id)
+    user_deals = UserDeal.where(user_id: user_id)
+    user_deals.map { |ud| deals.push(Deal.find(ud.deal_id)) }
+    # debugger
     render json: deals
   end
 

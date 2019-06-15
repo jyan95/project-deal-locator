@@ -32,9 +32,6 @@ function Home() {
   // }
   return (
     <div id='homepage'>
-      <br/>
-      <br/>
-      <br/>
       <Map />
     </div>
   )
