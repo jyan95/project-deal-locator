@@ -3,6 +3,10 @@ import { Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import API from '../../api';
 
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+
 const dealMarker = new L.Icon({
   iconUrl: require('../../assets/redPointer.svg'),
   iconRetinaUrl: require('../../assets/redPointer.svg'),
@@ -15,7 +19,17 @@ class DealMarker extends React.Component {
     deal: this.props.deal,
     address: this.props.deal.merchant.address,
     lat: '',
-    lon: ''
+    lon: '',
+    following: false
+  }
+
+  followDeal = (deal) => {
+    this.setState({following:true});
+    this.props.handleClick(deal);
+  }
+
+  openDeal = (deal) => {
+    return window.open(`${deal.url}`,'_blank');
   }
 
   componentDidMount(){
@@ -43,11 +57,23 @@ class DealMarker extends React.Component {
     return(
       <Marker position={[lat,lon]} icon={dealMarker}>
         <Popup>
-          {deal.short_title}
-          <br/>
-          <button onClick={() => this.props.handleClick(deal)}>
-            Follow Deal
-          </button>
+          <Typography gutterBottom align='center' display='block' variant="body1" component="p">
+            {deal.short_title}
+          </Typography>
+          <Grid container direction="row" justify="center" alignItems="center" spacing={2}>
+            <Grid item sm={6}>
+            {!this.state.following ? <Button size="small" variant="outlined" color="primary" onClick={() => this.followDeal(deal)}>
+              follow deal
+            </Button> : <Button size="small" variant="outlined" color="primary" disabled color="primary">
+              follow deal
+            </Button> }
+            </Grid>
+            <Grid item sm={6}>
+            <Button size="small" variant="outlined" onClick={() => this.openDeal(deal)}>
+              open in new tab
+            </Button>
+            </Grid>
+          </Grid>
         </Popup>
       </Marker>
     )

@@ -1,10 +1,9 @@
 import React from 'react';
 import FilterForm from '../components/FilterForm';
 import CategoryCard from '../components/cards/CategoryCard';
-import Container from '@material-ui/core/Container';
-
 import API from '../api';
 
+import Container from '@material-ui/core/Container';
 // import './Categories.css';
 
 // category index
