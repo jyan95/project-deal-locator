@@ -58,12 +58,14 @@ const DealCard = (props) => {
         <br/>
         <Grid container direction='row' justify='center' alignItems='center' spacing={2}>
           <Grid item sm={6}>
-            <Button size='small' variant='outlined' color='primary' onclick={() => followDeal(props.deal)}>
+            {props.loggedIn ? <Button size='small' variant='outlined' color='primary' onClick={() => followDeal(props.deal)}>
               follow deal
-            </Button>
+            </Button> : <Button size='small' variant='outlined' disabled>
+              log in to follow deal
+            </Button>}
           </Grid>
           <Grid item sm={6}>
-            <Button size='small' variant='outlined' onclick={() => openDeal(props.deal)}>
+            <Button size='small' variant='outlined' onClick={() => openDeal(props.deal)}>
               open in new tab
             </Button>
           </Grid>

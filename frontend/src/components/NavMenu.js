@@ -10,13 +10,13 @@ function logoutClick() {
   console.log('clicking logout');
   localStorage.clear();
   // handleClose();
-  return <Redirect to='/login' />
+  window.open('/login','_self');
 }
 
 function loginClick() {
   // handleClose();
   console.log('clicking login');
-  return <Redirect to='/login' />
+  window.open('/login','_self');
 }
 
 function profileClick() {

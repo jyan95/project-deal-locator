@@ -25,7 +25,7 @@ class Basket extends React.Component {
           currentUser: user
         })
       })
-    }
+    };
   }
 
   login = (formData) => {
