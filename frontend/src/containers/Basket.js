@@ -6,10 +6,10 @@ import UserDeals from './UserDeals';
 
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
-
+import Typography from '@material-ui/core/Typography';
 
 // index page for all categories
-class Profile extends React.Component {
+class Basket extends React.Component {
   state = {
     loggedIn: false
   };
@@ -46,16 +46,14 @@ class Profile extends React.Component {
   render(){
     return(
       <Container>
-        <div id='deals'>
-          {this.state.loggedIn ? <UserDeals /> : <Login login={this.login}/>}
-          <br/>
-          <br/>
-          <br/>
-          <br/>
-          {this.state.loggedIn ? <Button variant="contained" color="primary" onClick={this.logout}>
-            Logout
-          </Button> : null }
-        </div>
+        <br/>
+        <Typography variant='h5' component='h1' align='center'>
+          {this.state.loggedIn ? `YOUR DEALS` : null}
+        </Typography>
+        {this.state.loggedIn ? <UserDeals /> : <Login login={this.login}/>}
+        {this.state.loggedIn ? <Button variant="contained" color="primary" onClick={this.logout}>
+          Logout
+        </Button> : null }
         <br/>
         <br/>
         <br/>
@@ -65,4 +63,4 @@ class Profile extends React.Component {
   }
 }
 
-export default Profile;
+export default Basket;

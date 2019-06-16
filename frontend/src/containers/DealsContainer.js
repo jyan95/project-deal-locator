@@ -32,7 +32,8 @@ class DealsContainer extends React.Component {
         <Typography variant='h5' component='h1' align='center'>
           {slug.split('').includes('-') ? slug.replace('-',' & ').toUpperCase() : slug.toUpperCase()}
         </Typography>
-        <GridList cellHeight={155} cols={1}>
+        <br/>
+        <GridList cellHeight='auto' cols={1}>
           {this.state.deals.map(d => {
             return (
               <GridListTile key={d.deal.id}>

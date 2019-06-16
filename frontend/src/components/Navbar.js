@@ -1,21 +1,19 @@
 import React from 'react';
+import NavMenu from './NavMenu';
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-
-function LinkTab(props) {
-  return (
-    <Tab
-      component="a"
-      onClick={e => {}}
-      {...props}
-    />
-  );
-}
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import MapIcon from '@material-ui/icons/Map';
+import ShoppingBasket from '@material-ui/icons/ShoppingBasket';
+import SearchIcon from '@material-ui/icons/Search';
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles(theme => ({
+  grow: {
+    flexGrow: 1
+  },
   appBar: {
     top: 'auto',
     bottom: 0,
@@ -24,20 +22,37 @@ const useStyles = makeStyles(theme => ({
 
 const Navbar = () => {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  // const [value, setValue] = React.useState(0);
 
-  function handleChange(e, newValue){
-    setValue(newValue);
-  }
+  // function handleChange(event, newValue) {
+  //   setValue(newValue);
+  // }
 
   return (
-    <AppBar position='fixed' className={classes.appBar}>
-      <Tabs variant="fullWidth" value={value} onChange={handleChange} aria-disabled='true'>
-        <LinkTab label="map" href="/" value={0}/>
-        <LinkTab label="browse" href="/categories" value={1}/>
-        <LinkTab label="your deals" href="/your-deals" value={2}/>}
-      </Tabs>
-    </AppBar>
+    <div className={classes.grow}>
+      <AppBar position='fixed' className={classes.appBar}>
+        <Toolbar>
+          <Grid container direction='row' justify='space-evenly' alignItems='center'>
+            <Grid item>
+              <IconButton href='/categories' color='inherit'>
+                <SearchIcon/>
+              </IconButton>
+            </Grid>
+            <Grid item>
+              <IconButton href='/' color='inherit'>
+                <MapIcon/>
+              </IconButton>
+            </Grid>
+            <Grid item>
+              <IconButton href='/your-deals' color='inherit'>
+                <ShoppingBasket/>
+              </IconButton>
+            </Grid>
+          </Grid>
+          <NavMenu/>
+        </Toolbar>
+      </AppBar>
+    </div>
   );
 }
 

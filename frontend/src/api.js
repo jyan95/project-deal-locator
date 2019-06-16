@@ -1,6 +1,5 @@
 const DEALS_KEY = process.env.REACT_APP_DEALS_API_KEY;
 const MAPQUEST_KEY = process.env.REACT_APP_MAPQUEST_API_KEY;
-// const MAPBOX_KEY = process.env.REACT_APP_MAPBOX_API_KEY;
 const BACKEND_API = 'http://localhost:3000/api/v1';
 const FRONTEND_API = 'https://api.discountapi.com/v2';
 const GEOCODING_API = `http://www.mapquestapi.com/geocoding/v1/address?key=${MAPQUEST_KEY}`;
@@ -108,7 +107,7 @@ const getLatLon = (address) => {
 }
 
 const login = (formData) => {
-  console.log('API login', formData);
+  // console.log('API login', formData);
   return fetch(LOGIN_URL, {
     method: 'POST',
     headers: {
@@ -166,8 +165,6 @@ const API = {
   login,
   signup,
   addUserDeal
-}
-
-
+};
 
 export default API;
