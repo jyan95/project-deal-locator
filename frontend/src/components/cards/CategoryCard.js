@@ -1,5 +1,4 @@
 import React from 'react';
-import { Redirect } from "react-router-dom";
 
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
@@ -18,7 +17,7 @@ const CategoryCard = (props) => {
   return(
     <CardActionArea href={`/categories/${slug}`}>
       <CardContent>
-        <Typography gutterBottom variant='h5' component='h2'>
+        <Typography gutterBottom component='h2'>
           {name.toUpperCase()}
         </Typography>
       </CardContent>

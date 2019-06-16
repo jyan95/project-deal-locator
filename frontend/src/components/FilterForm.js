@@ -16,7 +16,7 @@ class FilterForm extends React.Component {
       <div>
         <TextField
           id="standard-full-width"
-          placeholder="Search by Category"
+          placeholder="Search deals by category"
           helperText=""
           fullWidth
           margin="normal"

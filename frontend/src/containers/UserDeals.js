@@ -29,7 +29,17 @@ class UserDeals extends React.Component {
     .then(data => data.map(d => {
       // console.log(d);
       return this.fetchDeal(d.frontend_id);
-    }))
+    }));
+    if (!!token) {
+      // console.log('mounting',this.state);
+      API.getUser(token)
+      .then(user => {
+        this.setState({
+          loggedIn: true,
+          currentUser: user
+        })
+      })
+    };
   }
 
   render(){
@@ -37,7 +47,7 @@ class UserDeals extends React.Component {
     return(
       <div id='user-deals-container'>
         {this.state.userDeals.map(d => {
-          return <UserDealCard deal={d} removeClick={this.removeDeal}/>
+          return <UserDealCard deal={d} removeClick={this.removeDeal} key={d.id}/>
         })}
       </div>
     )

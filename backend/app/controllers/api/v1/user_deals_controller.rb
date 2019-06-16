@@ -19,6 +19,6 @@ class Api::V1::UserDealsController < ApplicationController
 
   def destroy
     # debugger
-    UserDeal.find_by(deal_id: params[:id]).destroy
+    Deal.where(frontend_id: params[:id]).destroy_all
   end
 end

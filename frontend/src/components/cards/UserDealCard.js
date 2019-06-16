@@ -24,12 +24,12 @@ class UserDealCard extends React.Component {
   }
 
   render(){
-    let { id, expires_at, short_title, url, image_url, description, merchant } = this.props.deal;
+    let { id, expires_at, short_title, url, merchant } = this.props.deal;
     // console.log(this.props.deal);
     return(
-      <div>
+      <div key={id}>
         {this.state.following ? <CardContent>
-          <CardActionArea>
+          <CardActionArea href={url} target='_blank'>
             <Typography gutterBottom component='h3'>
               {short_title}
             </Typography>
