@@ -48,7 +48,7 @@ class Basket extends React.Component {
       <Container>
         <br/>
         <Typography variant='h5' component='h1' align='center'>
-          {this.state.loggedIn ? `YOUR DEALS` : null}
+          {this.state.loggedIn ? `YOUR DEALS` : `Please sign in to see your deals`}
         </Typography>
         {this.state.loggedIn ? <UserDeals /> : <Login login={this.login}/>}
         {this.state.loggedIn ? <Button variant="contained" color="primary" onClick={this.logout}>

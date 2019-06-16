@@ -60,7 +60,7 @@ const DealCard = (props) => {
           <Grid item sm={6}>
             {props.loggedIn ? <Button size='small' variant='outlined' color='primary' onClick={() => followDeal(props.deal)}>
               follow deal
-            </Button> : <Button size='small' variant='outlined' disabled>
+            </Button> : <Button size='small' variant='outlined' href='/login'>
               log in to follow deal
             </Button>}
           </Grid>
