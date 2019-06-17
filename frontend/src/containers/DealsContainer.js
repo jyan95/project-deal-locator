@@ -53,7 +53,7 @@ class DealsContainer extends React.Component {
     this.autoLogin();
     API.getUserDeals(token)
     .then(deals => {
-      console.log('GIVE ME SOME DEALS', deals)
+      // console.log('GIVE ME SOME DEALS', deals);
       this.setState({userDeals: deals})
     })
     //   this.setState({userDeals: deals});
@@ -81,8 +81,8 @@ class DealsContainer extends React.Component {
   render(){
     // console.log(this.state);
     let { slug } = this.props.match.params;
-    console.log(this.state)
-    console.log(this.filteredDeals())
+    // console.log(this.state)
+    // console.log(this.filteredDeals())
     return(
       <Container>
         <br/>
@@ -91,20 +91,8 @@ class DealsContainer extends React.Component {
         </Typography>
         <br/>
         <GridList cellHeight='auto' cols={1}>
-          {this.state.deals.map(d => {
-            return null
-            return (
-              <GridListTile key={d.deal.id}>
-                <DealCard
-                  deal={d.deal}
-                  loggedIn={this.state.loggedIn}
-                  followClick={this.followClick}
-                />
-              </GridListTile>
-            )
-          })}
           {this.filteredDeals().map(d => {
-            console.log(d)
+            // console.log(d)
             return (
               <GridListTile key={d.deal.id}>
                 <DealCard
