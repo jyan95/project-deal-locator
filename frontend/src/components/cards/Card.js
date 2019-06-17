@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
+import API from '../../api';
 
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -27,27 +28,27 @@ function truncate(str, charLimit){
   return str.length > charLimit ? str.substr(0, charLimit-1) + '…' : str;
 }
 
-function followDeal(deal){
-
-}
-
-function openDeal(deal){
-  window.open(deal.url,'_blank');
+function openDeal(url){
+  window.open(url,'_blank');
 }
 
 const DealCard = (props) => {
   const classes = useStyles();
-  const theme = useTheme();
-  let { id, short_title, url, description } = props.deal;
+  const [following, setFollowing] = useState(false);
+  // const theme = useTheme();
 
-  // <CardMedia
-  //   className={classes.cover}
-  //   image={image_url}
-  //   title="deal image"
-  // />
+  function followDeal(deal){
+    const token = localStorage.getItem('token');
+    API.addUserDeal(deal.id, token);
+    setFollowing(true);
+    props.followClick(deal);
+  }
+
+  let { id, short_title, url, description } = props.deal;
 
   return (
     <div className={classes.details} key={id}>
+    {following ? null :
       <CardContent className={classes.content}>
         <Typography component="h6" variant="h6">
           {short_title}
@@ -65,14 +66,14 @@ const DealCard = (props) => {
             </Button>}
           </Grid>
           <Grid item sm={6}>
-            <Button size='small' variant='outlined' onClick={() => openDeal(props.deal)}>
+            <Button size='small' variant='outlined' onClick={() => openDeal(url)}>
               open in new tab
             </Button>
           </Grid>
         </Grid>
         <br/>
         <Divider variant="middle" />
-      </CardContent>
+      </CardContent>}
     </div>
   );
 }
