@@ -30,8 +30,16 @@ class DealsContainer extends React.Component {
     };
   }
 
-  followClick = (deal) => {
-
+  followClick = () => {
+    // // console.log(this.state.deals);
+    // let filteredDeals = [];
+    // this.state.deals.map(d => {
+    //   this.state.userDeals.map(ud => {
+    //     return ud.frontend_id !== d.deal.id ? filteredDeals.push(d) : null
+    //   })
+    // });
+    // // console.log(filteredDeals);
+    // this.setState({deals:filteredDeals});
   }
 
   componentDidMount(){
@@ -44,15 +52,37 @@ class DealsContainer extends React.Component {
     };
     this.autoLogin();
     API.getUserDeals(token)
-    .then(deals => this.setState({userDeals: deals}))
+    .then(deals => {
+      console.log('GIVE ME SOME DEALS', deals)
+      this.setState({userDeals: deals})
+    })
+    //   this.setState({userDeals: deals});
+    //   let filteredDeals = [];
+    //   this.state.deals.map(d => {
+    //     this.state.userDeals.map(ud => {
+    //       return ud.frontend_id !== d.deal.id ? filteredDeals.push(d) : null
+    //     })
+    //   });
+    //   // console.log(filteredDeals);
+    //   this.setState({deals:filteredDeals});
+    // });
     // .then(userDeals => userDeals.map(ud => {
     //   return this.setState({deals: this.state.deals.filter(d => d.id !== ud.frontend_id)},() => console.log(this.state));
     // }))
   }
 
+  filteredDeals = () => {
+    return this.state.deals.filter(dealObject => {
+      const frontendIds = this.state.userDeals.map(ud=> ud.frontend_id)
+      return !frontendIds.includes(dealObject.deal.id)
+    })
+  }
+
   render(){
     // console.log(this.state);
     let { slug } = this.props.match.params;
+    console.log(this.state)
+    console.log(this.filteredDeals())
     return(
       <Container>
         <br/>
@@ -62,6 +92,19 @@ class DealsContainer extends React.Component {
         <br/>
         <GridList cellHeight='auto' cols={1}>
           {this.state.deals.map(d => {
+            return null
+            return (
+              <GridListTile key={d.deal.id}>
+                <DealCard
+                  deal={d.deal}
+                  loggedIn={this.state.loggedIn}
+                  followClick={this.followClick}
+                />
+              </GridListTile>
+            )
+          })}
+          {this.filteredDeals().map(d => {
+            console.log(d)
             return (
               <GridListTile key={d.deal.id}>
                 <DealCard

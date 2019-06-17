@@ -39,9 +39,9 @@ const DealCard = (props) => {
 
   function followDeal(deal){
     const token = localStorage.getItem('token');
-    API.addUserDeal(deal.id, token);
+    API.addUserDeal(deal.id, token); // track in parent state and add to userDeals array
     setFollowing(true);
-    props.followClick(deal);
+    props.followClick();
   }
 
   let { id, short_title, url, description } = props.deal;
