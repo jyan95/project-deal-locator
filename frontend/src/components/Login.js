@@ -35,7 +35,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Login = (props) => {
-
   const [formData, setFormData] = useState({username: '', password: ''});
 
   const handleChange = (e) => {

@@ -1,18 +1,17 @@
 import React from 'react';
 import API from '../api';
 import DealCard from '../components/cards/Card';
-import Container from '@material-ui/core/Container';
 
+import Container from '@material-ui/core/Container';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import Typography from '@material-ui/core/Typography';
-
-
 
 // deals index
 class DealsContainer extends React.Component {
   state = {
     deals: [],
+    userDeals: [],
     category:'',
     loggedIn: false
   };
@@ -24,25 +23,66 @@ class DealsContainer extends React.Component {
       API.getUser(token)
       .then(user => {
         this.setState({
-          loggedIn: true
+          loggedIn: true,
+          token: token
         })
       })
     };
   }
 
+  followClick = () => {
+    // // console.log(this.state.deals);
+    // let filteredDeals = [];
+    // this.state.deals.map(d => {
+    //   this.state.userDeals.map(ud => {
+    //     return ud.frontend_id !== d.deal.id ? filteredDeals.push(d) : null
+    //   })
+    // });
+    // // console.log(filteredDeals);
+    // this.setState({deals:filteredDeals});
+  }
+
   componentDidMount(){
+    const token = localStorage.getItem('token');
     let queryPage = 1;
     while(queryPage < 5){
       API.getCategory(this.props.match.params.slug,queryPage)
-      .then(data => this.setState({deals: this.state.deals.concat(data.deals)}))
+      .then(data => this.setState({deals: this.state.deals.concat(data.deals)}));
       queryPage++;
     };
     this.autoLogin();
+    API.getUserDeals(token)
+    .then(deals => {
+      // console.log('GIVE ME SOME DEALS', deals);
+      this.setState({userDeals: deals})
+    })
+    //   this.setState({userDeals: deals});
+    //   let filteredDeals = [];
+    //   this.state.deals.map(d => {
+    //     this.state.userDeals.map(ud => {
+    //       return ud.frontend_id !== d.deal.id ? filteredDeals.push(d) : null
+    //     })
+    //   });
+    //   // console.log(filteredDeals);
+    //   this.setState({deals:filteredDeals});
+    // });
+    // .then(userDeals => userDeals.map(ud => {
+    //   return this.setState({deals: this.state.deals.filter(d => d.id !== ud.frontend_id)},() => console.log(this.state));
+    // }))
+  }
+
+  filteredDeals = () => {
+    return this.state.deals.filter(dealObject => {
+      const frontendIds = this.state.userDeals.map(ud=> ud.frontend_id)
+      return !frontendIds.includes(dealObject.deal.id)
+    })
   }
 
   render(){
     // console.log(this.state);
     let { slug } = this.props.match.params;
+    // console.log(this.state)
+    // console.log(this.filteredDeals())
     return(
       <Container>
         <br/>
@@ -51,10 +91,15 @@ class DealsContainer extends React.Component {
         </Typography>
         <br/>
         <GridList cellHeight='auto' cols={1}>
-          {this.state.deals.map(d => {
+          {this.filteredDeals().map(d => {
+            // console.log(d)
             return (
               <GridListTile key={d.deal.id}>
-                <DealCard deal={d.deal} loggedIn={this.state.loggedIn}/>
+                <DealCard
+                  deal={d.deal}
+                  loggedIn={this.state.loggedIn}
+                  followClick={this.followClick}
+                />
               </GridListTile>
             )
           })}
