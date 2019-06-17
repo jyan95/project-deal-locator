@@ -51,11 +51,13 @@ class DealsContainer extends React.Component {
       queryPage++;
     };
     this.autoLogin();
-    API.getUserDeals(token)
-    .then(deals => {
-      // console.log('GIVE ME SOME DEALS', deals);
-      this.setState({userDeals: deals})
-    })
+    if (this.state.loggedIn) {
+      API.getUserDeals(token)
+      .then(deals => {
+        // console.log('GIVE ME SOME DEALS', deals);
+        this.setState({userDeals: deals})
+      })
+    }
     //   this.setState({userDeals: deals});
     //   let filteredDeals = [];
     //   this.state.deals.map(d => {
@@ -91,7 +93,18 @@ class DealsContainer extends React.Component {
         </Typography>
         <br/>
         <GridList cellHeight='auto' cols={1}>
-          {this.filteredDeals().map(d => {
+          {this.state.loggedIn ? this.filteredDeals().map(d => {
+            // console.log(d)
+            return (
+              <GridListTile key={d.deal.id}>
+                <DealCard
+                  deal={d.deal}
+                  loggedIn={this.state.loggedIn}
+                  followClick={this.followClick}
+                />
+              </GridListTile>
+            )
+          }) : this.state.deals.map(d => {
             // console.log(d)
             return (
               <GridListTile key={d.deal.id}>
