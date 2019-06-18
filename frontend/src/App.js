@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from './components/Navbar';
 import Home from './containers/Home';
 import SignUp from './components/SignUp';
-// import Login from './components/Login';
+import Login from './components/Login';
 import CategoriesContainer from './containers/CategoriesContainer';
 import DealsContainer from './containers/DealsContainer';
 import Basket from './containers/Basket';
@@ -20,7 +20,7 @@ const App = () => {
         <Route exact path='/categories/' component={CategoriesContainer} />
         <Route path='/your-deals' component={Basket} />
         <Route path='/signup' component={SignUp} />
-        <Route path='/login' component={Basket} />
+        <Route path='/login' component={Login} />
       </Switch>
     </React.Fragment>
   );

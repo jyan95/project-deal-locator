@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
+import API from '../api';
 
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -44,7 +45,13 @@ const Login = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.login(formData);
+    API.login(formData)
+    .then(data => {
+      // console.log("data", data);
+      const { token } = data;
+      localStorage.setItem('token', token);
+    });
+    // props.login(formData);
     setFormData({username:'',password:''});
     return <Redirect to='/your-deals' />
   }
@@ -53,6 +60,13 @@ const Login = (props) => {
 
   return (
     <Container component="main" maxWidth="xs">
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
       <CssBaseline />
       <div className={classes.paper}>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>

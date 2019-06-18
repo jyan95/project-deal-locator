@@ -3,8 +3,19 @@ import { Map, TileLayer, Marker } from 'react-leaflet';
 import L from 'leaflet';
 import './Map.css';
 import DealMarker from './DealMarker';
+import AddDealForm from './AddDealForm';
 // import UserMarker from './UserMarker';
 import API from '../../api';
+
+import Fab from '@material-ui/core/Fab';
+// import Typography from '@material-ui/core/Typography';
+// import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+// import Modal from '@material-ui/core/Modal';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+// import DialogContentText from '@material-ui/core/DialogContentText';
+// import DialogTitle from '@material-ui/core/DialogTitle';
 
 // for map filter
 // import IconButton from '@material-ui/core/IconButton';
@@ -29,7 +40,9 @@ class HomeMap extends React.Component {
   state = {
     deals: [],
     filter: 'All',
-    filteredDeals: []
+    filteredDeals: [],
+    addDealMode: false,
+    displayModal: false
   };
 
   handleClick = (deal) => {
@@ -88,23 +101,55 @@ class HomeMap extends React.Component {
   //   };
   //   return this.state.filteredDeals.map(d => <DealMarker key={d.deal.id} deal={d.deal} handleClick={this.handleClick}/>)
   // }
+  toggleMode = () => {
+    this.setState({addDealMode: !this.state.addDealMode})
+  }
 
+  toggleModal = (e) => {
+    console.log(e);
+    this.setState({displayModal: !this.state.displayModal})
+  }
+
+  addDeal = (formData) => {
+    console.log('adding deal', formData);
+    this.setState({displayModal: !this.state.displayModal});
+    this.toggleMode();
+  }
 
   render(){
     // console.log('map props',this.props);
     // {this.state.filter === 'All' ? this.renderAllDeals() : this.renderFilteredDeals()}
     return(
       <div>
-        <Map id='map' center={userLocation} zoom={16} >
+        <Map id='map' center={userLocation} zoom={16} onClick={this.state.addDealMode ? this.toggleModal : null}>
           <TileLayer
             attribution={MAPTYPE_URL}
             url={MAPTYPE_URL}
             maxZoom='18'
             minZoom='14'
           />
+          <div style={{
+            zIndex: 9999,
+            position: 'relative',
+            display: 'flex',
+            justifyContent: 'flex-end',
+            marginTop: 10,
+            marginRight: 10
+          }}>
+            <Fab variant='extended' color="primary" aria-label="Add" size='medium' onClick={this.toggleMode} >
+              {!this.state.addDealMode ? 'add deal' : 'exit'}
+            </Fab>
+          </div>
+          <Dialog
+            open={this.state.displayModal}
+            onClose={this.toggleModal}
+          >
+            <AddDealForm submitForm={this.addDeal}/>
+          </Dialog>
           {this.renderUserLocation()}
           {this.renderAllDeals()}
         </Map>
+
       </div>
     )
   }

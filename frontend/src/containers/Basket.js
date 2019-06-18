@@ -15,7 +15,7 @@ class Basket extends React.Component {
   };
 
   componentDidMount(){
-    console.log('hello', this.state);
+    // console.log('hello', this.state);
     const token = localStorage.getItem('token');
     if (!!token) {
       // console.log('mounting',this.state);
@@ -30,16 +30,18 @@ class Basket extends React.Component {
     };
   }
 
-  login = (formData) => {
-    // console.log('logging in', formData);
-    API.login(formData)
-    .then(data => {
-      console.log("data", data);
-      const { token, user } = data;
-      localStorage.setItem('token', token);
-      this.setState({currentUser: user, loggedIn: true})
-    })
-  }
+  // login = (formData) => {
+  //   // console.log('logging in', formData);
+  //   API.login(formData)
+  //   .then(data => {
+  //     console.log("data", data);
+  //     const { token, user } = data;
+  //     localStorage.setItem('token', token);
+  //     this.setState({currentUser: user, loggedIn: true})
+  //   })
+  // }
+
+
 
   logout = () => {
     localStorage.clear();
