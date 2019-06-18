@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ReactComponent as Logo } from '../assets/dealpal.svg'
 import API from '../api';
 
 import Button from '@material-ui/core/Button';
@@ -63,10 +64,7 @@ const Login = (props) => {
       <br/>
       <br/>
       <br/>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
+      <Logo/>
       <CssBaseline />
       <div className={classes.paper}>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>

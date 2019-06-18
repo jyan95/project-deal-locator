@@ -77,7 +77,7 @@ class DealsContainer extends React.Component {
   filteredDeals = () => {
     return this.state.deals.filter(dealObject => {
       const frontendIds = this.state.userDeals.map(ud=> ud.frontend_id)
-      console.log(frontendIds);
+      // console.log(frontendIds);
       return !frontendIds.includes(dealObject.deal.id)
     })
   }
