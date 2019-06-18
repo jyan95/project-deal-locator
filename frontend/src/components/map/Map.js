@@ -3,25 +3,13 @@ import { Map, TileLayer, Marker } from 'react-leaflet';
 import L from 'leaflet';
 import './Map.css';
 import DealMarker from './DealMarker';
+import UserAddedDealMarker from './UserAddedDealMarker';
 import AddDealForm from './AddDealForm';
 // import UserMarker from './UserMarker';
 import API from '../../api';
 
 import Fab from '@material-ui/core/Fab';
-// import Typography from '@material-ui/core/Typography';
-// import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
-// import Modal from '@material-ui/core/Modal';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-// import DialogContentText from '@material-ui/core/DialogContentText';
-// import DialogTitle from '@material-ui/core/DialogTitle';
-
-// for map filter
-// import IconButton from '@material-ui/core/IconButton';
-// import Menu from '@material-ui/core/Menu';
-// import MenuItem from '@material-ui/core/MenuItem';
-// import DealModal from './DealModal';
 
 const MAPTYPE_URL = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png';
 
@@ -38,14 +26,13 @@ const userIcon = new L.Icon({
 
 class HomeMap extends React.Component {
   state = {
-    deals: [],
-    filter: 'All',
-    filteredDeals: [],
+    APIdeals: [],
+    userAddedDeals: [],
     addDealMode: false,
     displayModal: false
   };
 
-  handleClick = (deal) => {
+  handleAPIDealClick = (deal) => {
     console.log('u adding:',deal);
     const token = localStorage.getItem('token');
     API.addUserDeal(deal.id, token)
@@ -57,11 +44,16 @@ class HomeMap extends React.Component {
     while(queryPage < 20){
       queryPage++;
       API.getDeals(latitude,longitude,queryPage)
-      .then(data => this.setState({deals: this.state.deals.concat(data.deals.filter(d => !!d.deal.merchant.address))}))
+      .then(data => this.setState({APIdeals: this.state.APIdeals.concat(data.deals.filter(d => !!d.deal.merchant.address))}))
     };
   }
 
-  getLocationDeals = () => {
+  getUserAddedDeals = () => {
+    API.getUserAddedDeals()
+    .then(data => this.setState({userAddedDeals: this.state.userAddedDeals.concat(data)}));
+  }
+
+  getLocationAndDeals = () => {
     if ('geolocation' in navigator) {
       // console.log('fetching location');
       navigator.geolocation.getCurrentPosition((position) => {
@@ -75,8 +67,9 @@ class HomeMap extends React.Component {
 
   // MULTI PAGE QUERY
   componentDidMount(){
-    // this.getLocationDeals();
-    // switch off for testing to prevent query spam
+    // this.getLocationAndDeals();
+    this.getUserAddedDeals();
+    // switch off during dev
   }
   // MULTI PAGE QUERY
 
@@ -87,33 +80,41 @@ class HomeMap extends React.Component {
     return <Marker position={userLocation} icon={userIcon}/>
   }
 
-  renderAllDeals = () => {
+  renderAPIDeals = () => {
     // console.log('rendering deals');
-    return this.state.deals.map(d => <DealMarker key={d.deal.id} deal={d.deal} handleClick={this.handleClick}/>)
+    return this.state.APIdeals.map(d => <DealMarker key={d.deal.id} deal={d.deal} handleClick={this.handleAPIDealClick}/>)
   }
 
-  // renderFilteredDeals = () => {
-  //   let queryPage = 1;
-  //   while(queryPage < 10){
-  //     queryPage++;
-  //     API.getCategory(this.state.filter,queryPage)
-  //     .then(data => this.setState({filteredDeals: this.state.filteredDeals.concat(data.deals.filter(d => !!d.deal.merchant.address))}))
-  //   };
-  //   return this.state.filteredDeals.map(d => <DealMarker key={d.deal.id} deal={d.deal} handleClick={this.handleClick}/>)
-  // }
+  renderUserAddedDeals = () => {
+    return this.state.userAddedDeals.map(d => <UserAddedDealMarker key={d.id} deal={d}/>)
+  }
+
   toggleMode = () => {
-    this.setState({addDealMode: !this.state.addDealMode})
+    this.setState({addDealMode: !this.state.addDealMode});
   }
 
-  toggleModal = (e) => {
-    console.log(e);
+  toggleModal = () => {
     this.setState({displayModal: !this.state.displayModal})
+  }
+
+  handleMapClick = (e) => {
+    console.log(e);
+    this.setState({clickLat:e.latlng.lat, clickLon:e.latlng.lng});
+    this.toggleModal();
+    // console.log(this.state)
   }
 
   addDeal = (formData) => {
     console.log('adding deal', formData);
-    this.setState({displayModal: !this.state.displayModal});
-    this.toggleMode();
+    const token = localStorage.getItem('token');
+    if(!!token){
+      API.addDealToMap(token, formData, this.state.clickLat, this.state.clickLon);
+      this.toggleModal();
+      this.toggleMode();
+    } else {
+      alert('please log in!')
+    }
+    this.getUserAddedDeals();
   }
 
   render(){
@@ -121,7 +122,7 @@ class HomeMap extends React.Component {
     // {this.state.filter === 'All' ? this.renderAllDeals() : this.renderFilteredDeals()}
     return(
       <div>
-        <Map id='map' center={userLocation} zoom={16} onClick={this.state.addDealMode ? this.toggleModal : null}>
+        <Map id='map' center={userLocation} zoom={16} onClick={this.state.addDealMode ? this.handleMapClick : null}>
           <TileLayer
             attribution={MAPTYPE_URL}
             url={MAPTYPE_URL}
@@ -147,9 +148,9 @@ class HomeMap extends React.Component {
             <AddDealForm submitForm={this.addDeal}/>
           </Dialog>
           {this.renderUserLocation()}
-          {this.renderAllDeals()}
+          {this.renderAPIDeals()}
+          {this.renderUserAddedDeals()}
         </Map>
-
       </div>
     )
   }

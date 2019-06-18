@@ -151,6 +151,29 @@ const addUserDeal = (id, token) => {
   })
 }
 
+const addDealToMap = (token, formData, lat, lon) => {
+  console.log('in fetch', formData, lat, lon);
+  // debugger
+  return fetch(`${BACKEND_API}/add-deal-to-map`,{
+    method: 'POST',
+    headers: {
+      Authorization: token,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      name: formData.name,
+      description: formData.description,
+      lat: lat,
+      lon: lon,
+      expiration: formData.expiration
+    })
+  })
+}
+
+const getUserAddedDeals = () => {
+  return get(`${BACKEND_API}/added-deals`)
+}
+
 const API = {
   getDeal,
   removeDeal,
@@ -164,7 +187,9 @@ const API = {
   getUserDeals,
   login,
   signup,
-  addUserDeal
+  addUserDeal,
+  addDealToMap,
+  getUserAddedDeals
 };
 
 export default API;
