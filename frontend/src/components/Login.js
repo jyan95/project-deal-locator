@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
 import API from '../api';
 
 import Button from '@material-ui/core/Button';
@@ -53,7 +52,8 @@ const Login = (props) => {
     });
     // props.login(formData);
     setFormData({username:'',password:''});
-    return <Redirect to='/your-deals' />
+    // console.log('submitted login', props)
+    props.history.push('/');
   }
 
   const classes = useStyles();
@@ -78,7 +78,7 @@ const Login = (props) => {
             id="username"
             label="Username"
             name="username"
-            autoComplete="username"
+            autoComplete="off"
             autoFocus
             value={formData.username}
             onChange={handleChange}
@@ -92,7 +92,7 @@ const Login = (props) => {
             label="Password"
             type="password"
             id="password"
-            autoComplete="current-password"
+            autoComplete="off"
             value={formData.password}
             onChange={handleChange}
           />

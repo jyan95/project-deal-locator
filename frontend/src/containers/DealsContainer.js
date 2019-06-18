@@ -7,28 +7,29 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import Typography from '@material-ui/core/Typography';
 
+let token = localStorage.getItem('token');
+
 // deals index
 class DealsContainer extends React.Component {
   state = {
     deals: [],
     userDeals: [],
     category:'',
-    loggedIn: false
+    loggedIn: !!token
   };
 
-  autoLogin = () => {
-    const token = localStorage.getItem('token');
-    if (!!token) {
-      // console.log('mounting',this.state);
-      API.getUser(token)
-      .then(user => {
-        this.setState({
-          loggedIn: true,
-          token: token
-        })
-      })
-    };
-  }
+  // autoLogin = () => {
+  //   if (!!token) {
+  //     // console.log('mounting',this.state);
+  //     API.getUser(token)
+  //     .then(user => {
+  //       this.setState({
+  //         loggedIn: true,
+  //         token: token
+  //       })
+  //     })
+  //   };
+  // }
 
   followClick = () => {
     // // console.log(this.state.deals);
@@ -50,7 +51,7 @@ class DealsContainer extends React.Component {
       .then(data => this.setState({deals: this.state.deals.concat(data.deals)}));
       queryPage++;
     };
-    this.autoLogin();
+    // this.autoLogin();
     if (this.state.loggedIn) {
       API.getUserDeals(token)
       .then(deals => {
@@ -76,6 +77,7 @@ class DealsContainer extends React.Component {
   filteredDeals = () => {
     return this.state.deals.filter(dealObject => {
       const frontendIds = this.state.userDeals.map(ud=> ud.frontend_id)
+      console.log(frontendIds);
       return !frontendIds.includes(dealObject.deal.id)
     })
   }

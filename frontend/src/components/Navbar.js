@@ -33,15 +33,15 @@ const Navbar = () => {
     <div className={classes.grow}>
       <AppBar position='fixed' className={classes.appBar}>
         <Toolbar>
-          <Grid container direction='row' justify='space-evenly' alignItems='center'>
-            <Grid item>
-              <Button href='/categories' color='inherit'>
-                <SearchIcon/>
-              </Button>
-            </Grid>
+          <Grid container direction='row' justify='space-evenly' alignItems='center'>            
             <Grid item>
               <Button href='/' color='inherit'>
                 <MapIcon/>
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button href='/categories' color='inherit'>
+                <SearchIcon/>
               </Button>
             </Grid>
             <Grid item>

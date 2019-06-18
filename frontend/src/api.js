@@ -139,7 +139,7 @@ const signup = (formData) => {
 }
 
 const addUserDeal = (id, token) => {
-  console.log('adding user deal', id, token);
+  // console.log('adding user deal', id, token);
   return fetch(`${BACKEND_API}/add-deal/${id}`,{
     method: 'POST',
     headers: {

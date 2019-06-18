@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import { Map, TileLayer, Marker } from 'react-leaflet';
 import L from 'leaflet';
 import './Map.css';
@@ -102,7 +103,8 @@ class HomeMap extends React.Component {
       this.setState({addDealMode: !this.state.addDealMode});
       this.setState({displayTooltip: this.state.displayTooltip +1})
     } else {
-      alert('please log in to add a deal')
+      // debugger
+      this.setState({redirect:true})
     }
   }
 
@@ -133,6 +135,12 @@ class HomeMap extends React.Component {
     }
   }
 
+  redirect = () => {
+    if(this.state.redirect){
+      return <Redirect to='/login' />
+    }
+  }
+
   render(){
     // console.log('map props',this.props);
     // {this.state.filter === 'All' ? this.renderAllDeals() : this.renderFilteredDeals()}
@@ -154,7 +162,7 @@ class HomeMap extends React.Component {
             marginRight: 10
           }}>
             <Fab variant='extended' color="primary" aria-label="Add" size='medium' onClick={this.toggleMode} >
-              {!this.state.addDealMode ? 'add deal' : 'exit'}
+              {!!token ? !this.state.addDealMode ? 'add deal' : 'exit' : 'sign in'}
             </Fab>
           </div>
           <Dialog
@@ -182,6 +190,7 @@ class HomeMap extends React.Component {
           {this.renderAPIDeals()}
           {this.renderUserAddedDeals()}
         </Map>
+        {this.redirect()}
       </div>
     )
   }
