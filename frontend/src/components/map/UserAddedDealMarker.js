@@ -27,8 +27,7 @@ class UserAddedDealMarker extends React.Component {
   // }
 
   render(){
-    console.log('in added deal marker',this.state);
-    // let { short_title, description, latitude, longitude } = this.state.deal;
+    // console.log('in added deal marker',this.state);
     // debugger
     return(
       <Marker position={[this.state.lat,this.state.lon]} icon={dealMarker}>
@@ -36,7 +35,7 @@ class UserAddedDealMarker extends React.Component {
           <Typography gutterBottom align='center' display='block' variant="body1" component="p">
             {this.state.name}
           </Typography>
-          <Typography gutterBottom align='center' display='block' variant="p" component="p">
+          <Typography gutterBottom align='center' display='block' variant="body2" component="p">
             {this.state.description}
           </Typography>
           <Grid container direction="row" justify="center" alignItems="center" spacing={2}>

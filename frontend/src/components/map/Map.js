@@ -9,10 +9,16 @@ import AddDealForm from './AddDealForm';
 import API from '../../api';
 
 import Fab from '@material-ui/core/Fab';
+import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
+// import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
 
 const MAPTYPE_URL = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png';
 
+let token = localStorage.getItem('token');
 let lat = 40.706858499999996;
 let lon = -74.01491589999999;
 let userLocation = [lat,lon];
@@ -29,12 +35,13 @@ class HomeMap extends React.Component {
     APIdeals: [],
     userAddedDeals: [],
     addDealMode: false,
-    displayModal: false
+    displayModal: false,
+    displayTooltip: 0
   };
 
   handleAPIDealClick = (deal) => {
     console.log('u adding:',deal);
-    const token = localStorage.getItem('token');
+    // const token = localStorage.getItem('token');
     API.addUserDeal(deal.id, token)
   }
 
@@ -90,31 +97,40 @@ class HomeMap extends React.Component {
   }
 
   toggleMode = () => {
-    this.setState({addDealMode: !this.state.addDealMode});
+    console.log(this.state.displayTooltip)
+    if(!!token){
+      this.setState({addDealMode: !this.state.addDealMode});
+      this.setState({displayTooltip: this.state.displayTooltip +1})
+    } else {
+      alert('please log in to add a deal')
+    }
   }
 
   toggleModal = () => {
     this.setState({displayModal: !this.state.displayModal})
   }
 
+  closeTooltip = () => {
+    this.setState({displayTooltip: this.state.displayTooltip +1})
+  }
+
   handleMapClick = (e) => {
-    console.log(e);
+    // console.log(e);
     this.setState({clickLat:e.latlng.lat, clickLon:e.latlng.lng});
     this.toggleModal();
     // console.log(this.state)
   }
 
   addDeal = (formData) => {
-    console.log('adding deal', formData);
-    const token = localStorage.getItem('token');
+    // console.log('adding deal', formData);
+    // const token = localStorage.getItem('token');
     if(!!token){
-      API.addDealToMap(token, formData, this.state.clickLat, this.state.clickLon);
+      API.addDealToMap(token, formData, this.state.clickLat, this.state.clickLon).then(this.getUserAddedDeals());
       this.toggleModal();
       this.toggleMode();
     } else {
       alert('please log in!')
     }
-    this.getUserAddedDeals();
   }
 
   render(){
@@ -146,6 +162,21 @@ class HomeMap extends React.Component {
             onClose={this.toggleModal}
           >
             <AddDealForm submitForm={this.addDeal}/>
+          </Dialog>
+          <Dialog
+            open={this.state.displayTooltip === 1}
+            onClose={this.closeTooltip}
+          >
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Select a point on the map to add a deal!
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={this.closeTooltip} color="primary">
+                got it
+              </Button>
+            </DialogActions>
           </Dialog>
           {this.renderUserLocation()}
           {this.renderAPIDeals()}
