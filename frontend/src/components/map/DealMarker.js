@@ -34,6 +34,7 @@ class DealMarker extends React.Component {
 
   componentDidMount(){
     // console.log('deal marker mounting');
+    let token = localStorage.getItem('token');
     let { latitude, longitude } = this.props.deal.merchant;
     if (latitude) {
       this.setState({lat:latitude, lon:longitude})
@@ -47,7 +48,15 @@ class DealMarker extends React.Component {
         })
         //, () => this.props.forceUpdate())
       })
-    }
+    };
+    API.getUserDeals(token)
+    .then(deals => deals.map(d => {
+      if(d.frontend_id === this.state.deal.id){
+        return this.setState({following: true});
+      } else {
+        return null
+      }
+    }))
   }
 
   render(){
