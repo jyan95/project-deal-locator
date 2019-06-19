@@ -4,7 +4,8 @@ import NavMenu from './NavMenu';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
+// import IconButton from '@material-ui/core/IconButton';
 import MapIcon from '@material-ui/icons/Map';
 import ShoppingBasket from '@material-ui/icons/ShoppingBasket';
 import SearchIcon from '@material-ui/icons/Search';
@@ -34,19 +35,19 @@ const Navbar = () => {
         <Toolbar>
           <Grid container direction='row' justify='space-evenly' alignItems='center'>
             <Grid item>
-              <IconButton href='/categories' color='inherit'>
-                <SearchIcon/>
-              </IconButton>
-            </Grid>
-            <Grid item>
-              <IconButton href='/' color='inherit'>
+              <Button href='/' color='inherit'>
                 <MapIcon/>
-              </IconButton>
+              </Button>
             </Grid>
             <Grid item>
-              <IconButton href='/your-deals' color='inherit'>
+              <Button href='/categories' color='inherit'>
+                <SearchIcon/>
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button href='/your-deals' color='inherit'>
                 <ShoppingBasket/>
-              </IconButton>
+              </Button>
             </Grid>
           </Grid>
           <NavMenu/>

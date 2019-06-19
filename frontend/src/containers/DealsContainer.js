@@ -1,61 +1,53 @@
 import React from 'react';
-import API from '../api';
 import DealCard from '../components/cards/Card';
+import API from '../api';
+// import { lat , lon } from '../App';
 
 import Container from '@material-ui/core/Container';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import Typography from '@material-ui/core/Typography';
 
-// deals index
+let token = localStorage.getItem('token');
+
 class DealsContainer extends React.Component {
   state = {
     deals: [],
     userDeals: [],
     category:'',
-    loggedIn: false
+    loggedIn: !!token
   };
 
-  autoLogin = () => {
-    const token = localStorage.getItem('token');
-    if (!!token) {
-      // console.log('mounting',this.state);
-      API.getUser(token)
-      .then(user => {
-        this.setState({
-          loggedIn: true,
-          token: token
-        })
-      })
-    };
-  }
-
-  followClick = () => {
-    // // console.log(this.state.deals);
-    // let filteredDeals = [];
-    // this.state.deals.map(d => {
-    //   this.state.userDeals.map(ud => {
-    //     return ud.frontend_id !== d.deal.id ? filteredDeals.push(d) : null
-    //   })
-    // });
-    // // console.log(filteredDeals);
-    // this.setState({deals:filteredDeals});
-  }
+  // autoLogin = () => {
+  //   if (!!token) {
+  //     // console.log('mounting',this.state);
+  //     API.getUser(token)
+  //     .then(user => {
+  //       this.setState({
+  //         loggedIn: true,
+  //         token: token
+  //       })
+  //     })
+  //   };
+  // }
 
   componentDidMount(){
     const token = localStorage.getItem('token');
     let queryPage = 1;
     while(queryPage < 5){
-      API.getCategory(this.props.match.params.slug,queryPage)
+      API.getCategoryDeals(this.props.match.params.slug,queryPage)
       .then(data => this.setState({deals: this.state.deals.concat(data.deals)}));
       queryPage++;
+      console.log(queryPage)
     };
-    this.autoLogin();
-    API.getUserDeals(token)
-    .then(deals => {
-      // console.log('GIVE ME SOME DEALS', deals);
-      this.setState({userDeals: deals})
-    })
+    // this.autoLogin();
+    if (this.state.loggedIn) {
+      API.getUserDeals(token)
+      .then(deals => {
+        // console.log('GIVE ME SOME DEALS', deals);
+        this.setState({userDeals: deals})
+      })
+    }
     //   this.setState({userDeals: deals});
     //   let filteredDeals = [];
     //   this.state.deals.map(d => {
@@ -74,6 +66,7 @@ class DealsContainer extends React.Component {
   filteredDeals = () => {
     return this.state.deals.filter(dealObject => {
       const frontendIds = this.state.userDeals.map(ud=> ud.frontend_id)
+      // console.log(frontendIds);
       return !frontendIds.includes(dealObject.deal.id)
     })
   }
@@ -87,11 +80,21 @@ class DealsContainer extends React.Component {
       <Container>
         <br/>
         <Typography variant='h5' component='h1' align='center'>
-          {slug.split('').includes('-') ? slug.replace('-',' & ').toUpperCase() : slug.toUpperCase()}
+          {slug.split('').includes('-') ? slug.replace('-',' & ').toUpperCase() : slug.split('').includes('_') ? slug.replace('_',' & ').toUpperCase() : slug.toUpperCase()}
         </Typography>
         <br/>
         <GridList cellHeight='auto' cols={1}>
-          {this.filteredDeals().map(d => {
+          {this.state.loggedIn ? this.filteredDeals().map(d => {
+            // console.log(d)
+            return (
+              <GridListTile key={d.deal.id}>
+                <DealCard
+                  deal={d.deal}
+                  loggedIn={this.state.loggedIn}
+                />
+              </GridListTile>
+            )
+          }) : this.state.deals.map(d => {
             // console.log(d)
             return (
               <GridListTile key={d.deal.id}>

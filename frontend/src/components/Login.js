@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { ReactComponent as Logo } from '../assets/dealpal.svg';
+import API from '../api';
 
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -44,15 +45,30 @@ const Login = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.login(formData);
+    API.login(formData)
+    .then(data => {
+      // console.log("data", data);
+      const { token } = data;
+      localStorage.setItem('token', token);
+    });
+    // props.login(formData);
     setFormData({username:'',password:''});
-    return <Redirect to='/your-deals' />
+    // console.log('submitted login', props)
+    props.history.push('/');
   }
 
   const classes = useStyles();
 
   return (
     <Container component="main" maxWidth="xs">
+      <br/>
+      <br/>
+      <br/>
+      <Grid container justify='center'>
+        <Grid item>
+          <Logo/>
+        </Grid>
+      </Grid>
       <CssBaseline />
       <div className={classes.paper}>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
@@ -64,7 +80,7 @@ const Login = (props) => {
             id="username"
             label="Username"
             name="username"
-            autoComplete="username"
+            autoComplete="off"
             autoFocus
             value={formData.username}
             onChange={handleChange}
@@ -78,7 +94,7 @@ const Login = (props) => {
             label="Password"
             type="password"
             id="password"
-            autoComplete="current-password"
+            autoComplete="off"
             value={formData.password}
             onChange={handleChange}
           />

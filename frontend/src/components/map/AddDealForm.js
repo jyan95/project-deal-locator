@@ -1,14 +1,9 @@
 import React, { useState } from 'react';
-// import { Redirect } from 'react-router-dom';
-import { ReactComponent as Logo } from '../assets/dealpal.svg';
-import API from '../api';
 
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -20,7 +15,7 @@ const useStyles = makeStyles(theme => ({
     },
   },
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(5),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -34,64 +29,46 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const SignUp = (props) => {
-
-  const [formData, setFormData] = useState({username: '', password: '',phone:''});
+const AddDealForm = (props) => {
+  const classes = useStyles();
+  const [formData, setFormData] = useState({
+    name: '',
+    description: '',
+    expiration: ''
+  });
 
   const handleChange = (e) => {
     setFormData({...formData, [e.target.name]: e.target.value})
-    // console.log('handling signup form', formData);
+    // console.log('handling login form', formData);
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    API.signup(formData);
-    setFormData({username:'',password:'',phone:''});
-    props.history.push('/');
+    props.submitForm(formData);
+    setFormData({name:'',description:'',expiration:''})
   }
-
-  const classes = useStyles();
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <br/>
-      <br/>
-      <br/>
-      <Grid container justify='center'>
-        <Grid item>
-          <Logo/>
-        </Grid>
-      </Grid>
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          Sign up
+          Add Deal
         </Typography>
-        <form className={classes.form} noValidate onSubmit={handleSubmit}>
+        <form className={classes.form} onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
+                name="name"
                 variant="outlined"
                 required
                 fullWidth
-                id="username"
-                label="Username"
-                name="username"
-                autoComplete="username"
-                value={formData.username}
+                id="name"
+                label="Deal Name"
+                autoFocus
+                value={formData.name}
                 onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                fullWidth
-                id="phone"
-                label="Phone"
-                name="phone"
-                autoComplete="phone"
-                value={formData.phone}
-                onChange={handleChange}
+                autoComplete='off'
               />
             </Grid>
             <Grid item xs={12}>
@@ -99,16 +76,27 @@ const SignUp = (props) => {
                 variant="outlined"
                 required
                 fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                value={formData.password}
+                multiline
+                id="description"
+                label="Description"
+                name="description"
+                value={formData.description}
                 onChange={handleChange}
+                autoComplete='off'
               />
             </Grid>
             <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="expiration"
+                label="Expire Date"
+                id="expiration"
+                value={formData.expiration}
+                onChange={handleChange}
+                autoComplete='off'
+              />
             </Grid>
           </Grid>
           <Button
@@ -118,21 +106,12 @@ const SignUp = (props) => {
             color="primary"
             className={classes.submit}
           >
-            Sign Up
+            add deal
           </Button>
-          <Grid container justify="center">
-            <Grid item>
-              <Link href="/login" variant="body2">
-                Already have an account? Sign in
-              </Link>
-            </Grid>
-          </Grid>
         </form>
       </div>
-      <Box mt={5}>
-      </Box>
     </Container>
   );
 }
 
-export default SignUp;
+export default AddDealForm;
