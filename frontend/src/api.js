@@ -174,6 +174,10 @@ const getUserAddedDeals = () => {
   return get(`${BACKEND_API}/added-deals`)
 }
 
+const removeDealFromMap = (id) => {
+  return fetch(`${BACKEND_API}/remove-deal-from-map/${id}`,{method:'DELETE'})
+}
+
 const API = {
   getDeal,
   removeDeal,
@@ -189,7 +193,8 @@ const API = {
   signup,
   addUserDeal,
   addDealToMap,
-  getUserAddedDeals
+  getUserAddedDeals,
+  removeDealFromMap
 };
 
 export default API;

@@ -74,7 +74,7 @@ class HomeMap extends React.Component {
 
   // MULTI PAGE QUERY
   componentDidMount(){
-    this.getLocationAndDeals();
+    // this.getLocationAndDeals();
     this.getUserAddedDeals();
     // switch off during dev
   }
@@ -105,30 +105,38 @@ class HomeMap extends React.Component {
   }
 
   renderUserAddedDeals = () => {
-    return this.state.userAddedDeals.map(d => <UserAddedDealMarker key={d.id} deal={d}/>)
+    return this.state.userAddedDeals.map(d => <UserAddedDealMarker key={d.id} deal={d} currentUserToken={token}/>)
   }
 
-  toggleMode = () => {
-    console.log(this.state.displayTooltip)
+  toggleMode = (e) => {
+    console.log('clicking fab', e.target);
+    // L.DomEvent.on(
+    //   document.getElementById('fab'),
+    //   'click',
+    //   function(e) {
+    //     console.log(e)
+    //     L.DomEvent.stopPropagation(e)
+    //   }
+    // );
     if(!!token){
       this.setState({addDealMode: !this.state.addDealMode});
       this.setState({displayTooltip: this.state.displayTooltip +1})
     } else {
       // debugger
       this.setState({redirect:true})
-    }
+    };
   }
 
   toggleModal = () => {
-    this.setState({displayModal: !this.state.displayModal})
+    this.setState({displayModal: !this.state.displayModal});
   }
 
   closeTooltip = () => {
-    this.setState({displayTooltip: this.state.displayTooltip +1})
+    this.setState({displayTooltip: this.state.displayTooltip +1});
   }
 
-  handleMapClick = (e) => {
-    // console.log(e);
+  mapClick = (e) => {
+    console.log('clicking map', e.target);
     this.setState({clickLat:e.latlng.lat, clickLon:e.latlng.lng});
     this.toggleModal();
     // console.log(this.state)
@@ -143,13 +151,13 @@ class HomeMap extends React.Component {
       this.toggleMode();
     } else {
       alert('please log in!')
-    }
+    };
   }
 
   redirect = () => {
     if(this.state.redirect){
       return <Redirect to='/login' />
-    }
+    };
   }
 
   render(){
@@ -157,7 +165,7 @@ class HomeMap extends React.Component {
     // {this.state.filter === 'All' ? this.renderAllDeals() : this.renderFilteredDeals()}
     return(
       <div>
-        <Map id='map' center={userLocation} zoom={16} onClick={this.state.addDealMode ? this.handleMapClick : null}>
+        <Map id='map' center={userLocation} zoom={16} onClick={this.state.addDealMode ? this.mapClick : null} >
           <TileLayer
             attribution={MAPTYPE_URL}
             url={MAPTYPE_URL}
@@ -172,7 +180,7 @@ class HomeMap extends React.Component {
             marginTop: 10,
             marginRight: 10
           }}>
-            <Fab variant='extended' color="primary" aria-label="Add" size='medium' onClick={this.toggleMode} >
+            <Fab id='fab' variant='extended' color="primary" aria-label="Add" size='medium' onClick={this.toggleMode} >
               {!!token ? !this.state.addDealMode ? 'add deal' : 'exit' : 'sign in'}
             </Fab>
           </div>
