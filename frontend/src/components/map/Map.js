@@ -1,28 +1,24 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { Map, TileLayer, Marker } from 'react-leaflet';
 import L from 'leaflet';
-import './Map.css';
+import { Map, TileLayer, Marker } from 'react-leaflet';
 import DealMarker from './DealMarker';
 import UserAddedDealMarker from './UserAddedDealMarker';
 import AddDealForm from './AddDealForm';
-// import UserMarker from './UserMarker';
 import API from '../../api';
+import { lat , lon } from '../../App';
 
+// import UserMarker from './UserMarker';
+
+import './Map.css';
 import Fab from '@material-ui/core/Fab';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-// import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 
 const MAPTYPE_URL = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png';
-
-let token = localStorage.getItem('token');
-let lat = 40.706858499999996;
-let lon = -74.01491589999999;
-let userLocation = [lat,lon];
 
 const userIcon = new L.Icon({
   iconUrl: require('../../assets/userIcon.png'),
@@ -30,6 +26,11 @@ const userIcon = new L.Icon({
   popupAnchor: [10,-44],
   iconSize: [30,30]
 })
+
+let token = localStorage.getItem('token');
+// let lat = 40.706858499999996;
+// let lon = -74.01491589999999;
+// let userLocation = [lat,lon];
 
 class HomeMap extends React.Component {
   state = {
@@ -81,27 +82,27 @@ class HomeMap extends React.Component {
     // this.getLocationAndDeals();
     this.getUserAddedDeals();
     // switch off during dev
+    // console.log( lat, lon );
   }
-  // MULTI PAGE QUERY
-
-  // renderUserLocation = () => {
-  //   // return <UserMarker position={this.state.position} />
-  //   // let { latitude, longitude } = this.state.position.coords;
-  //   // console.log('in render user location fn:', latitude);
-  //   return <Marker position={userLocation} icon={userIcon}/>
-  // }
 
   renderUserLocation = () => {
-    if ('geolocation' in navigator) {
-      // console.log('fetching location');
-      navigator.geolocation.getCurrentPosition((position) => {
-        // debugger
-        return <Marker position={[position.coords.latitude, position.coords.longitude]} icon={userIcon}/>
-      });
-    } else {
-      console.log('geolocation is not available');
-    }
+    // return <UserMarker position={this.state.position} />
+    // let { latitude, longitude } = this.state.position.coords;
+    // console.log('in render user location fn:', latitude);
+    return <Marker position={[lat,lon]} icon={userIcon}/>
   }
+
+  // renderUserLocation = () => {
+  //   if ('geolocation' in navigator) {
+  //     // console.log('fetching location');
+  //     navigator.geolocation.getCurrentPosition((position) => {
+  //       // debugger
+  //       return <Marker position={[position.coords.latitude, position.coords.longitude]} icon={userIcon}/>
+  //     });
+  //   } else {
+  //     console.log('geolocation is not available');
+  //   }
+  // }
 
   renderAPIDeals = () => {
     // console.log('rendering deals');
@@ -140,8 +141,7 @@ class HomeMap extends React.Component {
     // console.log('adding deal', formData);
     // const token = localStorage.getItem('token');
     if(!!token){
-      API.addDealToMap(token, formData, this.state.clickLat, this.state.clickLon)
-      .then(this.getUserAddedDeals());
+      API.addDealToMap(token, formData, this.state.clickLat, this.state.clickLon).then(this.getUserAddedDeals);
       this.toggleModal();
       this.toggleMode();
     } else {
@@ -158,6 +158,7 @@ class HomeMap extends React.Component {
   render(){
     // console.log('map props',this.props);
     // {this.state.filter === 'All' ? this.renderAllDeals() : this.renderFilteredDeals()}
+    // console.log( lat, lon );
     return(
       <div>
         <div style={{
@@ -172,7 +173,7 @@ class HomeMap extends React.Component {
             {!!token ? !this.state.addDealMode ? 'add deal' : 'exit' : 'sign in'}
           </Fab>
         </div>
-        <Map id='map' center={userLocation} zoom={16} onClick={this.state.addDealMode ? this.mapClick : null} >
+        <Map id='map' center={[lat,lon]} zoom={16} onClick={this.state.addDealMode ? this.mapClick : null} >
           <TileLayer
             attribution={MAPTYPE_URL}
             url={MAPTYPE_URL}

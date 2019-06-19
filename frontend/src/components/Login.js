@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ReactComponent as Logo } from '../assets/dealpal.svg'
+import { ReactComponent as Logo } from '../assets/dealpal.svg';
 import API from '../api';
 
 import Button from '@material-ui/core/Button';

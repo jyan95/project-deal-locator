@@ -45,10 +45,6 @@ const getCategories = () => {
   return get(`${FRONTEND_API}/categories`)
 }
 
-// const getUserCategories = () => {
-//   return get(`${BACKEND_API}/users`)
-// }
-
 const getUserDeals = (token) => {
   return fetch(`${BACKEND_API}/user-deals`,{
     headers: {
@@ -80,6 +76,10 @@ const getUserAddedDeals = () => {
 const getLatLon = (address) => {
   return get(`${GEOCODING_API}&location=${address}, NY`)
   // .then(data => console.log('lat', data.results[0].locations[0].latLng.lat))
+}
+
+const getLastAdded = () => {
+  return get(`${BACKEND_API}/last-added`)
 }
 
 //*****************************************************************************
@@ -202,6 +202,7 @@ const API = {
   getUserDeals,
   getUserAddedDeals,
   getLatLon,
+  getLastAdded,
 
   addUserDeal,
   addDealToMap,

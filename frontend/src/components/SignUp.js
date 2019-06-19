@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
+import { ReactComponent as Logo } from '../assets/dealpal.svg';
 import API from '../api';
-//styling
+
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -46,7 +47,7 @@ const SignUp = (props) => {
     e.preventDefault();
     API.signup(formData);
     setFormData({username:'',password:'',phone:''});
-    return <Redirect to='/login' />
+    props.history.push('/');
   }
 
   const classes = useStyles();
@@ -54,6 +55,14 @@ const SignUp = (props) => {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
+      <br/>
+      <br/>
+      <br/>
+      <Grid container justify='center'>
+        <Grid item>
+          <Logo/>
+        </Grid>
+      </Grid>
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
           Sign up

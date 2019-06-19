@@ -1,16 +1,12 @@
 import React from 'react';
-// import './Categories.css';
-// import API from '../api';
 import Login from '../components/Login';
 import UserDeals from './UserDeals';
 
-import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 
 let token = localStorage.getItem('token');
 
-// index page for all categories
 class FollowedDeals extends React.Component {
   state = {
     loggedIn: !!token
@@ -43,11 +39,6 @@ class FollowedDeals extends React.Component {
   //   })
   // }
 
-  logout = () => {
-    localStorage.clear();
-    this.setState({loggedIn: false, currentUser: null});
-  }
-
   render(){
     return(
       <Container>
@@ -57,13 +48,6 @@ class FollowedDeals extends React.Component {
           {this.state.loggedIn ? `YOUR DEALS` : `Please sign in to see your deals`}
         </Typography>
         {this.state.loggedIn ? <UserDeals /> : <Login login={this.login}/>}
-        {this.state.loggedIn ? <Button variant="contained" color="primary" onClick={this.logout}>
-          Logout
-        </Button> : null }
-        <br/>
-        <br/>
-        <br/>
-        <br/>
       </Container>
     )
   }

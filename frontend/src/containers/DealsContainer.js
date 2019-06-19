@@ -9,7 +9,6 @@ import Typography from '@material-ui/core/Typography';
 
 let token = localStorage.getItem('token');
 
-// deals index
 class DealsContainer extends React.Component {
   state = {
     deals: [],

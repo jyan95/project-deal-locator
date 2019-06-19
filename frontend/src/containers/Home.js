@@ -3,7 +3,7 @@ import Map from '../components/map/Map';
 // import API from '../api';
 // import './Home.css';
 
-function Home() {
+const Home = () => {
   // getUserLocation = () => {
   //   if ('geolocation' in navigator) {
   //     // console.log('fetching location');
