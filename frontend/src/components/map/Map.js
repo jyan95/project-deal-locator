@@ -145,7 +145,7 @@ class HomeMap extends React.Component {
       this.toggleModal();
       this.toggleMode();
     } else {
-      alert('please log in!')
+      alert('please log in!');
     };
   }
 
@@ -180,10 +180,7 @@ class HomeMap extends React.Component {
             maxZoom='18'
             minZoom='14'
           />
-          <Dialog
-            open={this.state.displayModal}
-            onClose={this.toggleModal}
-          >
+          <Dialog open={this.state.displayModal} onClose={this.toggleModal}>
             <AddDealForm submitForm={this.addDeal}/>
           </Dialog>
           <Dialog

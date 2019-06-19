@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
+// import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -29,12 +29,12 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const AddDealForm = (props) => {
+const EditUserForm = (props) => {
   const classes = useStyles();
   const [formData, setFormData] = useState({
-    name: '',
-    description: '',
-    expiration: ''
+    username: '',
+    phone: '',
+    password: ''
   });
 
   const handleChange = (e) => {
@@ -45,28 +45,28 @@ const AddDealForm = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     props.submitForm(formData);
-    setFormData({name:'',description:'',expiration:''})
+    setFormData({username:'',phone:'',password:''})
   }
 
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
+
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          Add Deal
+          Update Info
         </Typography>
-        <form className={classes.form} onSubmit={handleSubmit}>
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
-                name="name"
+                name="username"
                 variant="outlined"
                 required
                 fullWidth
-                id="name"
-                label="Deal Name"
+                id="username"
+                label="Username"
                 autoFocus
-                value={formData.name}
+                value={formData.username}
                 onChange={handleChange}
                 autoComplete='off'
               />
@@ -74,13 +74,12 @@ const AddDealForm = (props) => {
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
-                required
                 fullWidth
                 multiline
-                id="description"
-                label="Description"
-                name="description"
-                value={formData.description}
+                id="phone"
+                label="Phone"
+                name="phone"
+                value={formData.phone}
                 onChange={handleChange}
                 autoComplete='off'
               />
@@ -90,10 +89,10 @@ const AddDealForm = (props) => {
                 variant="outlined"
                 required
                 fullWidth
-                name="expiration"
-                label="Expire Date"
-                id="expiration"
-                value={formData.expiration}
+                name="password"
+                label="Password"
+                id="password"
+                value={formData.password}
                 onChange={handleChange}
                 autoComplete='off'
               />
@@ -106,7 +105,7 @@ const AddDealForm = (props) => {
             color="primary"
             className={classes.submit}
           >
-            add deal
+            Update Info
           </Button>
         </form>
       </div>
@@ -114,4 +113,4 @@ const AddDealForm = (props) => {
   );
 }
 
-export default AddDealForm;
+export default EditUserForm;

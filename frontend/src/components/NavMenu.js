@@ -19,7 +19,7 @@ function loginClick() {
 }
 
 function profileClick() {
-  console.log('clicking profile');
+  window.open('/profile','_self');
 }
 
 const NavMenu = () => {

@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './containers/Home';
+import UserProfile from './containers/UserProfile';
 import SignUp from './components/SignUp';
 import Login from './components/Login';
 import CategoriesContainer from './containers/CategoriesContainer';
@@ -37,6 +38,7 @@ const App = () => {
         <Route path='/your-deals' component={FollowedDeals} />
         <Route path='/signup' component={SignUp} />
         <Route path='/login' component={Login} />
+        <Route path='/profile' component={UserProfile} />
       </Switch>
       {getLocation()}
     </React.Fragment>

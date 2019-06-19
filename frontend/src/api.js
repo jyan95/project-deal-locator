@@ -1,3 +1,5 @@
+import { lat , lon } from './App';
+
 const DEALS_KEY = process.env.REACT_APP_DEALS_API_KEY;
 const MAPQUEST_KEY = process.env.REACT_APP_MAPQUEST_API_KEY;
 const BACKEND_API = 'http://localhost:3000/api/v1';
@@ -5,8 +7,7 @@ const FRONTEND_API = 'https://api.discountapi.com/v2';
 const GEOCODING_API = `http://www.mapquestapi.com/geocoding/v1/address?key=${MAPQUEST_KEY}`;
 const LOGIN_URL = 'http://localhost:3000/api/v1/login';
 const SIGNUP_URL = 'http://localhost:3000/api/v1/signup';
-let location = '40.7068069,-74.0149976'; // 11 broadway
-// let distance = '2';
+// let location = '40.7068069,-74.0149976'; // 11 broadway
 
 //*****************************************************************************
 // GET FETCHES
@@ -37,8 +38,8 @@ const getDeals = (lat,lon,page) => {
   return get(`${FRONTEND_API}/deals?api_key=${DEALS_KEY}&location=${lat},${lon}&radius=2&page=${page}`)
 }
 
-const getCategory = (query,queryPage) => {
-  return get(`${FRONTEND_API}/deals?api_key=${DEALS_KEY}&location=${location}&category_slugs=${query}&page=${queryPage}`)
+const getCategoryDeals = (query,queryPage) => {
+  return get(`${FRONTEND_API}/deals?api_key=${DEALS_KEY}&location=${lat},${lon}&category_slugs=${query}&page=${queryPage}`)
 }
 
 const getCategories = () => {
@@ -177,6 +178,18 @@ const signup = (formData) => {
   })
 }
 
+const editUser = (token, formData) => {
+  console.log('editting user', formData);
+  return fetch(`${BACKEND_API}/edit-user`,{
+    method: 'PATCH',
+    headers: {
+      Authorization: token,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(formData)
+  })
+}
+
 //*****************************************************************************
 // DELETE FETCHES
 //*****************************************************************************
@@ -189,6 +202,10 @@ const removeDealFromMap = (id) => {
   return fetch(`${BACKEND_API}/remove-deal-from-map/${id}`,{method:'DELETE'})
 }
 
+const deleteUser = () => {
+  return fetch(`${BACKEND_API}/delete-user`, {method:'DELETE'})
+}
+
 //*****************************************************************************
 // EXPORTED FUNCTIONS
 //*****************************************************************************
@@ -197,7 +214,7 @@ const API = {
   getUser,
   getDeal,
   getDeals,
-  getCategory,
+  getCategoryDeals,
   getCategories,
   getUserDeals,
   getUserAddedDeals,
@@ -210,8 +227,11 @@ const API = {
   login,
   signup,
 
+  editUser,
+
   removeDeal,
-  removeDealFromMap
+  removeDealFromMap,
+  deleteUser
 };
 
 export default API;

@@ -1,6 +1,7 @@
 import React from 'react';
 import DealCard from '../components/cards/Card';
 import API from '../api';
+// import { lat , lon } from '../App';
 
 import Container from '@material-ui/core/Container';
 import GridList from '@material-ui/core/GridList';
@@ -34,9 +35,10 @@ class DealsContainer extends React.Component {
     const token = localStorage.getItem('token');
     let queryPage = 1;
     while(queryPage < 5){
-      API.getCategory(this.props.match.params.slug,queryPage)
+      API.getCategoryDeals(this.props.match.params.slug,queryPage)
       .then(data => this.setState({deals: this.state.deals.concat(data.deals)}));
       queryPage++;
+      console.log(queryPage)
     };
     // this.autoLogin();
     if (this.state.loggedIn) {
@@ -78,7 +80,7 @@ class DealsContainer extends React.Component {
       <Container>
         <br/>
         <Typography variant='h5' component='h1' align='center'>
-          {slug.split('').includes('-') ? slug.replace('-',' & ').toUpperCase() : slug.toUpperCase()}
+          {slug.split('').includes('-') ? slug.replace('-',' & ').toUpperCase() : slug.split('').includes('_') ? slug.replace('_',' & ').toUpperCase() : slug.toUpperCase()}
         </Typography>
         <br/>
         <GridList cellHeight='auto' cols={1}>

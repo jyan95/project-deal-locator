@@ -15,7 +15,7 @@ class IndexContainer extends React.Component {
   };
 
   setCategory = (slug) => {
-    API.getCategory(slug)
+    API.getCategoryDeals(slug)
     .then(data => (
       this.setState({
         active_index: 'deals',
