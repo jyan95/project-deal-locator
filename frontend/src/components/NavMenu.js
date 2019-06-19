@@ -5,6 +5,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import MoreIcon from '@material-ui/icons/MoreVert';
 
+
+const token = localStorage.getItem('token');
+
 function logoutClick() {
   console.log('clicking logout');
   localStorage.clear();
@@ -19,12 +22,11 @@ function loginClick() {
 }
 
 function profileClick() {
-  window.open('/profile','_self');
+  window.open('/profile/','_self');
 }
 
 const NavMenu = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const token = localStorage.getItem('token');
 
   function handleClick(event) {
     setAnchorEl(event.currentTarget);

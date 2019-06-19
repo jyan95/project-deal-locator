@@ -14,102 +14,97 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 
 let token = localStorage.getItem('token');
 
-const useStyles = makeStyles(theme => ({
-  '@global': {
-    body: {
-      backgroundColor: theme.palette.common.white,
-    },
-  },
-  paper: {
-    marginTop: theme.spacing(5),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  }
-}));
+class UserProfile extends React.Component {
+  state = {
+    displayForm: false,
+    displayConfirm: false,
+    currentUser: {}
+  };
 
-const UserProfile = (props) => {
-
-  const [displayForm, setDisplayForm] = useState(false);
-  const [displayConfirm, setDisplayConfirm] = useState(false);
-
-  const classes = useStyles();
-
-  const toggleFormModal = () => {
-    setDisplayForm(!displayForm);
+  toggleFormModal = () => {
+    this.setState({displayForm:!this.state.displayForm});
   }
 
-  const toggleConfirmModal = () => {
-    setDisplayConfirm(!displayConfirm);
+  toggleConfirmModal = () => {
+    this.setState({displayConfirm:!this.state.displayConfirm});
   }
 
-  const editUser = (formData) => {
-
+  editUser = (formData) => {
     API.editUser(token, formData)
   }
 
-  const deleteUser = () => {
-    console.log('deleting user')
-    API.deleteUser(token)
+  deleteUser = () => {
+    // console.log('deleting user');
+    API.deleteUser(token);
+  }
+
+  componentDidMount() {
+    if(!!token) {
+      API.getUser(token)
+      .then(user => this.setState({currentUser: user}))
+    }
   }
 
   // useEffect(() => {
   //   API.getUser(token).then(user => setCurrentUser(user));
   //   console.log(currentUser)
   // }, [currentUser])
-
-  return (
-    <Container component="main" maxWidth="xs">
-      <div className={classes.paper}>
-        <Typography component="h1" variant="h5">
-          Your Profile
-        </Typography>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-          Username:
+  render () {
+    let { username, phone, added_deals, deals } = this.state.currentUser;
+    console.log(this.state)
+    return (
+      <Container component="main" maxWidth="xs">
+        <div>
+          <Typography component="h1" variant="h5">
+            Your Profile
+          </Typography>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+            Username: {username}
+            </Grid>
+            <Grid item xs={12}>
+            Phone: {!!phone ? phone : 'not listed'}
+            </Grid>
+            <Grid item xs={12}>
+            Added Deals: {!!added_deals ? added_deals.length : null}
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-          Phone:
+          <br/>
+          <br/>
+          <Grid container direction='row' justify='center' spacing={2}>
+            <Grid item sm={6}>
+              <Button variant="outlined" color="primary" onClick={this.toggleFormModal} >
+                update info
+              </Button>
+            </Grid>
+            <Grid item sm={6}>
+              <Button variant="outlined" color="secondary" onClick={this.toggleConfirmModal} >
+                delete account
+              </Button>
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-          Added Deals:
-          </Grid>
-        </Grid>
-        <br/><br/>
-        <Grid container direction='row' justify='center' spacing={2}>
-          <Grid item sm={6}>
-            <Button variant="outlined" color="primary" onClick={toggleFormModal} >
-              update info
+        </div>
+        <Dialog open={this.state.displayForm} onClose={this.toggleFormModal}>
+          <EditUserForm submitForm={this.editUser}/>
+        </Dialog>
+        <Dialog open={this.state.displayConfirm} onClose={this.toggleConfirmModal}>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Are you sure you want to delete your account?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.deleteUser} color="primary">
+              confirm
             </Button>
-          </Grid>
-          <Grid item sm={6}>
-            <Button variant="outlined" color="secondary" onClick={toggleConfirmModal} >
-              delete account
+            <Button onClick={this.toggleConfirmModal} color="primary">
+              cancel
             </Button>
-          </Grid>
-        </Grid>
-      </div>
-      <Dialog open={displayForm} onClose={toggleFormModal}>
-        <EditUserForm submitForm={editUser}/>
-      </Dialog>
-      <Dialog open={displayConfirm} onClose={toggleConfirmModal}>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Are you sure you want to delete your account?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={deleteUser} color="primary">
-            confirm
-          </Button>
-          <Button onClick={toggleConfirmModal} color="primary">
-            cancel
-          </Button>
-        </DialogActions>
-      </Dialog>
-
-    </Container>
-  )
+          </DialogActions>
+        </Dialog>
+      </Container>
+    )
+  }
 }
 
 export default UserProfile;
