@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 let token = localStorage.getItem('token');
 
 // index page for all categories
-class Basket extends React.Component {
+class FollowedDeals extends React.Component {
   state = {
     loggedIn: !!token
   };
@@ -69,4 +69,4 @@ class Basket extends React.Component {
   }
 }
 
-export default Basket;
+export default FollowedDeals;

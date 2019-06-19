@@ -58,7 +58,11 @@ class HomeMap extends React.Component {
 
   getUserAddedDeals = () => {
     API.getUserAddedDeals()
-    .then(data => this.setState({userAddedDeals: this.state.userAddedDeals.concat(data)}));
+    // .then(data => this.setState({userAddedDeals: this.state.userAddedDeals.concat(data)}));
+    //
+    .then(data => data.map(d => {
+      return this.setState({userAddedDeals: [...this.state.userAddedDeals, d]})
+    }))
   }
 
   getLocationAndDeals = () => {
@@ -109,15 +113,6 @@ class HomeMap extends React.Component {
   }
 
   toggleMode = (e) => {
-    console.log('clicking fab', e.target);
-    // L.DomEvent.on(
-    //   document.getElementById('fab'),
-    //   'click',
-    //   function(e) {
-    //     console.log(e)
-    //     L.DomEvent.stopPropagation(e)
-    //   }
-    // );
     if(!!token){
       this.setState({addDealMode: !this.state.addDealMode});
       this.setState({displayTooltip: this.state.displayTooltip +1})
@@ -136,7 +131,6 @@ class HomeMap extends React.Component {
   }
 
   mapClick = (e) => {
-    console.log('clicking map', e.target);
     this.setState({clickLat:e.latlng.lat, clickLon:e.latlng.lng});
     this.toggleModal();
     // console.log(this.state)
@@ -146,7 +140,8 @@ class HomeMap extends React.Component {
     // console.log('adding deal', formData);
     // const token = localStorage.getItem('token');
     if(!!token){
-      API.addDealToMap(token, formData, this.state.clickLat, this.state.clickLon).then(this.getUserAddedDeals());
+      API.addDealToMap(token, formData, this.state.clickLat, this.state.clickLon)
+      .then(this.getUserAddedDeals());
       this.toggleModal();
       this.toggleMode();
     } else {
@@ -165,6 +160,18 @@ class HomeMap extends React.Component {
     // {this.state.filter === 'All' ? this.renderAllDeals() : this.renderFilteredDeals()}
     return(
       <div>
+        <div style={{
+          zIndex: 9999,
+          position: 'absolute',
+          display: 'flex',
+          justifyContent: 'flex-end',
+          top: 10,
+          right: 10
+        }}>
+          <Fab id='fab' variant='extended' color="primary" aria-label="Add" size='medium' onClick={this.toggleMode} >
+            {!!token ? !this.state.addDealMode ? 'add deal' : 'exit' : 'sign in'}
+          </Fab>
+        </div>
         <Map id='map' center={userLocation} zoom={16} onClick={this.state.addDealMode ? this.mapClick : null} >
           <TileLayer
             attribution={MAPTYPE_URL}
@@ -172,18 +179,6 @@ class HomeMap extends React.Component {
             maxZoom='18'
             minZoom='14'
           />
-          <div style={{
-            zIndex: 9999,
-            position: 'relative',
-            display: 'flex',
-            justifyContent: 'flex-end',
-            marginTop: 10,
-            marginRight: 10
-          }}>
-            <Fab id='fab' variant='extended' color="primary" aria-label="Add" size='medium' onClick={this.toggleMode} >
-              {!!token ? !this.state.addDealMode ? 'add deal' : 'exit' : 'sign in'}
-            </Fab>
-          </div>
           <Dialog
             open={this.state.displayModal}
             onClose={this.toggleModal}

@@ -1,12 +1,12 @@
 import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './containers/Home';
 import SignUp from './components/SignUp';
 import Login from './components/Login';
 import CategoriesContainer from './containers/CategoriesContainer';
 import DealsContainer from './containers/DealsContainer';
-import Basket from './containers/Basket';
-import { Switch, Route } from 'react-router-dom';
+import FollowedDeals from './containers/FollowedDeals';
 
 import './App.css';
 
@@ -18,7 +18,7 @@ const App = () => {
         <Route exact path='/' component={Home} />
         <Route path='/categories/:slug' component={DealsContainer} />
         <Route exact path='/categories/' component={CategoriesContainer} />
-        <Route path='/your-deals' component={Basket} />
+        <Route path='/your-deals' component={FollowedDeals} />
         <Route path='/signup' component={SignUp} />
         <Route path='/login' component={Login} />
       </Switch>

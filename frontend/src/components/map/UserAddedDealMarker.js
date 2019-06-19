@@ -52,8 +52,7 @@ class UserAddedDealMarker extends React.Component {
               :
               null }
           </Popup>
-        </Marker>
-        }
+        </Marker>}
       </div>
     )
   }

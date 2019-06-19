@@ -34,7 +34,7 @@ class UserDealCard extends React.Component {
               {short_title}
             </Typography>
           </CardActionArea>
-            <Grid container spacing={3}>
+            <Grid container spacing={3} alignItems='baseline'>
               <Grid item xs={8}>
                 <Typography variant="body2" color="textSecondary" component="p">
                   Address: {merchant.address}

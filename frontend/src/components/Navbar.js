@@ -33,7 +33,7 @@ const Navbar = () => {
     <div className={classes.grow}>
       <AppBar position='fixed' className={classes.appBar}>
         <Toolbar>
-          <Grid container direction='row' justify='space-evenly' alignItems='center'>            
+          <Grid container direction='row' justify='space-evenly' alignItems='center'>
             <Grid item>
               <Button href='/' color='inherit'>
                 <MapIcon/>

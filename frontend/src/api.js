@@ -8,6 +8,9 @@ const SIGNUP_URL = 'http://localhost:3000/api/v1/signup';
 let location = '40.7068069,-74.0149976'; // 11 broadway
 // let distance = '2';
 
+//*****************************************************************************
+// GET FETCHES
+//*****************************************************************************
 const get = (url) => {
   // console.log('DEALSKEY',DEALS_KEY);
   // console.log('MAPKEY',MAPQUEST_KEY);
@@ -30,8 +33,12 @@ const getDeal = (id) => {
   return get(`${FRONTEND_API}/deals/${id}`)
 }
 
-const removeDeal = (id) => {
-  return fetch(`${BACKEND_API}/remove-deal/${id}`,{method: 'DELETE'})
+const getDeals = (lat,lon,page) => {
+  return get(`${FRONTEND_API}/deals?api_key=${DEALS_KEY}&location=${lat},${lon}&radius=2&page=${page}`)
+}
+
+const getCategory = (query,queryPage) => {
+  return get(`${FRONTEND_API}/deals?api_key=${DEALS_KEY}&location=${location}&category_slugs=${query}&page=${queryPage}`)
 }
 
 const getCategories = () => {
@@ -66,13 +73,18 @@ const getUserDeals = (token) => {
     // })
 }
 
-const getCategory = (query,queryPage) => {
-  return get(`${FRONTEND_API}/deals?api_key=${DEALS_KEY}&location=${location}&category_slugs=${query}&page=${queryPage}`)
+const getUserAddedDeals = () => {
+  return get(`${BACKEND_API}/added-deals`)
 }
 
-const getDeals = (lat,lon,page) => {
-  return get(`${FRONTEND_API}/deals?api_key=${DEALS_KEY}&location=${lat},${lon}&radius=2&page=${page}`)
+const getLatLon = (address) => {
+  return get(`${GEOCODING_API}&location=${address}, NY`)
+  // .then(data => console.log('lat', data.results[0].locations[0].latLng.lat))
 }
+
+//*****************************************************************************
+// POST FETCHES
+//*****************************************************************************
 
 // const addUserCategory = (slug) => {
 //   return fetch(`${BACKEND_API}/user_categories`, {
@@ -101,9 +113,36 @@ const getDeals = (lat,lon,page) => {
 //   })
 // }
 
-const getLatLon = (address) => {
-  return get(`${GEOCODING_API}&location=${address}, NY`)
-  // .then(data => console.log('lat', data.results[0].locations[0].latLng.lat))
+const addUserDeal = (id, token) => {
+  // console.log('adding user deal', id, token);
+  return fetch(`${BACKEND_API}/add-deal/${id}`,{
+    method: 'POST',
+    headers: {
+      Authorization: token
+    },
+    body: JSON.stringify({
+      deal_id: id
+    })
+  })
+}
+
+const addDealToMap = (token, formData, lat, lon) => {
+  // console.log('in fetch', formData, lat, lon);
+  // debugger
+  return fetch(`${BACKEND_API}/add-deal-to-map`,{
+    method: 'POST',
+    headers: {
+      Authorization: token,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      name: formData.name,
+      description: formData.description,
+      lat: lat,
+      lon: lon,
+      expiration: formData.expiration
+    })
+  })
 }
 
 const login = (formData) => {
@@ -138,62 +177,39 @@ const signup = (formData) => {
   })
 }
 
-const addUserDeal = (id, token) => {
-  // console.log('adding user deal', id, token);
-  return fetch(`${BACKEND_API}/add-deal/${id}`,{
-    method: 'POST',
-    headers: {
-      Authorization: token
-    },
-    body: JSON.stringify({
-      deal_id: id
-    })
-  })
-}
+//*****************************************************************************
+// DELETE FETCHES
+//*****************************************************************************
 
-const addDealToMap = (token, formData, lat, lon) => {
-  console.log('in fetch', formData, lat, lon);
-  // debugger
-  return fetch(`${BACKEND_API}/add-deal-to-map`,{
-    method: 'POST',
-    headers: {
-      Authorization: token,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      name: formData.name,
-      description: formData.description,
-      lat: lat,
-      lon: lon,
-      expiration: formData.expiration
-    })
-  })
-}
-
-const getUserAddedDeals = () => {
-  return get(`${BACKEND_API}/added-deals`)
+const removeDeal = (id) => {
+  return fetch(`${BACKEND_API}/remove-deal/${id}`,{method: 'DELETE'})
 }
 
 const removeDealFromMap = (id) => {
   return fetch(`${BACKEND_API}/remove-deal-from-map/${id}`,{method:'DELETE'})
 }
 
+//*****************************************************************************
+// EXPORTED FUNCTIONS
+//*****************************************************************************
+
 const API = {
-  getDeal,
-  removeDeal,
-  getCategories,
-  getCategory,
-  getDeals,
-  // addUserCategory,
-  // addUserDeal,
-  getLatLon,
   getUser,
+  getDeal,
+  getDeals,
+  getCategory,
+  getCategories,
   getUserDeals,
-  login,
-  signup,
+  getUserAddedDeals,
+  getLatLon,
+
   addUserDeal,
   addDealToMap,
-  getUserAddedDeals,
+
+  login,
+  signup,
+
+  removeDeal,
   removeDealFromMap
 };
 

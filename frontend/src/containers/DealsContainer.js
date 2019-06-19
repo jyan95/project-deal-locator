@@ -1,6 +1,6 @@
 import React from 'react';
-import API from '../api';
 import DealCard from '../components/cards/Card';
+import API from '../api';
 
 import Container from '@material-ui/core/Container';
 import GridList from '@material-ui/core/GridList';
@@ -30,18 +30,6 @@ class DealsContainer extends React.Component {
   //     })
   //   };
   // }
-
-  followClick = () => {
-    // // console.log(this.state.deals);
-    // let filteredDeals = [];
-    // this.state.deals.map(d => {
-    //   this.state.userDeals.map(ud => {
-    //     return ud.frontend_id !== d.deal.id ? filteredDeals.push(d) : null
-    //   })
-    // });
-    // // console.log(filteredDeals);
-    // this.setState({deals:filteredDeals});
-  }
 
   componentDidMount(){
     const token = localStorage.getItem('token');
@@ -102,7 +90,6 @@ class DealsContainer extends React.Component {
                 <DealCard
                   deal={d.deal}
                   loggedIn={this.state.loggedIn}
-                  followClick={this.followClick}
                 />
               </GridListTile>
             )
