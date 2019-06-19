@@ -64,7 +64,11 @@ const Login = (props) => {
       <br/>
       <br/>
       <br/>
-      <Logo/>
+      <Grid container justify='center'>
+        <Grid item>
+          <Logo/>
+        </Grid>
+      </Grid>
       <CssBaseline />
       <div className={classes.paper}>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>

@@ -65,7 +65,6 @@ class HomeMap extends React.Component {
     if ('geolocation' in navigator) {
       // console.log('fetching location');
       navigator.geolocation.getCurrentPosition((position) => {
-        this.setState({ position });
         this.getDeals(position);
       });
     } else {
@@ -81,11 +80,23 @@ class HomeMap extends React.Component {
   }
   // MULTI PAGE QUERY
 
+  // renderUserLocation = () => {
+  //   // return <UserMarker position={this.state.position} />
+  //   // let { latitude, longitude } = this.state.position.coords;
+  //   // console.log('in render user location fn:', latitude);
+  //   return <Marker position={userLocation} icon={userIcon}/>
+  // }
+
   renderUserLocation = () => {
-    // return <UserMarker position={this.state.position} />
-    // let { latitude, longitude } = this.state.position.coords;
-    // console.log('in render user location fn:', latitude);
-    return <Marker position={userLocation} icon={userIcon}/>
+    if ('geolocation' in navigator) {
+      // console.log('fetching location');
+      navigator.geolocation.getCurrentPosition((position) => {
+        // debugger
+        return <Marker position={[position.coords.latitude, position.coords.longitude]} icon={userIcon}/>
+      });
+    } else {
+      console.log('geolocation is not available');
+    }
   }
 
   renderAPIDeals = () => {
