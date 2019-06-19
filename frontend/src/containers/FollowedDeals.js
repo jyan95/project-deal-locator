@@ -47,6 +47,9 @@ class FollowedDeals extends React.Component {
         <Typography variant='h6' component='h1' align='center'>
           {this.state.loggedIn ? `YOUR DEALS` : `Please sign in to see your deals`}
         </Typography>
+        <Typography variant='body2' component='p' align='center'>
+          {this.state.loggedIn ? `(click deal title to open in new tab)` : `Please sign in to see your deals`}
+        </Typography>
         {this.state.loggedIn ? <UserDeals /> : <Login login={this.login}/>}
       </Container>
     )
