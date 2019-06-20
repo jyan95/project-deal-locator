@@ -38,7 +38,7 @@ class DealsContainer extends React.Component {
       API.getCategoryDeals(this.props.match.params.slug,queryPage)
       .then(data => this.setState({deals: this.state.deals.concat(data.deals)}));
       queryPage++;
-      console.log(queryPage)
+      // console.log(queryPage);
     };
     // this.autoLogin();
     if (this.state.loggedIn) {

@@ -30,7 +30,6 @@ class CategoriesContainer extends React.Component {
 
   render(){
     // console.log('Categories',this.state.categories);
-    console.log(this.state);
     return(
       <React.Fragment>
         <Container>
