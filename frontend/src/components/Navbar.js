@@ -23,11 +23,6 @@ const useStyles = makeStyles(theme => ({
 
 const Navbar = () => {
   const classes = useStyles();
-  // const [value, setValue] = React.useState(0);
-
-  // function handleChange(event, newValue) {
-  //   setValue(newValue);
-  // }
 
   return (
     <div className={classes.grow}>

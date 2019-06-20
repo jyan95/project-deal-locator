@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import EditUserForm from '../components/EditUserForm';
+import AddedDealList from '../components/AddedDealList';
 import API from '../api';
 
 import Container from '@material-ui/core/Container';
-import { makeStyles } from '@material-ui/core/styles';
+import CardContent from '@material-ui/core/CardContent';
+import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -31,6 +33,7 @@ class UserProfile extends React.Component {
 
   editUser = (formData) => {
     API.editUser(token, formData)
+    this.setState({displayForm: false});
   }
 
   deleteUser = () => {
@@ -38,39 +41,51 @@ class UserProfile extends React.Component {
     API.deleteUser(token);
   }
 
+  deleteAddedDeal = (id) => {
+    API.deleteAddedDeal(id)
+    .then(r => {
+      let updated = this.state.currentUser.added_deals.filter(ad => ad.id !== id);
+      this.setState({currentUser: {...this.state.currentUser, added_deals: updated}})
+    })
+  }
+
   componentDidMount() {
     if(!!token) {
       API.getUser(token)
       .then(user => this.setState({currentUser: user}))
-    }
+    };
   }
 
-  // useEffect(() => {
-  //   API.getUser(token).then(user => setCurrentUser(user));
-  //   console.log(currentUser)
-  // }, [currentUser])
   render () {
-    let { username, phone, added_deals, deals } = this.state.currentUser;
-    console.log(this.state)
+    let { username, phone, added_deals } = this.state.currentUser;
+    // console.log(this.state);
     return (
       <Container component="main" maxWidth="xs">
         <div>
-          <Typography component="h1" variant="h5">
-            Your Profile
-          </Typography>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-            Username: {username}
-            </Grid>
-            <Grid item xs={12}>
-            Phone: {!!phone ? phone : 'not listed'}
-            </Grid>
-            <Grid item xs={12}>
-            Added Deals: {!!added_deals ? added_deals.length : null}
-            </Grid>
-          </Grid>
           <br/>
           <br/>
+          <CardContent>
+            <Typography component="h1" variant="h6" align='center'>
+              YOUR PROFILE
+            </Typography>
+            <br/>
+            <Divider variant='middle' />
+            <br/>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+              Username: {username}
+              </Grid>
+              <Grid item xs={12}>
+              Phone: {!!phone ? phone : 'not listed'}
+              </Grid>
+              <Grid item xs={12}>
+              Added Deals: {!!added_deals ? <AddedDealList deals={this.state.currentUser.added_deals} handleClick={this.deleteAddedDeal}/> : null}
+              </Grid>
+            </Grid>
+            <br/>
+            <Divider variant='middle' />
+            <br/>
+          </CardContent>
           <Grid container direction='row' justify='center' spacing={2}>
             <Grid item sm={6}>
               <Button variant="outlined" color="primary" onClick={this.toggleFormModal} >

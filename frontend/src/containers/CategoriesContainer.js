@@ -4,9 +4,7 @@ import CategoryCard from '../components/cards/CategoryCard';
 import API from '../api';
 
 import Container from '@material-ui/core/Container';
-// import './Categories.css';
 
-// category index
 class CategoriesContainer extends React.Component {
   state = {
     categories: [],
@@ -15,7 +13,7 @@ class CategoriesContainer extends React.Component {
 
   componentDidMount(){
     API.getCategories()
-    .then(data => this.setState({categories: data.categories, filteredCategories: data.categories}))
+    .then(data => this.setState({categories: data.categories, filteredCategories: data.categories.filter(c => c.category.slug !== 'adult')}))
   }
 
   filterCategories = (input) => {
@@ -30,7 +28,6 @@ class CategoriesContainer extends React.Component {
 
   render(){
     // console.log('Categories',this.state.categories);
-    // console.log(this.props);
     return(
       <React.Fragment>
         <Container>

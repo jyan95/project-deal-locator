@@ -12,33 +12,6 @@ class FollowedDeals extends React.Component {
     loggedIn: !!token
   };
 
-  // componentDidMount(){
-  //   // console.log('hello', this.state);
-  //   // let token = localStorage.getItem('token');
-  //   if (!!token) {
-  //     // console.log('mounting',this.state);
-  //     API.getUser(token)
-  //     .then(user => {
-  //       // alert(user);
-  //       this.setState({
-  //         loggedIn: true,
-  //         currentUser: user
-  //       })
-  //     })
-  //   };
-  // }
-
-  // login = (formData) => {
-  //   // console.log('logging in', formData);
-  //   API.login(formData)
-  //   .then(data => {
-  //     console.log("data", data);
-  //     const { token, user } = data;
-  //     localStorage.setItem('token', token);
-  //     this.setState({currentUser: user, loggedIn: true})
-  //   })
-  // }
-
   render(){
     return(
       <Container>

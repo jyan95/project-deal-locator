@@ -8,8 +8,6 @@ import AddDealForm from './AddDealForm';
 import API from '../../api';
 import { lat , lon } from '../../App';
 
-// import UserMarker from './UserMarker';
-
 import './Map.css';
 import Fab from '@material-ui/core/Fab';
 import Button from '@material-ui/core/Button';
@@ -28,9 +26,6 @@ const userIcon = new L.Icon({
 })
 
 let token = localStorage.getItem('token');
-// let lat = 40.706858499999996;
-// let lon = -74.01491589999999;
-// let userLocation = [lat,lon];
 
 class HomeMap extends React.Component {
   state = {
@@ -42,8 +37,7 @@ class HomeMap extends React.Component {
   };
 
   handleAPIDealClick = (deal) => {
-    console.log('u adding:',deal);
-    // const token = localStorage.getItem('token');
+    // console.log('u adding:',deal);
     API.addUserDeal(deal.id, token)
   }
 
@@ -59,8 +53,6 @@ class HomeMap extends React.Component {
 
   getUserAddedDeals = () => {
     API.getUserAddedDeals()
-    // .then(data => this.setState({userAddedDeals: this.state.userAddedDeals.concat(data)}));
-    //
     .then(data => data.map(d => {
       return this.setState({userAddedDeals: [...this.state.userAddedDeals, d]})
     }))
@@ -79,30 +71,16 @@ class HomeMap extends React.Component {
 
   // MULTI PAGE QUERY
   componentDidMount(){
-    // this.getLocationAndDeals();
-    this.getUserAddedDeals();
+    this.getLocationAndDeals();
     // switch off during dev
+    this.getUserAddedDeals();
     // console.log( lat, lon );
   }
 
   renderUserLocation = () => {
-    // return <UserMarker position={this.state.position} />
-    // let { latitude, longitude } = this.state.position.coords;
     // console.log('in render user location fn:', latitude);
     return <Marker position={[lat,lon]} icon={userIcon}/>
   }
-
-  // renderUserLocation = () => {
-  //   if ('geolocation' in navigator) {
-  //     // console.log('fetching location');
-  //     navigator.geolocation.getCurrentPosition((position) => {
-  //       // debugger
-  //       return <Marker position={[position.coords.latitude, position.coords.longitude]} icon={userIcon}/>
-  //     });
-  //   } else {
-  //     console.log('geolocation is not available');
-  //   }
-  // }
 
   renderAPIDeals = () => {
     // console.log('rendering deals');
@@ -143,7 +121,7 @@ class HomeMap extends React.Component {
     if(!!token){
       API.addDealToMap(token, formData, this.state.clickLat, this.state.clickLon).then(this.getUserAddedDeals);
       this.toggleModal();
-      this.toggleMode();
+      // this.toggleMode();
     } else {
       alert('please log in!');
     };
@@ -156,9 +134,7 @@ class HomeMap extends React.Component {
   }
 
   render(){
-    // console.log('map props',this.props);
-    // {this.state.filter === 'All' ? this.renderAllDeals() : this.renderFilteredDeals()}
-    // console.log( lat, lon );
+
     return(
       <div>
         <div style={{
