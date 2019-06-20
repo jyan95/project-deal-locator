@@ -46,15 +46,21 @@ const Login = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     API.login(formData)
+    .then(r => !r.ok ? alert('Invalid Username or Password') : r.json()
     .then(data => {
       // console.log("data", data);
       const { token } = data;
       localStorage.setItem('token', token);
-    });
+      props.history.push('/');
+    }));
+    // .then(data => {
+    //   // console.log("data", data);
+    //   const { token } = data;
+    //   localStorage.setItem('token', token);
+    // });
     // props.login(formData);
     setFormData({username:'',password:''});
     // console.log('submitted login', props)
-    props.history.push('/');
   }
 
   const classes = useStyles();
@@ -71,7 +77,7 @@ const Login = (props) => {
       </Grid>
       <CssBaseline />
       <div className={classes.paper}>
-        <form className={classes.form} noValidate onSubmit={handleSubmit}>
+        <form className={classes.form} onSubmit={handleSubmit}>
           <TextField
             variant="outlined"
             margin="normal"

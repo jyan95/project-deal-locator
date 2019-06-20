@@ -19,8 +19,10 @@ class UserAddedDealMarker extends React.Component {
 
   componentDidMount() {
     // console.log(this.props)
-    API.getUser(this.props.currentUserToken)
-    .then(user => this.setState({currentUserId:user.id}))
+    if(!!this.props.currentUserToken){
+      API.getUser(this.props.currentUserToken)
+      .then(user => this.setState({currentUserId:user.id}))
+    }
   }
 
   removeDeal = (id) => {
