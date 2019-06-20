@@ -4,7 +4,6 @@ import AddedDealList from '../components/AddedDealList';
 import API from '../api';
 
 import Container from '@material-ui/core/Container';
-// import { makeStyles } from '@material-ui/core/styles';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
@@ -56,10 +55,6 @@ class UserProfile extends React.Component {
     };
   }
 
-  // useEffect(() => {
-  //   API.getUser(token).then(user => setCurrentUser(user));
-  //   console.log(currentUser)
-  // }, [currentUser])
   render () {
     let { username, phone, added_deals } = this.state.currentUser;
     // console.log(this.state);

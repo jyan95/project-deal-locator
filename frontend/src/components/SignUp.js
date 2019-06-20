@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import { Redirect } from 'react-router-dom';
 import { ReactComponent as Logo } from '../assets/dealpal.svg';
 import API from '../api';
 

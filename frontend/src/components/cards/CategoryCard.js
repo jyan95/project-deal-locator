@@ -5,11 +5,6 @@ import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 
-// function handleClick(slug) {
-//   // console.log('clicking', slug);
-//   return <Redirect to={`/categories/${slug}`} />
-// }
-
 const CategoryCard = (props) => {
   let { slug, name } = props.data.category;
   // console.log(this.props.data);

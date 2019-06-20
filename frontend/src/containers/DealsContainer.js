@@ -18,19 +18,6 @@ class DealsContainer extends React.Component {
     loggedIn: !!token
   };
 
-  // autoLogin = () => {
-  //   if (!!token) {
-  //     // console.log('mounting',this.state);
-  //     API.getUser(token)
-  //     .then(user => {
-  //       this.setState({
-  //         loggedIn: true,
-  //         token: token
-  //       })
-  //     })
-  //   };
-  // }
-
   componentDidMount(){
     const token = localStorage.getItem('token');
     let queryPage = 1;
@@ -48,19 +35,6 @@ class DealsContainer extends React.Component {
         this.setState({userDeals: deals})
       })
     }
-    //   this.setState({userDeals: deals});
-    //   let filteredDeals = [];
-    //   this.state.deals.map(d => {
-    //     this.state.userDeals.map(ud => {
-    //       return ud.frontend_id !== d.deal.id ? filteredDeals.push(d) : null
-    //     })
-    //   });
-    //   // console.log(filteredDeals);
-    //   this.setState({deals:filteredDeals});
-    // });
-    // .then(userDeals => userDeals.map(ud => {
-    //   return this.setState({deals: this.state.deals.filter(d => d.id !== ud.frontend_id)},() => console.log(this.state));
-    // }))
   }
 
   filteredDeals = () => {

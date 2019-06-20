@@ -4,9 +4,7 @@ import CategoryCard from '../components/cards/CategoryCard';
 import API from '../api';
 
 import Container from '@material-ui/core/Container';
-// import './Categories.css';
 
-// category index
 class CategoriesContainer extends React.Component {
   state = {
     categories: [],

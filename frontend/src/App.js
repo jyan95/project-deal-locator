@@ -20,7 +20,6 @@ const getLocation = () => {
       // debugger
       lat = position.coords.latitude;
       lon = position.coords.longitude;
-      // console.log('setting pos')
     });
   } else {
     console.log('geolocation is not available');
