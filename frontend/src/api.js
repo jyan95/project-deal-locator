@@ -179,7 +179,7 @@ const signup = (formData) => {
 }
 
 const editUser = (token, formData) => {
-  console.log('editting user', formData);
+  console.log('editing user', formData);
   return fetch(`${BACKEND_API}/edit-user`,{
     method: 'PATCH',
     headers: {

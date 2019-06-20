@@ -37,7 +37,7 @@ class HomeMap extends React.Component {
   };
 
   handleAPIDealClick = (deal) => {
-    console.log('u adding:',deal);
+    // console.log('u adding:',deal);
     API.addUserDeal(deal.id, token)
   }
 

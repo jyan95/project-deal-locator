@@ -33,6 +33,7 @@ class UserProfile extends React.Component {
 
   editUser = (formData) => {
     API.editUser(token, formData)
+    this.setState({displayForm: false});
   }
 
   deleteUser = () => {
