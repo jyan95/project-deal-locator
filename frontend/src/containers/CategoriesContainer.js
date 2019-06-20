@@ -15,7 +15,7 @@ class CategoriesContainer extends React.Component {
 
   componentDidMount(){
     API.getCategories()
-    .then(data => this.setState({categories: data.categories, filteredCategories: data.categories}))
+    .then(data => this.setState({categories: data.categories, filteredCategories: data.categories.filter(c => c.category.slug !== 'adult')}))
   }
 
   filterCategories = (input) => {
@@ -30,7 +30,7 @@ class CategoriesContainer extends React.Component {
 
   render(){
     // console.log('Categories',this.state.categories);
-    // console.log(this.props);
+    console.log(this.state);
     return(
       <React.Fragment>
         <Container>
