@@ -1,14 +1,14 @@
 class Api::V1::UsersController < ApplicationController
-  skip_before_action :authorized, only: [:create]
+  skip_before_action :authorized, only: [:index, :create, :show]
 
   def index
     @all = User.all
     render json: @all
   end
 
-  def profile
-    render json: { user: UserSerializer.new(current_user)}, status: :accepted
-  end
+  # def profile
+  #   render json: { user: UserSerializer.new(current_user)}, status: :accepted
+  # end
 
   def create
     # byebug
@@ -22,9 +22,21 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def show
-    current = user ||= User.find(decoded_token[0]['user_id'])
+    user = User.find(params[:id])
+    render json: user
+  end
 
+  def set_user
+    current = user ||= User.find(decoded_token[0]['user_id'])
     render json: current
+  end
+
+  def update
+    User.find(decoded_token[0]['user_id']).update(user_params)
+  end
+
+  def destroy
+    User.find(decoded_token[0]['user_id']).destroy
   end
 
   private
