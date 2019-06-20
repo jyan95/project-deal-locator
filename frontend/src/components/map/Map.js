@@ -143,7 +143,7 @@ class HomeMap extends React.Component {
     if(!!token){
       API.addDealToMap(token, formData, this.state.clickLat, this.state.clickLon).then(this.getUserAddedDeals);
       this.toggleModal();
-      this.toggleMode();
+      // this.toggleMode();
     } else {
       alert('please log in!');
     };

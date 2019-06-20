@@ -24,7 +24,7 @@ class UserAddedDealMarker extends React.Component {
   }
 
   removeDeal = (id) => {
-    API.removeDealFromMap(id);
+    API.deleteAddedDeal(id);
     this.setState({removed:true});
   }
 

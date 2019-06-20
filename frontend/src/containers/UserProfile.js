@@ -1,5 +1,6 @@
 import React from 'react';
 import EditUserForm from '../components/EditUserForm';
+import AddedDealList from '../components/AddedDealList';
 import API from '../api';
 
 import Container from '@material-ui/core/Container';
@@ -40,11 +41,19 @@ class UserProfile extends React.Component {
     API.deleteUser(token);
   }
 
+  deleteAddedDeal = (id) => {
+    API.deleteAddedDeal(id)
+    .then(r => {
+      let updated = this.state.currentUser.added_deals.filter(ad => ad.id !== id);
+      this.setState({currentUser: {...this.state.currentUser, added_deals: updated}})
+    })
+  }
+
   componentDidMount() {
     if(!!token) {
       API.getUser(token)
       .then(user => this.setState({currentUser: user}))
-    }
+    };
   }
 
   // useEffect(() => {
@@ -52,7 +61,7 @@ class UserProfile extends React.Component {
   //   console.log(currentUser)
   // }, [currentUser])
   render () {
-    let { username, phone, added_deals, deals } = this.state.currentUser;
+    let { username, phone, added_deals } = this.state.currentUser;
     // console.log(this.state);
     return (
       <Container component="main" maxWidth="xs">
@@ -74,10 +83,7 @@ class UserProfile extends React.Component {
               Phone: {!!phone ? phone : 'not listed'}
               </Grid>
               <Grid item xs={12}>
-              Followed Deals: {!!deals ? deals.length : null}
-              </Grid>
-              <Grid item xs={12}>
-              Added Deals: {!!added_deals ? added_deals.length : null}
+              Added Deals: {!!added_deals ? <AddedDealList deals={this.state.currentUser.added_deals} handleClick={this.deleteAddedDeal}/> : null}
               </Grid>
             </Grid>
             <br/>

@@ -195,11 +195,11 @@ const editUser = (token, formData) => {
 //*****************************************************************************
 
 const removeDeal = (id) => {
-  return fetch(`${BACKEND_API}/remove-deal/${id}`,{method: 'DELETE'})
+  return fetch(`${BACKEND_API}/unfollow-deal/${id}`,{method: 'DELETE'})
 }
 
-const removeDealFromMap = (id) => {
-  return fetch(`${BACKEND_API}/remove-deal-from-map/${id}`,{method:'DELETE'})
+const deleteAddedDeal = (id) => {
+  return fetch(`${BACKEND_API}/delete-added-deal/${id}`,{method:'DELETE'})
 }
 
 const deleteUser = () => {
@@ -230,7 +230,7 @@ const API = {
   editUser,
 
   removeDeal,
-  removeDealFromMap,
+  deleteAddedDeal,
   deleteUser
 };
 
