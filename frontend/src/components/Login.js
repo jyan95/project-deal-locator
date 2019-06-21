@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import { ReactComponent as Logo } from '../assets/dealpal.svg';
 import API from '../api';
 
@@ -37,10 +38,17 @@ const useStyles = makeStyles(theme => ({
 
 const Login = (props) => {
   const [formData, setFormData] = useState({username: '', password: ''});
+  const [redirect, toggleRedirect] = useState(false);
 
   const handleChange = (e) => {
     setFormData({...formData, [e.target.name]: e.target.value})
     // console.log('handling login form', formData);
+  }
+
+  function checkRedirect() {
+    if(redirect){
+      return <Redirect to='/' />
+    };
   }
 
   const handleSubmit = (e) => {
@@ -51,7 +59,7 @@ const Login = (props) => {
       // console.log("data", data);
       const { token } = data;
       localStorage.setItem('token', token);
-      props.history.push('/');
+      toggleRedirect(true);
     }));
     // .then(data => {
     //   // console.log("data", data);
@@ -122,6 +130,7 @@ const Login = (props) => {
           </Grid>
         </form>
       </div>
+      {checkRedirect()}
     </Container>
   );
 }

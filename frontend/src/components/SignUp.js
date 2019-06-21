@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import { ReactComponent as Logo } from '../assets/dealpal.svg';
 import API from '../api';
 
@@ -34,19 +35,25 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SignUp = (props) => {
-
   const [formData, setFormData] = useState({username: '', password: '',phone:''});
+  const [redirect, toggleRedirect] = useState(false);
 
   const handleChange = (e) => {
     setFormData({...formData, [e.target.name]: e.target.value})
     // console.log('handling signup form', formData);
   }
 
+  function checkRedirect() {
+    if(redirect){
+      return <Redirect to='/' />
+    };
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     API.signup(formData);
     setFormData({username:'',password:'',phone:''});
-    props.history.push('/');
+    toggleRedirect(true);
   }
 
   const classes = useStyles();
@@ -128,8 +135,7 @@ const SignUp = (props) => {
           </Grid>
         </form>
       </div>
-      <Box mt={5}>
-      </Box>
+      {checkRedirect()}
     </Container>
   );
 }
