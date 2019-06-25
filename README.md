@@ -1,8 +1,6 @@
-# project5-tbd
-interactive proximity deals map app - js frontend ruby backend
-
 # dealpal
 Welcome to dealpal - a mobile optimized web app built with JS React frontend and Ruby on Rails backend
+please visit on your smartphone here: https://dealpal.herokuapp.com/
 
 ## Description
 dealpal is an app designed to help locate and keep track of deals based on user location
