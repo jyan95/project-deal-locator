@@ -1,6 +1,8 @@
 # dealpal
 A mobile optimized app designed to locate and track nearby deals.
 
+![screenshot of homepage](https://imgur.com/DVGZmbD)
+
 https://dealpal.herokuapp.com/
 
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
