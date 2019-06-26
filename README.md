@@ -24,7 +24,7 @@ I wanted to create a simple app that would locate deals in a user's vicinity in 
   
 ## Installation
 
-1. Clone this repository and navigate to `/backend`
+1. Clone this repository and navigate to /backend, and run gem install bundler, then bundle
 2. run `rails db:migrate` and `rails db:seed`, then run `rails s` (it will default to localhost:3000
 3. navigate to `/frontend` and run `npm install`, then `npm start` - it will prompt you to run on another port, hit `y`
 4. if it does not automatically open in your browser, navigate to http://localhost:3001
