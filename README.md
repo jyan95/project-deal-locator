@@ -34,8 +34,6 @@ I wanted to create a simple app that would locate deals in a user's vicinity in 
 - [Discount API](https://discountapi.com/docs)
 - [Mapquest Geocoding API](https://developer.mapquest.com/documentation/geocoding-api/)
 
-## How to use?
-If people like your project they’ll want to learn how they can use it. To do so include step by step guide to use your project.
 
 ## License
 This code is free to use under the terms of the MIT license.
