@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import { ReactComponent as Logo } from '../assets/dealpal.svg';
 import API from '../api';
 
@@ -37,24 +38,37 @@ const useStyles = makeStyles(theme => ({
 
 const Login = (props) => {
   const [formData, setFormData] = useState({username: '', password: ''});
+  const [redirect, toggleRedirect] = useState(false);
 
   const handleChange = (e) => {
     setFormData({...formData, [e.target.name]: e.target.value})
     // console.log('handling login form', formData);
   }
 
+  function checkRedirect() {
+    if(redirect){
+      return <Redirect to='/' />
+    };
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     API.login(formData)
+    .then(r => !r.ok ? alert('Invalid Username or Password') : r.json()
     .then(data => {
       // console.log("data", data);
       const { token } = data;
       localStorage.setItem('token', token);
-    });
+      toggleRedirect(true);
+    }));
+    // .then(data => {
+    //   // console.log("data", data);
+    //   const { token } = data;
+    //   localStorage.setItem('token', token);
+    // });
     // props.login(formData);
     setFormData({username:'',password:''});
     // console.log('submitted login', props)
-    props.history.push('/');
   }
 
   const classes = useStyles();
@@ -71,7 +85,7 @@ const Login = (props) => {
       </Grid>
       <CssBaseline />
       <div className={classes.paper}>
-        <form className={classes.form} noValidate onSubmit={handleSubmit}>
+        <form className={classes.form} onSubmit={handleSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -116,6 +130,7 @@ const Login = (props) => {
           </Grid>
         </form>
       </div>
+      {checkRedirect()}
     </Container>
   );
 }

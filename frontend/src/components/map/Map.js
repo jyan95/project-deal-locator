@@ -33,7 +33,8 @@ class HomeMap extends React.Component {
     userAddedDeals: [],
     addDealMode: false,
     displayModal: false,
-    displayTooltip: 0
+    displayTooltip: 0,
+    loggedIn: false
   };
 
   handleAPIDealClick = (deal) => {
@@ -71,8 +72,11 @@ class HomeMap extends React.Component {
 
   // MULTI PAGE QUERY
   componentDidMount(){
-    this.getLocationAndDeals();
+    // this.getLocationAndDeals();
     // switch off during dev
+    if(!!token){
+      this.setState({loggedIn:true});
+    }
     this.getUserAddedDeals();
     // console.log( lat, lon );
   }
@@ -134,7 +138,6 @@ class HomeMap extends React.Component {
   }
 
   render(){
-
     return(
       <div>
         <div style={{
@@ -146,7 +149,7 @@ class HomeMap extends React.Component {
           right: 10
         }}>
           <Fab id='fab' variant='extended' color="primary" aria-label="Add" size='medium' onClick={this.toggleMode} >
-            {!!token ? !this.state.addDealMode ? 'add deal' : 'exit' : 'sign in'}
+            {this.state.loggedIn ? !this.state.addDealMode ? 'add deal' : 'exit' : 'sign in'}
           </Fab>
         </div>
         <Map id='map' center={[lat,lon]} zoom={16} onClick={this.state.addDealMode ? this.mapClick : null} >

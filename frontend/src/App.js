@@ -16,11 +16,16 @@ let lon = -74.0149;
 const getLocation = () => {
   if ('geolocation' in navigator) {
     // console.log('fetching location');
-    navigator.geolocation.getCurrentPosition((position) => {
-      // debugger
-      lat = position.coords.latitude;
-      lon = position.coords.longitude;
-    });
+    let coords = localStorage.getItem('lat');
+    if(!!coords){
+      navigator.geolocation.getCurrentPosition((position) => {
+        // debugger
+        localStorage.setItem('lat', position.coords.latitude)
+        localStorage.setItem('lon', position.coords.longitude)
+        lat = position.coords.latitude;
+        lon = position.coords.longitude;
+      });
+    }
   } else {
     console.log('geolocation is not available');
   }
