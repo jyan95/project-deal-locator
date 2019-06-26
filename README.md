@@ -1,12 +1,10 @@
 # dealpal
 A mobile optimized app designed to locate and track nearby deals.
 https://dealpal.herokuapp.com/
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
 
 ## Motivation
 I wanted to create a simple app that would locate deals in a user's vicinity in case they had time to spare, but didn't want to go too far out of their way. I also wanted to familiarize myself with mobile first design, as well as implementation of an interactive map. 
-
-## Code style
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
 
 ## Tech stack
 
